@@ -3,7 +3,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
 import type { Language } from '@/i18n/translations';
 import { ChevronDown, Menu, X } from 'lucide-react';
-import churchLogo from '@/assets/church-logo.png';
+import { Church } from 'lucide-react';
 
 const langLabels: Record<Language, string> = { en: 'EN', zh: '中文', th: 'ไทย' };
 
