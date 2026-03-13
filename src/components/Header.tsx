@@ -84,7 +84,7 @@ export default function Header() {
       <div className="bg-card/95 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto flex items-center justify-between py-3 px-4">
           <button onClick={() => scrollTo('hero')} className="flex items-center gap-3">
-            <img src={churchLogo} alt="TCC Logo" className="h-10 w-auto" />
+            <Church className="h-8 w-8 text-primary" />
             <span className="font-heading text-lg font-semibold text-foreground hidden sm:block">
               {t(translations.hero.title, language)}
             </span>
