@@ -1,6 +1,5 @@
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
-import heroImage from '@/assets/hero-church.jpg';
 import { MapPin, BookOpen } from 'lucide-react';
 
 export default function HeroSection() {
@@ -13,10 +12,7 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className="relative min-h-[85vh] flex items-center justify-center">
-      <div className="absolute inset-0">
-        <img src={heroImage} alt="Church" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-primary/60" />
-      </div>
+      <div className="absolute inset-0 bg-primary" />
       <div className="relative z-10 text-center px-4 max-w-3xl mx-auto animate-fade-in">
         <h1 className="font-heading text-4xl md:text-6xl font-bold text-primary-foreground mb-4">
           {t(hero.title, language)}
