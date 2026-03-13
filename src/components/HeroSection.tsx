@@ -1,6 +1,5 @@
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
-import heroImage from '@/assets/hero-church.jpg';
 import { MapPin, BookOpen } from 'lucide-react';
 
 export default function HeroSection() {
