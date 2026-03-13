@@ -1,8 +1,6 @@
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
-import choirImg from '@/assets/ministry-choir.jpg';
-import youthImg from '@/assets/ministry-youth.jpg';
-import childrenImg from '@/assets/ministry-children.jpg';
+import { Music, Users, Baby } from 'lucide-react';
 
 export default function MinistriesSection() {
   const { language } = useLanguage();
