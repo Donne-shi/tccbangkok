@@ -7,9 +7,9 @@ export default function MinistriesSection() {
   const ms = translations.ministriesSection;
 
   const ministries = [
-    { ...ms.choir, img: choirImg },
-    { ...ms.youth, img: youthImg },
-    { ...ms.children, img: childrenImg },
+    { ...ms.choir, icon: Music },
+    { ...ms.youth, icon: Users },
+    { ...ms.children, icon: Baby },
   ];
 
   return (
