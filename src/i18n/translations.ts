@@ -17,16 +17,19 @@ export const translations = {
     youth: { en: 'Youth Ministry', zh: '青少年服侍', th: 'พันธกิจเยาวชน' },
     children: { en: "Children's Ministry", zh: '儿童服侍', th: 'พันธกิจเด็ก' },
     resources: { en: 'Resources', zh: '学习资源', th: 'แหล่งเรียนรู้' },
-    westminster: { en: 'Westminster Catechism', zh: '威斯敏斯特教理问答', th: 'คำสอนเวสต์มินสเตอร์' },
+    westminsterConfession: { en: 'Westminster Confession', zh: '威斯敏斯特信条', th: 'คำสารภาพเวสต์มินสเตอร์' },
+    westminsterCatechism: { en: 'Westminster Catechism', zh: '威斯敏斯特小要理问答', th: 'คำสอนเวสต์มินสเตอร์' },
     heidelberg: { en: 'Heidelberg Catechism', zh: '海德堡教理问答', th: 'คำสอนไฮเดลเบิร์ก' },
+    home: { en: 'Home', zh: '首页', th: 'หน้าแรก' },
+    backToHome: { en: '← Back to Home', zh: '← 返回首页', th: '← กลับหน้าแรก' },
   },
 
   // Hero section
   hero: {
     title: {
-      en: 'Trinity Community Church',
-      zh: '三一社区教会',
-      th: 'คริสตจักรชุมชนตรีเอกานุภาพ',
+      en: 'Bangkok Trinity Community Church',
+      zh: '曼谷三一社区教会',
+      th: 'คริสตจักรชุมชนตรีเอกานุภาพกรุงเทพฯ',
     },
     subtitle: {
       en: 'Bangkok, Thailand',
@@ -45,6 +48,35 @@ export const translations = {
     },
     cta1: { en: 'Find Us', zh: '教会地址', th: 'ค้นหาเรา' },
     cta2: { en: "This Week's Sermon", zh: '本周讲道', th: 'คำเทศนาสัปดาห์นี้' },
+  },
+
+  // Homepage quick links
+  quickLinks: {
+    title: { en: 'Explore Our Church', zh: '探索我们的教会', th: 'สำรวจคริสตจักรของเรา' },
+    faith: {
+      title: { en: 'Statement of Faith', zh: '信仰告白', th: 'คำแถลงศรัทธา' },
+      desc: { en: 'What we believe', zh: '我们的信仰', th: 'สิ่งที่เราเชื่อ' },
+    },
+    sermons: {
+      title: { en: 'Sunday Service', zh: '本周主日', th: 'นมัสการวันอาทิตย์' },
+      desc: { en: 'Weekly sermons', zh: '每周讲道', th: 'คำเทศนาประจำสัปดาห์' },
+    },
+    membership: {
+      title: { en: 'Join Us', zh: '加入我们', th: 'เข้าร่วม' },
+      desc: { en: 'Apply for membership', zh: '申请会友', th: 'สมัครสมาชิก' },
+    },
+    ministries: {
+      title: { en: 'Ministries', zh: '教会服侍', th: 'การรับใช้' },
+      desc: { en: 'Choir, Youth, Children', zh: '诗班、青少年、儿童', th: 'คณะนักร้อง เยาวชน เด็ก' },
+    },
+    resources: {
+      title: { en: 'Resources', zh: '学习资源', th: 'แหล่งเรียนรู้' },
+      desc: { en: 'Catechisms & Confessions', zh: '教理问答与信条', th: 'คำสอนและคำสารภาพ' },
+    },
+    constitution: {
+      title: { en: 'Constitution', zh: '教会章程', th: 'ธรรมนูญ' },
+      desc: { en: 'Church governance', zh: '教会治理', th: 'การปกครองคริสตจักร' },
+    },
   },
 
   // Statement of Faith
@@ -106,35 +138,19 @@ export const translations = {
   membership: {
     title: { en: 'Membership Application', zh: '申请会友', th: 'สมัครสมาชิก' },
     intro: {
-      en: 'We warmly invite you to join Trinity Community Church. Please fill in the form below.',
-      zh: '我们诚挚邀请您加入三一社区教会。请填写以下表格。',
-      th: 'เราขอเชิญชวนคุณเข้าร่วมคริสตจักรชุมชนตรีเอกานุภาพ กรุณากรอกแบบฟอร์มด้านล่าง',
+      en: 'We warmly invite you to join Bangkok Trinity Community Church. Please fill in the form below.',
+      zh: '我们诚挚邀请您加入曼谷三一社区教会。请填写以下表格。',
+      th: 'เราขอเชิญชวนคุณเข้าร่วมคริสตจักรชุมชนตรีเอกานุภาพกรุงเทพฯ กรุณากรอกแบบฟอร์มด้านล่าง',
     },
     nameLabel: { en: 'Full Name', zh: '姓名', th: 'ชื่อ-นามสกุล' },
     emailLabel: { en: 'Email', zh: '电子邮箱', th: 'อีเมล' },
     phoneLabel: { en: 'Phone', zh: '电话', th: 'โทรศัพท์' },
     typeLabel: { en: 'Membership Type', zh: '会友类型', th: 'ประเภทสมาชิก' },
     types: [
-      {
-        en: 'Transfer membership from another church',
-        zh: '从其他教会转移会籍',
-        th: 'โอนสมาชิกภาพจากคริสตจักรอื่น',
-      },
-      {
-        en: 'Associate Member (retain membership elsewhere)',
-        zh: '副会友（保留其他教会会籍）',
-        th: 'สมาชิกสมทบ (คงสมาชิกภาพที่อื่น)',
-      },
-      {
-        en: 'Baptized but not a member of any church',
-        zh: '已受洗但不是任何教会的正式成员',
-        th: 'รับบัพติศมาแล้วแต่ไม่ได้เป็นสมาชิกคริสตจักรใด',
-      },
-      {
-        en: 'Seek baptism and full membership',
-        zh: '寻求受洗并成为正式会友',
-        th: 'ต้องการรับบัพติศมาและเป็นสมาชิกเต็มรูปแบบ',
-      },
+      { en: 'Transfer membership from another church', zh: '从其他教会转移会籍', th: 'โอนสมาชิกภาพจากคริสตจักรอื่น' },
+      { en: 'Associate Member (retain membership elsewhere)', zh: '副会友（保留其他教会会籍）', th: 'สมาชิกสมทบ (คงสมาชิกภาพที่อื่น)' },
+      { en: 'Baptized but not a member of any church', zh: '已受洗但不是任何教会的正式成员', th: 'รับบัพติศมาแล้วแต่ไม่ได้เป็นสมาชิกคริสตจักรใด' },
+      { en: 'Seek baptism and full membership', zh: '寻求受洗并成为正式会友', th: 'ต้องการรับบัพติศมาและเป็นสมาชิกเต็มรูปแบบ' },
     ],
     childrenLabel: { en: 'Children (names, ages, baptismal status)', zh: '子女信息（姓名、年龄、受洗状况）', th: 'บุตร (ชื่อ อายุ สถานะบัพติศมา)' },
     messageLabel: { en: 'Additional Message', zh: '其他信息', th: 'ข้อความเพิ่มเติม' },
@@ -162,13 +178,48 @@ export const translations = {
   // Resources
   resourcesSection: {
     title: { en: 'Learning Resources', zh: '学习资源', th: 'แหล่งเรียนรู้' },
-    westminster: {
+    viewAndDownload: { en: 'View & Download', zh: '查看和下载', th: 'ดูและดาวน์โหลด' },
+    download: { en: 'Download PDF', zh: '下载 PDF', th: 'ดาวน์โหลด PDF' },
+    viewOnline: { en: 'View Online', zh: '在线查看', th: 'ดูออนไลน์' },
+    westminsterConfession: {
+      title: { en: 'Westminster Confession of Faith', zh: '威斯敏斯特信条', th: 'คำสารภาพแห่งศรัทธาเวสต์มินสเตอร์' },
+      desc: {
+        en: 'The Westminster Confession of Faith is a classic expression of Reformed theology, produced by over 100 pastors and theologians at the Westminster Assembly in England after three years of discussion, completed in December 1646.',
+        zh: '《威斯敏斯特信条》是基督教神学的典范，由参加英国威斯敏斯特会议的一百多位教牧神学家，经过长达三年的讨论，于1646年12月完成。',
+        th: 'คำสารภาพแห่งศรัทธาเวสต์มินสเตอร์เป็นการแสดงออกที่เป็นแบบฉบับของเทววิทยาปฏิรูป จัดทำโดยศิษยาภิบาลและนักเทววิทยามากกว่า 100 คน',
+      },
+      slug: 'westminster-confession',
+      pdfPath: '/documents/westminster-confession.pdf',
+    },
+    westminsterCatechism: {
       title: { en: 'Westminster Shorter Catechism', zh: '威斯敏斯特小要理问答', th: 'คำสอนสั้นเวสต์มินสเตอร์' },
-      desc: { en: 'A foundational Reformed catechism summarizing Christian doctrine in question-and-answer format.', zh: '以问答形式概括基督教教义的改革宗基础要理问答。', th: 'คำสอนปฏิรูปพื้นฐานที่สรุปหลักคำสอนคริสเตียนในรูปแบบถาม-ตอบ' },
+      desc: {
+        en: 'The Westminster Shorter Catechism was produced by the Westminster Assembly in 1647. It summarizes Christian doctrine in a question-and-answer format and has been widely used by Reformed churches ever since.',
+        zh: '《威斯敏斯特小教理问答》是在1647年英国威斯敏斯特会议产生的。它用字审慎、字义明晰，在宗教改革所产生的众多信条和教理问答中堪称奇葩。',
+        th: 'คำสอนสั้นเวสต์มินสเตอร์จัดทำโดยสมัชชาเวสต์มินสเตอร์ในปี 1647 สรุปหลักคำสอนคริสเตียนในรูปแบบถาม-ตอบ',
+      },
+      slug: 'westminster-catechism',
+      pdfPath: '/documents/westminster-shorter-catechism.pdf',
     },
     heidelberg: {
       title: { en: 'Heidelberg Catechism', zh: '海德堡教理问答', th: 'คำสอนไฮเดลเบิร์ก' },
-      desc: { en: 'A warm and personal catechism exploring human misery, redemption, and gratitude.', zh: '一部温暖而个人化的教理问答，探讨人的苦难、救赎和感恩。', th: 'คำสอนที่อบอุ่นและเป็นส่วนตัว สำรวจความทุกข์ การไถ่ และความกตัญญูของมนุษย์' },
+      desc: {
+        en: 'The Heidelberg Catechism, also known as "Method of Instruction in the Christian Religion," explores human misery, redemption, and gratitude in a warm and personal manner. It contains 129 questions divided into 52 Lord\'s Days.',
+        zh: '《海德堡教理问答》也被称为《基督徒追求敬虔的方法》，以温暖而个人化的方式探讨人的苦难、救赎和感恩。共有129个问题，按52个主日划分。',
+        th: 'คำสอนไฮเดลเบิร์ก หรือ "วิธีการสอนในศาสนาคริสเตียน" สำรวจความทุกข์ การไถ่ และความกตัญญูของมนุษย์อย่างอบอุ่นและเป็นส่วนตัว',
+      },
+      slug: 'heidelberg',
+      pdfPath: '/documents/heidelberg-catechism.pdf',
+    },
+  },
+
+  // Constitution
+  constitution: {
+    title: { en: 'Church Constitution', zh: '教会章程', th: 'ธรรมนูญคริสตจักร' },
+    desc: {
+      en: 'The Constitution of Bangkok Trinity Community Church was adopted on November 26, 2023. It establishes the governance, membership, and doctrinal standards of our church.',
+      zh: '曼谷三一社区教会章程于2023年11月26日通过。该章程确立了教会的治理结构、会友制度和教义标准。',
+      th: 'ธรรมนูญของคริสตจักรชุมชนตรีเอกานุภาพกรุงเทพฯ ได้รับการรับรองเมื่อวันที่ 26 พฤศจิกายน 2023',
     },
   },
 
@@ -182,9 +233,9 @@ export const translations = {
   // Footer
   footer: {
     copyright: {
-      en: '© 2024 Trinity Community Church (Bangkok). All rights reserved.',
-      zh: '© 2024 三一社区教会（曼谷）。保留所有权利。',
-      th: '© 2024 คริสตจักรชุมชนตรีเอกานุภาพ (กรุงเทพฯ) สงวนลิขสิทธิ์',
+      en: '© 2024 Bangkok Trinity Community Church. All rights reserved.',
+      zh: '© 2024 曼谷三一社区教会。保留所有权利。',
+      th: '© 2024 คริสตจักรชุมชนตรีเอกานุภาพกรุงเทพฯ สงวนลิขสิทธิ์',
     },
   },
 };
