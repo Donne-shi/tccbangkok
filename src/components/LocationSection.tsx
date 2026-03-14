@@ -6,6 +6,8 @@ export default function LocationSection() {
   const { language } = useLanguage();
   const loc = translations.location;
 
+  const mapSrc = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.2!2d100.6308!3d13.5997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x311d604f0a5b51e1%3A0x0!2s99%2F558+Moo+8+Srinakarin+Road+Bang+Muang+Mueang+Samut+Prakan+10270!5e0!3m2!1sen!2sth!4v1700000000000";
+
   return (
     <section id="location" className="py-20 bg-background">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -15,13 +17,12 @@ export default function LocationSection() {
         <div className="bg-card rounded-lg shadow-sm border border-border overflow-hidden">
           <div className="aspect-video w-full">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.5!2d100.6!3d13.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTMuNjAwMDAwMCwxMDAuNjAwMDAwMA!5e0!3m2!1sen!2sth!4v1700000000000"
+              src={mapSrc}
               title="Bangkok Trinity Community Church Location"
               className="w-full h-full border-0"
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              src={`https://www.google.com/maps/embed/v1/place?key=&q=99/558+Moo+8+Srinakarin+Road+Bang+Muang+Mueang+Samut+Prakan+10270+Thailand`}
             />
           </div>
           <div className="p-6 text-center space-y-3">
