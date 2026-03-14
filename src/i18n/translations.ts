@@ -226,7 +226,11 @@ export const translations = {
   // Location
   location: {
     title: { en: 'Find Us', zh: '教会地址', th: 'ค้นหาเรา' },
-    address: { en: 'Bangkok, Thailand', zh: '泰国曼谷', th: 'กรุงเทพฯ ประเทศไทย' },
+    address: {
+      en: '99/558 Moo 8, Srinakarin Road, Bang Muang, Mueang Samut Prakan, Samut Prakan 10270',
+      zh: '99/558 Moo 8, Srinakarin路, Bang Muang, Mueang Samut Prakan区, 北揽府 10270',
+      th: '99/558 หมู่ 8 ถนนศรีนครินทร์ บางเมือง เมืองสมุทรปราการ สมุทรปราการ 10270',
+    },
     serviceTime: { en: 'Sunday Service: 10:00 AM', zh: '主日崇拜：上午10:00', th: 'นมัสการวันอาทิตย์: 10:00 น.' },
   },
 
