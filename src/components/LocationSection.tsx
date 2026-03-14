@@ -8,18 +8,31 @@ export default function LocationSection() {
 
   return (
     <section id="location" className="py-20 bg-background">
-      <div className="container mx-auto px-4 max-w-3xl">
+      <div className="container mx-auto px-4 max-w-4xl">
         <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground text-center mb-12">
           {t(loc.title, language)}
         </h2>
-        <div className="bg-card rounded-lg p-8 shadow-sm border border-border text-center">
-          <div className="flex items-center justify-center gap-2 text-foreground mb-3">
-            <MapPin className="h-5 w-5 text-accent" />
-            <span className="text-lg">{t(loc.address, language)}</span>
+        <div className="bg-card rounded-lg shadow-sm border border-border overflow-hidden">
+          <div className="aspect-video w-full">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3877.5!2d100.6!3d13.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTMuNjAwMDAwMCwxMDAuNjAwMDAwMA!5e0!3m2!1sen!2sth!4v1700000000000"
+              title="Bangkok Trinity Community Church Location"
+              className="w-full h-full border-0"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://www.google.com/maps/embed/v1/place?key=&q=99/558+Moo+8+Srinakarin+Road+Bang+Muang+Mueang+Samut+Prakan+10270+Thailand`}
+            />
           </div>
-          <div className="flex items-center justify-center gap-2 text-muted-foreground">
-            <Clock className="h-5 w-5 text-accent" />
-            <span>{t(loc.serviceTime, language)}</span>
+          <div className="p-6 text-center space-y-3">
+            <div className="flex items-center justify-center gap-2 text-foreground">
+              <MapPin className="h-5 w-5 text-accent flex-shrink-0" />
+              <span className="text-lg">{t(loc.address, language)}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-muted-foreground">
+              <Clock className="h-5 w-5 text-accent flex-shrink-0" />
+              <span>{t(loc.serviceTime, language)}</span>
+            </div>
           </div>
         </div>
       </div>
