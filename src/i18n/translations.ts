@@ -37,9 +37,9 @@ export const translations = {
       th: 'กรุงเทพฯ ประเทศไทย',
     },
     themeLabel: {
-      en: '2024 Annual Theme',
-      zh: '2024年度主题',
-      th: 'ธีมประจำปี 2024',
+      en: '2026 Annual Theme',
+      zh: '2026年度主题',
+      th: 'ธีมประจำปี 2026',
     },
     theme: {
       en: '"Rise Up and Build Together"',
