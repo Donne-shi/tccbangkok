@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
+import { Download, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function MembershipForm() {
@@ -22,7 +23,30 @@ export default function MembershipForm() {
         <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground text-center mb-4">
           {t(m.title, language)}
         </h2>
-        <p className="text-muted-foreground text-center mb-10">{t(m.intro, language)}</p>
+        <p className="text-muted-foreground text-center mb-6">{t(m.intro, language)}</p>
+        
+        <div className="bg-card rounded-lg p-6 shadow-sm border border-border mb-10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <FileText className="h-8 w-8 text-accent flex-shrink-0" />
+            <div>
+              <p className="font-semibold text-foreground">
+                {language === 'zh' ? '会友申请表' : language === 'th' ? 'แบบฟอร์มสมัครสมาชิก' : 'Membership Application Form'}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {language === 'zh' ? '下载并填写申请表' : language === 'th' ? 'ดาวน์โหลดและกรอกแบบฟอร์ม' : 'Download and fill out the form'}
+              </p>
+            </div>
+          </div>
+          <a
+            href="/documents/membership-application.pdf"
+            download
+            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-2.5 rounded-md font-semibold hover:opacity-90 transition-opacity duration-300 flex-shrink-0"
+          >
+            <Download className="h-4 w-4" />
+            {language === 'zh' ? '下载' : language === 'th' ? 'ดาวน์โหลด' : 'Download'}
+          </a>
+        </div>
+
         <form onSubmit={handleSubmit} className="bg-card rounded-lg p-8 shadow-sm border border-border space-y-5">
           <div>
             <label className="block text-sm font-medium text-foreground mb-1">{t(m.nameLabel, language)}</label>
