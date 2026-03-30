@@ -120,9 +120,10 @@ export const translations = {
   team: {
     title: { en: 'Ministry Team', zh: '服侍团队', th: 'ทีมรับใช้' },
     members: [
-      { name: 'Pastor Mac Wiener', role: { en: 'Pastor', zh: '麦克牧师', th: 'ศิษยาภิบาล' } },
       { name: 'Elder Caleb Luo', role: { en: 'Elder', zh: '罗坚长老', th: 'ผู้ปกครอง' } },
       { name: 'Elder Martin Zhang', role: { en: 'Elder', zh: '张马丁长老', th: 'ผู้ปกครอง' } },
+      { name: 'Elder Dohan', role: { en: 'Elder', zh: '多瀚长老', th: 'ผู้ปกครอง' } },
+      { name: 'Elder Ye Qing', role: { en: 'Elder', zh: '叶青长老', th: 'ผู้ปกครอง' } },
     ],
   },
 
