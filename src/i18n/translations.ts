@@ -42,9 +42,9 @@ export const translations = {
       th: 'ธีมประจำปี 2024',
     },
     theme: {
-      en: '"Growing Together in Christ"',
-      zh: '"在基督里一同成长"',
-      th: '"เติบโตร่วมกันในพระคริสต์"',
+      en: '"Rise Up and Build Together"',
+      zh: '"起来，一起建造"',
+      th: '"ลุกขึ้นและสร้างด้วยกัน"',
     },
     cta1: { en: 'Find Us', zh: '教会地址', th: 'ค้นหาเรา' },
     cta2: { en: "This Week's Sermon", zh: '本周讲道', th: 'คำเทศนาสัปดาห์นี้' },
