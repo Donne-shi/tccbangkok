@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
+import { Download, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function MembershipForm() {
