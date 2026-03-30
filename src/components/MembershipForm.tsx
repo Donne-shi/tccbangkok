@@ -25,26 +25,34 @@ export default function MembershipForm() {
         </h2>
         <p className="text-muted-foreground text-center mb-6">{t(m.intro, language)}</p>
         
-        <div className="bg-card rounded-lg p-6 shadow-sm border border-border mb-10 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <FileText className="h-8 w-8 text-accent flex-shrink-0" />
-            <div>
-              <p className="font-semibold text-foreground">
-                {language === 'zh' ? '会友申请表' : language === 'th' ? 'แบบฟอร์มสมัครสมาชิก' : 'Membership Application Form'}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {language === 'zh' ? '下载并填写申请表' : language === 'th' ? 'ดาวน์โหลดและกรอกแบบฟอร์ม' : 'Download and fill out the form'}
-              </p>
+        <div className="bg-card rounded-lg shadow-sm border border-border mb-10 overflow-hidden">
+          <div className="p-6 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <FileText className="h-8 w-8 text-accent flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-foreground">
+                  {language === 'zh' ? '会友申请表' : language === 'th' ? 'แบบฟอร์มสมัครสมาชิก' : 'Membership Application Form'}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {language === 'zh' ? '在线预览或下载申请表' : language === 'th' ? 'ดูตัวอย่างหรือดาวน์โหลดแบบฟอร์ม' : 'Preview online or download the form'}
+                </p>
+              </div>
             </div>
+            <a
+              href="/documents/membership-application.pdf"
+              download
+              className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-2.5 rounded-md font-semibold hover:opacity-90 transition-opacity duration-300 flex-shrink-0"
+            >
+              <Download className="h-4 w-4" />
+              {language === 'zh' ? '下载' : language === 'th' ? 'ดาวน์โหลด' : 'Download'}
+            </a>
           </div>
-          <a
-            href="/documents/membership-application.pdf"
-            download
-            className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-2.5 rounded-md font-semibold hover:opacity-90 transition-opacity duration-300 flex-shrink-0"
-          >
-            <Download className="h-4 w-4" />
-            {language === 'zh' ? '下载' : language === 'th' ? 'ดาวน์โหลด' : 'Download'}
-          </a>
+          <iframe
+            src="/documents/membership-application.pdf"
+            className="w-full border-t border-border"
+            style={{ height: '500px' }}
+            title={language === 'zh' ? '会友申请表预览' : language === 'th' ? 'ตัวอย่างแบบฟอร์ม' : 'Application Form Preview'}
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="bg-card rounded-lg p-8 shadow-sm border border-border space-y-5">
