@@ -2,6 +2,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
 import { MapPin, BookOpen } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import heroBg from '@/assets/hero-bg.jpg';
 
 function FloatingOrb({ className }: { className: string }) {
   return (
