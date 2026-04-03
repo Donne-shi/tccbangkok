@@ -8,6 +8,7 @@ import FaithPage from "./pages/FaithPage.tsx";
 import TeamPage from "./pages/TeamPage.tsx";
 import ConstitutionPage from "./pages/ConstitutionPage.tsx";
 import SermonsPage from "./pages/SermonsPage.tsx";
+import SermonDetailPage from "./pages/SermonDetailPage.tsx";
 import MembershipPage from "./pages/MembershipPage.tsx";
 import MinistriesPage from "./pages/MinistriesPage.tsx";
 import ResourcesPage from "./pages/ResourcesPage.tsx";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/team" element={<TeamPage />} />
           <Route path="/constitution" element={<ConstitutionPage />} />
           <Route path="/sermons" element={<SermonsPage />} />
+          <Route path="/sermons/:slug" element={<SermonDetailPage />} />
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/ministries" element={<MinistriesPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
