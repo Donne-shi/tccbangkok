@@ -56,15 +56,8 @@ export default function Header() {
     },
     {
       label: t(nav.resources, language),
-      items: [
-        { label: t(nav.apostlesCreed, language), to: '/creeds/apostles-creed' },
-        { label: t(nav.niceneCreed, language), to: '/creeds/nicene-creed' },
-        { label: t(nav.chalcedonianCreed, language), to: '/creeds/chalcedonian-creed' },
-        { label: t(nav.athanasianCreed, language), to: '/creeds/athanasian-creed' },
-        { label: t(nav.westminsterConfession, language), to: '/resources/westminster-confession' },
-        { label: t(nav.westminsterCatechism, language), to: '/resources/westminster-catechism' },
-        { label: t(nav.heidelberg, language), to: '/resources/heidelberg' },
-      ],
+      to: '/resources',
+      single: true,
     },
   ];
 
