@@ -47,8 +47,8 @@ function QuickLinksSection() {
                 to={link.to}
                 className="block bg-card rounded-xl p-6 shadow-sm border border-border group transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-accent/30 h-full"
               >
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 ${link.color}`}>
-                  <link.icon className="h-6 w-6" />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 bg-accent/10">
+                  <link.icon className="h-6 w-6 text-accent" />
                 </div>
                 <h3 className="font-heading text-base font-semibold text-foreground mb-1 group-hover:text-accent transition-colors duration-300">
                   {t(link.title, language)}
