@@ -14,21 +14,21 @@ function QuickLinksSection() {
   const ql = translations.quickLinks;
 
   const links = [
-    { ...ql.faith, icon: Heart, to: '/faith', color: 'bg-red-500/10 text-red-600' },
-    { ...ql.sermons, icon: Music, to: '/sermons', color: 'bg-blue-500/10 text-blue-600' },
-    { ...ql.membership, icon: Users, to: '/membership', color: 'bg-green-500/10 text-green-600' },
-    { ...ql.ministries, icon: Church, to: '/ministries', color: 'bg-purple-500/10 text-purple-600' },
-    { ...ql.resources, icon: BookOpen, to: '/resources', color: 'bg-amber-500/10 text-amber-600' },
-    { ...ql.constitution, icon: FileText, to: '/constitution', color: 'bg-teal-500/10 text-teal-600' },
+    { ...ql.faith, icon: Heart, to: '/faith' },
+    { ...ql.sermons, icon: Music, to: '/sermons' },
+    { ...ql.membership, icon: Users, to: '/membership' },
+    { ...ql.ministries, icon: Church, to: '/ministries' },
+    { ...ql.resources, icon: BookOpen, to: '/resources' },
+    { ...ql.constitution, icon: FileText, to: '/constitution' },
     {
       title: translations.nav.events,
       desc: { en: 'Weekly gatherings & events', zh: '每周聚会与活动', th: 'การรวมตัวประจำสัปดาห์' },
-      icon: CalendarDays, to: '/events', color: 'bg-indigo-500/10 text-indigo-600',
+      icon: CalendarDays, to: '/events',
     },
     {
       title: translations.nav.giving,
       desc: { en: 'Support our ministry', zh: '支持我们的事工', th: 'สนับสนุนพันธกิจ' },
-      icon: HandHeart, to: '/giving', color: 'bg-rose-500/10 text-rose-600',
+      icon: HandHeart, to: '/giving',
     },
   ];
 
