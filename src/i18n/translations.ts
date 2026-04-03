@@ -282,9 +282,9 @@ export const translations = {
   // Footer
   footer: {
     copyright: {
-      en: '© 2024 Bangkok Trinity Community Church. All rights reserved.',
-      zh: '© 2024 曼谷三一社区教会。保留所有权利。',
-      th: '© 2024 คริสตจักรชุมชนตรีเอกานุภาพกรุงเทพฯ สงวนลิขสิทธิ์',
+      en: '© 2026 Bangkok Trinity Community Church. All rights reserved.',
+      zh: '© 2026 曼谷三一社区教会。保留所有权利。',
+      th: '© 2026 คริสตจักรชุมชนตรีเอกานุภาพกรุงเทพฯ สงวนลิขสิทธิ์',
     },
   },
 };
