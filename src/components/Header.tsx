@@ -45,6 +45,16 @@ export default function Header() {
       single: true,
     },
     {
+      label: t(nav.events, language),
+      to: '/events',
+      single: true,
+    },
+    {
+      label: t(nav.giving, language),
+      to: '/giving',
+      single: true,
+    },
+    {
       label: t(nav.resources, language),
       items: [
         { label: t(nav.westminsterConfession, language), to: '/resources/westminster-confession' },

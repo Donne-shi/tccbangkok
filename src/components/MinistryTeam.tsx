@@ -1,6 +1,7 @@
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
 import { User } from 'lucide-react';
+import teamPhoto from '@/assets/team-photo.jpg';
 
 export default function MinistryTeam() {
   const { language } = useLanguage();
@@ -8,11 +9,21 @@ export default function MinistryTeam() {
 
   return (
     <section id="team" className="py-20 bg-secondary">
-      <div className="container mx-auto px-4 max-w-3xl">
-        <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground text-center mb-12">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground text-center mb-8">
           {t(team.title, language)}
         </h2>
-        <div className="grid sm:grid-cols-3 gap-6">
+
+        {/* Team photo */}
+        <div className="rounded-lg overflow-hidden shadow-lg border border-border mb-12">
+          <img
+            src={teamPhoto}
+            alt="Ministry Team"
+            className="w-full object-cover"
+          />
+        </div>
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
           {team.members.map((member, i) => (
             <div key={i} className="bg-card rounded-lg p-6 text-center shadow-sm border border-border">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
