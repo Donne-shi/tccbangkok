@@ -3,9 +3,9 @@ import { translations, t } from '@/i18n/translations';
 import { Music } from 'lucide-react';
 
 const sampleSermons = [
-  { date: '2024-03-10', title: { en: 'The Grace of God', zh: '上帝的恩典', th: 'พระคุณของพระเจ้า' }, speaker: 'Pastor Mac Wiener' },
-  { date: '2024-03-03', title: { en: 'Walking in Faith', zh: '凭信心行走', th: 'เดินในความเชื่อ' }, speaker: 'Elder Caleb Luo' },
-  { date: '2024-02-25', title: { en: 'The Body of Christ', zh: '基督的身体', th: 'พระกายของพระคริสต์' }, speaker: 'Elder Martin Zhang' },
+  { date: '2026-03-10', title: { en: 'The Grace of God', zh: '上帝的恩典', th: 'พระคุณของพระเจ้า' }, speaker: 'Pastor Mac Wiener' },
+  { date: '2026-03-03', title: { en: 'Walking in Faith', zh: '凭信心行走', th: 'เดินในความเชื่อ' }, speaker: 'Elder Caleb Luo' },
+  { date: '2026-02-25', title: { en: 'The Body of Christ', zh: '基督的身体', th: 'พระกายของพระคริสต์' }, speaker: 'Elder Martin Zhang' },
 ];
 
 export default function SermonsSection() {
