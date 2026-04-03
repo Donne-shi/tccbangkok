@@ -22,6 +22,8 @@ export const translations = {
     heidelberg: { en: 'Heidelberg Catechism', zh: '海德堡教理问答', th: 'คำสอนไฮเดลเบิร์ก' },
     home: { en: 'Home', zh: '首页', th: 'หน้าแรก' },
     backToHome: { en: '← Back to Home', zh: '← 返回首页', th: '← กลับหน้าแรก' },
+    events: { en: 'Events', zh: '活动日历', th: 'กิจกรรม' },
+    giving: { en: 'Giving', zh: '奉献', th: 'การถวาย' },
   },
 
   // Hero section
