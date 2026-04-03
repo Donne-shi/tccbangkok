@@ -135,8 +135,8 @@ export const translations = {
 
   // Sermons
   sermons: {
-    title: { en: 'Sunday Service', zh: '本周主日', th: 'นมัสการวันอาทิตย์' },
-    subtitle: { en: 'Weekly Sermons', zh: '每周讲道', th: 'คำเทศนาประจำสัปดาห์' },
+    title: { en: 'Sermon Series', zh: '系列讲道', th: 'ชุดคำเทศนา' },
+    subtitle: { en: 'Browse sermons by year', zh: '按年份浏览讲道', th: 'เรียกดูคำเทศนาตามปี' },
     play: { en: 'Play', zh: '播放', th: 'เล่น' },
     noSermons: { en: 'Sermons coming soon.', zh: '讲道音频即将上线。', th: 'คำเทศนาเร็วๆ นี้' },
   },
