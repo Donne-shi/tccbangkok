@@ -23,11 +23,31 @@ export default function MinistryTeam() {
           />
         </div>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {/* Elders */}
+        <h3 className="font-heading text-2xl font-semibold text-foreground text-center mb-6">
+          {t(team.elders, language)}
+        </h3>
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           {team.members.map((member, i) => (
             <div key={i} className="bg-card rounded-lg p-6 text-center shadow-sm border border-border">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <User className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="font-heading text-lg font-semibold text-foreground">{member.name}</h3>
+              <p className="text-muted-foreground text-sm mt-1">{t(member.role, language)}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Deacons */}
+        <h3 className="font-heading text-2xl font-semibold text-foreground text-center mb-6">
+          {t(team.deacons, language)}
+        </h3>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {team.deaconMembers.map((member, i) => (
+            <div key={i} className="bg-card rounded-lg p-6 text-center shadow-sm border border-border">
+              <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-4">
+                <User className="h-8 w-8 text-accent-foreground" />
               </div>
               <h3 className="font-heading text-lg font-semibold text-foreground">{member.name}</h3>
               <p className="text-muted-foreground text-sm mt-1">{t(member.role, language)}</p>

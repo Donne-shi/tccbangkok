@@ -125,11 +125,20 @@ export const translations = {
   // Ministry team
   team: {
     title: { en: 'Ministry Team', zh: '服侍团队', th: 'ทีมรับใช้' },
+    elders: { en: 'Elders', zh: '长老', th: 'ผู้ปกครอง' },
+    deacons: { en: 'Deacons', zh: '执事', th: 'มัคนายก' },
     members: [
       { name: 'Elder Caleb Luo', role: { en: 'Elder', zh: '罗坚长老', th: 'ผู้ปกครอง' } },
       { name: 'Elder Martin Zhang', role: { en: 'Elder', zh: '张马丁长老', th: 'ผู้ปกครอง' } },
       { name: 'Elder Dohan', role: { en: 'Elder', zh: '多瀚长老', th: 'ผู้ปกครอง' } },
       { name: 'Elder Ye Qing', role: { en: 'Elder', zh: '叶青长老', th: 'ผู้ปกครอง' } },
+    ],
+    deaconMembers: [
+      { name: 'Xichen Feng', role: { en: 'Deacon', zh: '冯希臣执事', th: 'มัคนายก' } },
+      { name: 'Yifei Yu', role: { en: 'Deacon', zh: '余益飞执事', th: 'มัคนายก' } },
+      { name: 'Shuncai Lei', role: { en: 'Deacon', zh: '雷顺才执事', th: 'มัคนายก' } },
+      { name: 'Qiaoyan Zhou', role: { en: 'Deacon', zh: '周巧燕执事', th: 'มัคนายก' } },
+      { name: 'Haiou Shao', role: { en: 'Deacon', zh: '邵海鸥执事', th: 'มัคนายก' } },
     ],
   },
 
