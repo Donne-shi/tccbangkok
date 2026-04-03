@@ -64,8 +64,8 @@ export const translations = {
       desc: { en: 'What we believe', zh: '我们的信仰', th: 'สิ่งที่เราเชื่อ' },
     },
     sermons: {
-      title: { en: 'Sunday Service', zh: '本周主日', th: 'นมัสการวันอาทิตย์' },
-      desc: { en: 'Weekly sermons', zh: '每周讲道', th: 'คำเทศนาประจำสัปดาห์' },
+      title: { en: 'Sermon Series', zh: '系列讲道', th: 'ชุดคำเทศนา' },
+      desc: { en: 'Browse by year', zh: '按年份浏览', th: 'เรียกดูตามปี' },
     },
     membership: {
       title: { en: 'Join Us', zh: '加入我们', th: 'เข้าร่วม' },
