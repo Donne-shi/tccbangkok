@@ -22,6 +22,8 @@ export const translations = {
     heidelberg: { en: 'Heidelberg Catechism', zh: '海德堡教理问答', th: 'คำสอนไฮเดลเบิร์ก' },
     home: { en: 'Home', zh: '首页', th: 'หน้าแรก' },
     backToHome: { en: '← Back to Home', zh: '← 返回首页', th: '← กลับหน้าแรก' },
+    events: { en: 'Events', zh: '活动日历', th: 'กิจกรรม' },
+    giving: { en: 'Giving', zh: '奉献', th: 'การถวาย' },
   },
 
   // Hero section
@@ -233,6 +235,44 @@ export const translations = {
       th: '99/558 หมู่ 8 ถนนศรีนครินทร์ บางเมือง เมืองสมุทรปราการ สมุทรปราการ 10270',
     },
     serviceTime: { en: 'Sunday Service: 10:00 AM', zh: '主日崇拜：上午10:00', th: 'นมัสการวันอาทิตย์: 10:00 น.' },
+  },
+
+  // Events
+  events: {
+    title: { en: 'Events & Calendar', zh: '活动日历', th: 'กิจกรรมและปฏิทิน' },
+    subtitle: { en: 'Our weekly gatherings and special events', zh: '我们每周的聚会和特别活动', th: 'การรวมตัวประจำสัปดาห์และกิจกรรมพิเศษ' },
+    featuredTitle: { en: 'Featured Event', zh: '本月活动', th: 'กิจกรรมเด่น' },
+    weekly: [
+      {
+        name: { en: 'Sunday Worship', zh: '主日聚会', th: 'นมัสการวันอาทิตย์' },
+        day: { en: 'Sunday', zh: '周日', th: 'วันอาทิตย์' },
+        time: '9:00 - 11:30',
+      },
+      {
+        name: { en: 'Church Prayer Meeting', zh: '教会祷告会', th: 'การประชุมอธิษฐาน' },
+        day: { en: 'Wednesday', zh: '周三晚上', th: 'วันพุธ' },
+        time: '19:30 - 20:30',
+      },
+      {
+        name: { en: "Brothers' Fellowship", zh: '弟兄团契', th: 'สามัคคีธรรมพี่น้องชาย' },
+        day: { en: 'Tuesday', zh: '周二', th: 'วันอังคาร' },
+        time: '9:00 - 11:00',
+      },
+      {
+        name: { en: "Sisters' Fellowship", zh: '姐妹团契', th: 'สามัคคีธรรมพี่น้องหญิง' },
+        day: { en: 'Tuesday', zh: '周二', th: 'วันอังคาร' },
+        time: '9:00 - 11:00',
+      },
+    ],
+  },
+
+  // Giving
+  giving: {
+    title: { en: 'Giving', zh: '奉献', th: 'การถวาย' },
+    subtitle: { en: 'Support the ministry of our church', zh: '支持我们教会的事工', th: 'สนับสนุนพันธกิจของคริสตจักร' },
+    onlineGiving: { en: 'Thailand Online Giving', zh: '泰国线上奉献账户', th: 'ถวายออนไลน์ประเทศไทย' },
+    nameLabel: { en: 'Account Name', zh: '户名', th: 'ชื่อบัญชี' },
+    accountLabel: { en: 'Bank Account', zh: '账号', th: 'เลขบัญชี' },
   },
 
   // Footer
