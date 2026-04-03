@@ -2,6 +2,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
 import { MapPin, BookOpen } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import heroBg from '@/assets/hero-bg.jpg';
 
 function FloatingOrb({ className }: { className: string }) {
   return (
@@ -57,10 +58,20 @@ export default function HeroSection() {
 
   return (
     <section id="hero" className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-primary" />
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img
+          src={heroBg}
+          alt=""
+          className="w-full h-full object-cover"
+          width={1920}
+          height={1080}
+        />
+      </div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-primary/70" />
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-20"
         style={{
           background: 'radial-gradient(ellipse at 30% 20%, hsl(var(--accent) / 0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, hsl(var(--accent) / 0.15) 0%, transparent 50%)',
         }}
