@@ -12,6 +12,7 @@ import MembershipPage from "./pages/MembershipPage.tsx";
 import MinistriesPage from "./pages/MinistriesPage.tsx";
 import ResourcesPage from "./pages/ResourcesPage.tsx";
 import ResourceViewPage from "./pages/ResourceViewPage.tsx";
+import CreedViewPage from "./pages/CreedViewPage.tsx";
 import EventsPage from "./pages/EventsPage.tsx";
 import GivingPage from "./pages/GivingPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/ministries" element={<MinistriesPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/resources/:slug" element={<ResourceViewPage />} />
+          <Route path="/creeds/:slug" element={<CreedViewPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/giving" element={<GivingPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
