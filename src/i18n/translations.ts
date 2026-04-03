@@ -9,7 +9,7 @@ export const translations = {
     constitution: { en: 'Church Constitution', zh: '教会章程', th: 'ธรรมนูญคริสตจักร' },
     location: { en: 'Location', zh: '教会地址', th: 'ที่ตั้ง' },
     annualTheme: { en: 'Annual Theme', zh: '今年主题', th: 'ธีมประจำปี' },
-    sundayService: { en: 'Sunday Service', zh: '本周主日', th: 'วันอาทิตย์' },
+    sundayService: { en: 'Sermon Series', zh: '系列讲道', th: 'ชุดคำเทศนา' },
     joinUs: { en: 'Join Us', zh: '加入我们', th: 'เข้าร่วม' },
     membershipApplication: { en: 'Membership Application', zh: '申请会友', th: 'สมัครสมาชิก' },
     ministries: { en: 'Ministries', zh: '教会服侍', th: 'การรับใช้' },
@@ -64,8 +64,8 @@ export const translations = {
       desc: { en: 'What we believe', zh: '我们的信仰', th: 'สิ่งที่เราเชื่อ' },
     },
     sermons: {
-      title: { en: 'Sunday Service', zh: '本周主日', th: 'นมัสการวันอาทิตย์' },
-      desc: { en: 'Weekly sermons', zh: '每周讲道', th: 'คำเทศนาประจำสัปดาห์' },
+      title: { en: 'Sermon Series', zh: '系列讲道', th: 'ชุดคำเทศนา' },
+      desc: { en: 'Browse by year', zh: '按年份浏览', th: 'เรียกดูตามปี' },
     },
     membership: {
       title: { en: 'Join Us', zh: '加入我们', th: 'เข้าร่วม' },
@@ -135,8 +135,8 @@ export const translations = {
 
   // Sermons
   sermons: {
-    title: { en: 'Sunday Service', zh: '本周主日', th: 'นมัสการวันอาทิตย์' },
-    subtitle: { en: 'Weekly Sermons', zh: '每周讲道', th: 'คำเทศนาประจำสัปดาห์' },
+    title: { en: 'Sermon Series', zh: '系列讲道', th: 'ชุดคำเทศนา' },
+    subtitle: { en: 'Browse sermons by year', zh: '按年份浏览讲道', th: 'เรียกดูคำเทศนาตามปี' },
     play: { en: 'Play', zh: '播放', th: 'เล่น' },
     noSermons: { en: 'Sermons coming soon.', zh: '讲道音频即将上线。', th: 'คำเทศนาเร็วๆ นี้' },
   },
