@@ -12,6 +12,8 @@ import MembershipPage from "./pages/MembershipPage.tsx";
 import MinistriesPage from "./pages/MinistriesPage.tsx";
 import ResourcesPage from "./pages/ResourcesPage.tsx";
 import ResourceViewPage from "./pages/ResourceViewPage.tsx";
+import EventsPage from "./pages/EventsPage.tsx";
+import GivingPage from "./pages/GivingPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
