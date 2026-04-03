@@ -9,7 +9,7 @@ export const translations = {
     constitution: { en: 'Church Constitution', zh: '教会章程', th: 'ธรรมนูญคริสตจักร' },
     location: { en: 'Location', zh: '教会地址', th: 'ที่ตั้ง' },
     annualTheme: { en: 'Annual Theme', zh: '今年主题', th: 'ธีมประจำปี' },
-    sundayService: { en: 'Sunday Service', zh: '本周主日', th: 'วันอาทิตย์' },
+    sundayService: { en: 'Sermon Series', zh: '系列讲道', th: 'ชุดคำเทศนา' },
     joinUs: { en: 'Join Us', zh: '加入我们', th: 'เข้าร่วม' },
     membershipApplication: { en: 'Membership Application', zh: '申请会友', th: 'สมัครสมาชิก' },
     ministries: { en: 'Ministries', zh: '教会服侍', th: 'การรับใช้' },
