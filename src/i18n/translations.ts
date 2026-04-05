@@ -282,7 +282,7 @@ export const translations = {
 
   // Giving
   giving: {
-    title: { en: 'Giving', zh: '奉献', th: 'การถวาย' },
+    title: { en: 'Giving & Finance', zh: '奉献与财务', th: 'การถวายและการเงิน' },
     subtitle: { en: 'Support the ministry of our church', zh: '支持我们教会的事工', th: 'สนับสนุนพันธกิจของคริสตจักร' },
     onlineGiving: { en: 'Thailand Online Giving', zh: '泰国线上奉献账户', th: 'ถวายออนไลน์ประเทศไทย' },
     nameLabel: { en: 'Account Name', zh: '户名', th: 'ชื่อบัญชี' },
