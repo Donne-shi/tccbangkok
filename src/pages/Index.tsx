@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { BookOpen, Music, Users, FileText, Heart, Church, CalendarDays, HandHeart } from 'lucide-react';
 import { ScrollReveal } from '@/hooks/useScrollReveal';
+import ThisWeekSermon from '@/components/ThisWeekSermon';
 
 function QuickLinksSection() {
   const { language } = useLanguage();
