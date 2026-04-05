@@ -235,7 +235,7 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
       <div className="space-y-2">
         <Label>标题（中/英/泰）</Label>
         <Input value={titleZh} onChange={e => setTitleZh(e.target.value)} required placeholder="中文标题" />
-        <Input value={titleEn} onChange={e => setTitleEn(e.target.value)} required placeholder="English Title" />
+        <Input value={titleEn} onChange={e => setTitleEn(e.target.value)} placeholder="English Title (可选)" />
         <Input value={titleTh} onChange={e => setTitleTh(e.target.value)} placeholder="ชื่อภาษาไทย (可选)" />
       </div>
       <div className="space-y-2">
