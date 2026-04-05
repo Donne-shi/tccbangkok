@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      sunday_school_content: {
+        Row: {
+          category: string
+          created_at: string
+          date: string
+          id: string
+          ppt_url: string | null
+          song_links: Json | null
+          summary: string | null
+          title: string
+          updated_at: string
+          video_links: Json | null
+          year: number
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          date: string
+          id?: string
+          ppt_url?: string | null
+          song_links?: Json | null
+          summary?: string | null
+          title: string
+          updated_at?: string
+          video_links?: Json | null
+          year: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          date?: string
+          id?: string
+          ppt_url?: string | null
+          song_links?: Json | null
+          summary?: string | null
+          title?: string
+          updated_at?: string
+          video_links?: Json | null
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
