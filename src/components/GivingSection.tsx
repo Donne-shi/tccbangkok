@@ -40,13 +40,6 @@ export default function GivingSection() {
                 <p className="font-semibold text-foreground font-mono tracking-wider">9217277871</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-secondary rounded-md">
-              <CreditCard className="h-5 w-5 text-primary shrink-0" />
-              <div>
-                <p className="text-sm text-muted-foreground">KBank</p>
-                <p className="font-semibold text-foreground font-mono tracking-wider">—</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
