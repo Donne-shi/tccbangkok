@@ -27,7 +27,7 @@ export const translations = {
     home: { en: 'Home', zh: '首页', th: 'หน้าแรก' },
     backToHome: { en: '← Back to Home', zh: '← 返回首页', th: '← กลับหน้าแรก' },
     events: { en: 'Events', zh: '活动日历', th: 'กิจกรรม' },
-    giving: { en: 'Giving', zh: '奉献', th: 'การถวาย' },
+    giving: { en: 'Giving & Finance', zh: '奉献与财务', th: 'การถวายและการเงิน' },
     sundaySchool: { en: 'Sunday School', zh: '主日学', th: 'โรงเรียนวันอาทิตย์' },
   },
 
@@ -248,7 +248,7 @@ export const translations = {
       zh: '99/558 Moo 8, Srinakarin路, Bang Muang, Mueang Samut Prakan区, 北揽府 10270',
       th: '99/558 หมู่ 8 ถนนศรีนครินทร์ บางเมือง เมืองสมุทรปราการ สมุทรปราการ 10270',
     },
-    serviceTime: { en: 'Sunday Service: 10:00 AM', zh: '主日崇拜：上午10:00', th: 'นมัสการวันอาทิตย์: 10:00 น.' },
+    serviceTime: { en: 'Sunday Service: 9:00 AM', zh: '主日崇拜：上午9:00', th: 'นมัสการวันอาทิตย์: 9:00 น.' },
   },
 
   // Events
@@ -282,7 +282,7 @@ export const translations = {
 
   // Giving
   giving: {
-    title: { en: 'Giving', zh: '奉献', th: 'การถวาย' },
+    title: { en: 'Giving & Finance', zh: '奉献与财务', th: 'การถวายและการเงิน' },
     subtitle: { en: 'Support the ministry of our church', zh: '支持我们教会的事工', th: 'สนับสนุนพันธกิจของคริสตจักร' },
     onlineGiving: { en: 'Thailand Online Giving', zh: '泰国线上奉献账户', th: 'ถวายออนไลน์ประเทศไทย' },
     nameLabel: { en: 'Account Name', zh: '户名', th: 'ชื่อบัญชี' },

@@ -83,7 +83,10 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* Language bar */}
       <div className="bg-primary">
-        <div className="container mx-auto flex justify-end py-1.5 px-4">
+        <div className="container mx-auto flex items-center justify-between py-1.5 px-4">
+          <span className="text-primary-foreground text-xs sm:text-sm font-medium tracking-wide">
+            为基督和祂荣耀的国度
+          </span>
           <div className="flex gap-1">
             {(Object.keys(langLabels) as Language[]).map((lang) => (
               <button
