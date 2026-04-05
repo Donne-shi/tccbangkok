@@ -16,6 +16,8 @@ import ResourceViewPage from "./pages/ResourceViewPage.tsx";
 import CreedViewPage from "./pages/CreedViewPage.tsx";
 import EventsPage from "./pages/EventsPage.tsx";
 import GivingPage from "./pages/GivingPage.tsx";
+import SundaySchoolPage from "./pages/SundaySchoolPage.tsx";
+import AdminPage from "./pages/AdminPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
