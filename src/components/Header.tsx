@@ -55,6 +55,11 @@ export default function Header() {
       single: true,
     },
     {
+      label: t(nav.sundaySchool, language),
+      to: '/sunday-school',
+      single: true,
+    },
+    {
       label: t(nav.resources, language),
       to: '/resources',
       single: true,

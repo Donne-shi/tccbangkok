@@ -28,6 +28,7 @@ export const translations = {
     backToHome: { en: '← Back to Home', zh: '← 返回首页', th: '← กลับหน้าแรก' },
     events: { en: 'Events', zh: '活动日历', th: 'กิจกรรม' },
     giving: { en: 'Giving', zh: '奉献', th: 'การถวาย' },
+    sundaySchool: { en: 'Sunday School', zh: '主日学', th: 'โรงเรียนวันอาทิตย์' },
   },
 
   // Hero section
