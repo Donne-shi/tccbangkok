@@ -96,7 +96,8 @@ function SSForm({ initial, onSave, onCancel }: { initial?: SSContent; onSave: ()
     try {
       let pptUrl = existingPptUrl;
       if (pptFile) {
-        const fileName = `${Date.now()}_${pptFile.name}`;
+        const ssExt = pptFile.name.split('.').pop() || 'pptx';
+        const fileName = `${Date.now()}_file.${ssExt}`;
         const { error: ue } = await supabase.storage.from('sunday-school-files').upload(fileName, pptFile);
         if (ue) throw ue;
         pptUrl = supabase.storage.from('sunday-school-files').getPublicUrl(fileName).data.publicUrl;
