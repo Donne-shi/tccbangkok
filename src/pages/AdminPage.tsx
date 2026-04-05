@@ -205,7 +205,8 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
         if (ue) throw ue;
         pptUrl = supabase.storage.from('sunday-school-files').getPublicUrl(fileName).data.publicUrl;
       }
-      const slug = initial?.slug || `${date}-${titleEn.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+      const slugBase = titleEn.trim() || titleZh.trim() || 'sermon';
+      const slug = initial?.slug || `${date}-${slugBase.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-').replace(/(^-|-$)/g, '')}`;
       const year = new Date(date).getFullYear();
       const record = {
         slug, date, year, speaker: speaker.trim(),
