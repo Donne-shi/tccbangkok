@@ -182,7 +182,8 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
   const [scriptureZh, setScriptureZh] = useState(initial?.scripture_zh || '');
   const [scriptureEn, setScriptureEn] = useState(initial?.scripture_en || '');
   const [scriptureTh, setScriptureTh] = useState(initial?.scripture_th || '');
-  const [audioUrl, setAudioUrl] = useState(initial?.audio_url || '');
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [existingAudioUrl] = useState(initial?.audio_url || '');
   const [pptFile, setPptFile] = useState<File | null>(null);
   const [existingPptUrl] = useState(initial?.ppt_url || '');
   const [saving, setSaving] = useState(false);
