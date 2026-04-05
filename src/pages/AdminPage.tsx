@@ -147,8 +147,8 @@ function ContentForm({
         year,
         summary: summary.trim() || null,
         ppt_url: pptUrl || null,
-        song_links: songLinks.filter(l => l.title && l.url),
-        video_links: videoLinks.filter(l => l.title && l.url),
+        song_links: JSON.parse(JSON.stringify(songLinks.filter(l => l.title && l.url))),
+        video_links: JSON.parse(JSON.stringify(videoLinks.filter(l => l.title && l.url))),
       };
 
       if (initial) {
