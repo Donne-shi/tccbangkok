@@ -5,6 +5,7 @@ import PageLayout from '@/components/PageLayout';
 import { supabase } from '@/integrations/supabase/client';
 import { Music, Download, FileText, BookOpen, User, CalendarDays } from 'lucide-react';
 import AudioPlayer from '@/components/AudioPlayer';
+import DocumentViewer from '@/components/DocumentViewer';
 import type { Language } from '@/i18n/translations';
 
 interface DbSermon {
