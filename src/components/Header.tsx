@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
 import type { Language } from '@/i18n/translations';
-import { ChevronDown, Menu, X, Church } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import churchLogo from '@/assets/church-logo.png';
 
 const langLabels: Record<Language, string> = { en: 'EN', zh: '中文', th: 'ไทย' };
 
@@ -105,7 +106,7 @@ export default function Header() {
       <div className="bg-card/95 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto flex items-center justify-between py-3 px-4">
           <Link to="/" className="flex items-center gap-3" onClick={closeMobile}>
-            <Church className="h-8 w-8 text-primary" />
+            <img src={churchLogo} alt="Church Logo" className="h-8 w-8 object-contain" />
             <span className="font-heading text-lg font-semibold text-foreground hidden sm:block">
               {t(translations.hero.title, language)}
             </span>
