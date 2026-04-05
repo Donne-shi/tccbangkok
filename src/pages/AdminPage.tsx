@@ -182,7 +182,8 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
   const [scriptureZh, setScriptureZh] = useState(initial?.scripture_zh || '');
   const [scriptureEn, setScriptureEn] = useState(initial?.scripture_en || '');
   const [scriptureTh, setScriptureTh] = useState(initial?.scripture_th || '');
-  const [audioUrl, setAudioUrl] = useState(initial?.audio_url || '');
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [existingAudioUrl] = useState(initial?.audio_url || '');
   const [pptFile, setPptFile] = useState<File | null>(null);
   const [existingPptUrl] = useState(initial?.ppt_url || '');
   const [saving, setSaving] = useState(false);
@@ -190,6 +191,13 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true);
     try {
+      let audioUrl = existingAudioUrl;
+      if (audioFile) {
+        const audioName = `${Date.now()}_${audioFile.name}`;
+        const { error: ae } = await supabase.storage.from('sermon-audio').upload(audioName, audioFile);
+        if (ae) throw ae;
+        audioUrl = supabase.storage.from('sermon-audio').getPublicUrl(audioName).data.publicUrl;
+      }
       let pptUrl = existingPptUrl;
       if (pptFile) {
         const fileName = `sermons/${Date.now()}_${pptFile.name}`;
@@ -204,7 +212,7 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
         title_en: titleEn.trim(), title_zh: titleZh.trim(), title_th: titleTh.trim(),
         series_en: seriesEn.trim() || null, series_zh: seriesZh.trim() || null, series_th: seriesTh.trim() || null,
         scripture_en: scriptureEn.trim() || null, scripture_zh: scriptureZh.trim() || null, scripture_th: scriptureTh.trim() || null,
-        audio_url: audioUrl.trim() || null, ppt_url: pptUrl || null,
+        audio_url: audioUrl || null, ppt_url: pptUrl || null,
       };
       if (initial) {
         const { error } = await supabase.from('sermons').update(record).eq('id', initial.id);
@@ -242,7 +250,9 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
         <Input value={scriptureEn} onChange={e => setScriptureEn(e.target.value)} placeholder="Scripture (English)" />
         <Input value={scriptureTh} onChange={e => setScriptureTh(e.target.value)} placeholder="พระคัมภีร์ (ภาษาไทย)" />
       </div>
-      <div><Label>音频链接（可选）</Label><Input value={audioUrl} onChange={e => setAudioUrl(e.target.value)} placeholder="https://..." /></div>
+      <div><Label>音频文件（可选）</Label>
+        {existingAudioUrl && !audioFile && <p className="text-xs text-muted-foreground mb-1">已有音频，上传新文件将替换</p>}
+        <Input type="file" accept="audio/*" onChange={e => setAudioFile(e.target.files?.[0] || null)} /></div>
       <div><Label>PPT/幻灯片文件（可选）</Label>
         {existingPptUrl && !pptFile && <p className="text-xs text-muted-foreground mb-1">已有文件，上传新文件将替换</p>}
         <Input type="file" accept=".ppt,.pptx,.pdf" onChange={e => setPptFile(e.target.files?.[0] || null)} /></div>

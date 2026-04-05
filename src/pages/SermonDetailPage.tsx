@@ -4,6 +4,7 @@ import { LanguageProvider, useLanguage } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
 import { supabase } from '@/integrations/supabase/client';
 import { Music, Download, FileText, BookOpen, User, CalendarDays } from 'lucide-react';
+import AudioPlayer from '@/components/AudioPlayer';
 import type { Language } from '@/i18n/translations';
 
 interface DbSermon {
@@ -104,9 +105,7 @@ function SermonDetailContent() {
               <h2 className="font-heading text-lg font-semibold text-foreground">{l('audio')}</h2>
             </div>
             {sermon.audio_url ? (
-              <audio controls className="w-full" preload="none">
-                <source src={sermon.audio_url} type="audio/mpeg" />
-              </audio>
+              <AudioPlayer src={sermon.audio_url} />
             ) : (
               <div className="bg-secondary rounded-md p-4 text-center">
                 <p className="text-muted-foreground text-sm">{l('audioComingSoon')}</p>
