@@ -201,7 +201,8 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
       }
       let pptUrl = existingPptUrl;
       if (pptFile) {
-        const fileName = `sermons/${Date.now()}_${pptFile.name}`;
+        const pptExt = pptFile.name.split('.').pop() || 'pptx';
+        const fileName = `sermons/${Date.now()}_slides.${pptExt}`;
         const { error: ue } = await supabase.storage.from('sunday-school-files').upload(fileName, pptFile);
         if (ue) throw ue;
         pptUrl = supabase.storage.from('sunday-school-files').getPublicUrl(fileName).data.publicUrl;
