@@ -106,7 +106,7 @@ export default function Header() {
       <div className="bg-card/95 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto flex items-center justify-between py-3 px-4">
           <Link to="/" className="flex items-center gap-3" onClick={closeMobile}>
-            <Church className="h-8 w-8 text-primary" />
+            <img src={churchLogo} alt="Church Logo" className="h-8 w-8 object-contain" />
             <span className="font-heading text-lg font-semibold text-foreground hidden sm:block">
               {t(translations.hero.title, language)}
             </span>
