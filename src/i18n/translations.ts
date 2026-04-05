@@ -248,7 +248,7 @@ export const translations = {
       zh: '99/558 Moo 8, Srinakarin路, Bang Muang, Mueang Samut Prakan区, 北揽府 10270',
       th: '99/558 หมู่ 8 ถนนศรีนครินทร์ บางเมือง เมืองสมุทรปราการ สมุทรปราการ 10270',
     },
-    serviceTime: { en: 'Sunday Service: 10:00 AM', zh: '主日崇拜：上午10:00', th: 'นมัสการวันอาทิตย์: 10:00 น.' },
+    serviceTime: { en: 'Sunday Service: 9:00 AM', zh: '主日崇拜：上午9:00', th: 'นมัสการวันอาทิตย์: 9:00 น.' },
   },
 
   // Events
