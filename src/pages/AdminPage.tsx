@@ -193,7 +193,8 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
     try {
       let audioUrl = existingAudioUrl;
       if (audioFile) {
-        const audioName = `${Date.now()}_${audioFile.name}`;
+        const ext = audioFile.name.split('.').pop() || 'mp3';
+        const audioName = `${Date.now()}_audio.${ext}`;
         const { error: ae } = await supabase.storage.from('sermon-audio').upload(audioName, audioFile);
         if (ae) throw ae;
         audioUrl = supabase.storage.from('sermon-audio').getPublicUrl(audioName).data.publicUrl;
