@@ -191,6 +191,13 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true);
     try {
+      let audioUrl = existingAudioUrl;
+      if (audioFile) {
+        const audioName = `${Date.now()}_${audioFile.name}`;
+        const { error: ae } = await supabase.storage.from('sermon-audio').upload(audioName, audioFile);
+        if (ae) throw ae;
+        audioUrl = supabase.storage.from('sermon-audio').getPublicUrl(audioName).data.publicUrl;
+      }
       let pptUrl = existingPptUrl;
       if (pptFile) {
         const fileName = `sermons/${Date.now()}_${pptFile.name}`;
@@ -205,7 +212,7 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
         title_en: titleEn.trim(), title_zh: titleZh.trim(), title_th: titleTh.trim(),
         series_en: seriesEn.trim() || null, series_zh: seriesZh.trim() || null, series_th: seriesTh.trim() || null,
         scripture_en: scriptureEn.trim() || null, scripture_zh: scriptureZh.trim() || null, scripture_th: scriptureTh.trim() || null,
-        audio_url: audioUrl.trim() || null, ppt_url: pptUrl || null,
+        audio_url: audioUrl || null, ppt_url: pptUrl || null,
       };
       if (initial) {
         const { error } = await supabase.from('sermons').update(record).eq('id', initial.id);
