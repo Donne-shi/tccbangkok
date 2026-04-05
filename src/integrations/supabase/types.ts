@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      sermons: {
+        Row: {
+          audio_url: string | null
+          created_at: string
+          date: string
+          id: string
+          ppt_url: string | null
+          scripture_en: string | null
+          scripture_th: string | null
+          scripture_zh: string | null
+          series_en: string | null
+          series_th: string | null
+          series_zh: string | null
+          slug: string
+          speaker: string
+          title_en: string
+          title_th: string
+          title_zh: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          audio_url?: string | null
+          created_at?: string
+          date: string
+          id?: string
+          ppt_url?: string | null
+          scripture_en?: string | null
+          scripture_th?: string | null
+          scripture_zh?: string | null
+          series_en?: string | null
+          series_th?: string | null
+          series_zh?: string | null
+          slug: string
+          speaker?: string
+          title_en?: string
+          title_th?: string
+          title_zh?: string
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          audio_url?: string | null
+          created_at?: string
+          date?: string
+          id?: string
+          ppt_url?: string | null
+          scripture_en?: string | null
+          scripture_th?: string | null
+          scripture_zh?: string | null
+          series_en?: string | null
+          series_th?: string | null
+          series_zh?: string | null
+          slug?: string
+          speaker?: string
+          title_en?: string
+          title_th?: string
+          title_zh?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
       sunday_school_content: {
         Row: {
           category: string
