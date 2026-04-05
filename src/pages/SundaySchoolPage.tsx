@@ -94,6 +94,7 @@ function SundaySchoolContent() {
                                 <Calendar className="h-3.5 w-3.5" />
                                 {new Date(item.date).toLocaleDateString(language === 'zh' ? 'zh-CN' : language === 'th' ? 'th-TH' : 'en-US')}
                               </p>
+                            </div>
                           </div>
                         </CardHeader>
                         <CardContent className="pt-0">
