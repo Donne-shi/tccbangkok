@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileText, Music, Video, Download, Calendar } from 'lucide-react';
+import DocumentViewer from '@/components/DocumentViewer';
 
 interface SundaySchoolContent {
   id: string;
@@ -94,19 +95,19 @@ function SundaySchoolContent() {
                                 {new Date(item.date).toLocaleDateString(language === 'zh' ? 'zh-CN' : language === 'th' ? 'th-TH' : 'en-US')}
                               </p>
                             </div>
-                            {item.ppt_url && (
-                              <a href={item.ppt_url} download target="_blank" rel="noopener noreferrer">
-                                <Button variant="outline" size="sm" className="flex-shrink-0">
-                                  <Download className="h-4 w-4 mr-1" />
-                                  {l('downloadPpt')}
-                                </Button>
-                              </a>
-                            )}
                           </div>
                         </CardHeader>
                         <CardContent className="pt-0">
                           {item.summary && (
                             <p className="text-sm text-muted-foreground mb-3">{item.summary}</p>
+                          )}
+                          {item.ppt_url && (
+                            <div className="mb-3">
+                              <DocumentViewer
+                                url={item.ppt_url}
+                                downloadLabel={l('downloadPpt')}
+                              />
+                            </div>
                           )}
                           <div className="flex flex-wrap gap-3">
                             {item.song_links.map((link, i) => (

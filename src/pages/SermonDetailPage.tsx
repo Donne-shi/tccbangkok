@@ -5,6 +5,7 @@ import PageLayout from '@/components/PageLayout';
 import { supabase } from '@/integrations/supabase/client';
 import { Music, Download, FileText, BookOpen, User, CalendarDays } from 'lucide-react';
 import AudioPlayer from '@/components/AudioPlayer';
+import DocumentViewer from '@/components/DocumentViewer';
 import type { Language } from '@/i18n/translations';
 
 interface DbSermon {
@@ -96,23 +97,33 @@ function SermonDetailContent() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
-                <Music className="h-5 w-5 text-accent" />
-              </div>
-              <h2 className="font-heading text-lg font-semibold text-foreground">{l('audio')}</h2>
+        {/* Audio */}
+        <div className="bg-card rounded-lg border border-border p-6 shadow-sm mb-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+              <Music className="h-5 w-5 text-accent" />
             </div>
-            {sermon.audio_url ? (
-              <AudioPlayer src={sermon.audio_url} />
-            ) : (
-              <div className="bg-secondary rounded-md p-4 text-center">
-                <p className="text-muted-foreground text-sm">{l('audioComingSoon')}</p>
-              </div>
-            )}
+            <h2 className="font-heading text-lg font-semibold text-foreground">{l('audio')}</h2>
           </div>
+          {sermon.audio_url ? (
+            <AudioPlayer src={sermon.audio_url} />
+          ) : (
+            <div className="bg-secondary rounded-md p-4 text-center">
+              <p className="text-muted-foreground text-sm">{l('audioComingSoon')}</p>
+            </div>
+          )}
+        </div>
 
+        {/* Slides */}
+        {sermon.ppt_url ? (
+          <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
+            <DocumentViewer
+              url={sermon.ppt_url}
+              title={l('ppt')}
+              downloadLabel={l('downloadPpt')}
+            />
+          </div>
+        ) : (
           <div className="bg-card rounded-lg border border-border p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -120,24 +131,11 @@ function SermonDetailContent() {
               </div>
               <h2 className="font-heading text-lg font-semibold text-foreground">{l('ppt')}</h2>
             </div>
-            {sermon.ppt_url ? (
-              <a
-                href={sermon.ppt_url}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 py-2.5 rounded-md text-sm font-medium hover:opacity-90 transition-opacity w-full justify-center"
-              >
-                <Download className="h-4 w-4" />
-                {l('downloadPpt')}
-              </a>
-            ) : (
-              <div className="bg-secondary rounded-md p-4 text-center">
-                <p className="text-muted-foreground text-sm">{l('pptComingSoon')}</p>
-              </div>
-            )}
+            <div className="bg-secondary rounded-md p-4 text-center">
+              <p className="text-muted-foreground text-sm">{l('pptComingSoon')}</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );
