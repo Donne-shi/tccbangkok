@@ -81,6 +81,7 @@ const Index = () => {
         <Header />
         <main className="pt-[88px]">
           <HeroSection />
+          <ThisWeekSermon />
           <QuickLinksSection />
           <LocationSectionAnimated />
         </main>
