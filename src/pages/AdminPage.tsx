@@ -205,7 +205,8 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
         if (ue) throw ue;
         pptUrl = supabase.storage.from('sunday-school-files').getPublicUrl(fileName).data.publicUrl;
       }
-      const slug = initial?.slug || `${date}-${titleEn.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+      const slugBase = titleEn.trim() || titleZh.trim() || 'sermon';
+      const slug = initial?.slug || `${date}-${slugBase.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-').replace(/(^-|-$)/g, '')}`;
       const year = new Date(date).getFullYear();
       const record = {
         slug, date, year, speaker: speaker.trim(),
@@ -235,7 +236,7 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
       <div className="space-y-2">
         <Label>标题（中/英/泰）</Label>
         <Input value={titleZh} onChange={e => setTitleZh(e.target.value)} required placeholder="中文标题" />
-        <Input value={titleEn} onChange={e => setTitleEn(e.target.value)} required placeholder="English Title" />
+        <Input value={titleEn} onChange={e => setTitleEn(e.target.value)} placeholder="English Title (可选)" />
         <Input value={titleTh} onChange={e => setTitleTh(e.target.value)} placeholder="ชื่อภาษาไทย (可选)" />
       </div>
       <div className="space-y-2">
