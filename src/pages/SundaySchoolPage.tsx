@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileText, Music, Video, Download, Calendar } from 'lucide-react';
+import DocumentViewer from '@/components/DocumentViewer';
 
 interface SundaySchoolContent {
   id: string;
