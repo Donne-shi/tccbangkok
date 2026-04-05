@@ -250,7 +250,9 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
         <Input value={scriptureEn} onChange={e => setScriptureEn(e.target.value)} placeholder="Scripture (English)" />
         <Input value={scriptureTh} onChange={e => setScriptureTh(e.target.value)} placeholder="พระคัมภีร์ (ภาษาไทย)" />
       </div>
-      <div><Label>音频链接（可选）</Label><Input value={audioUrl} onChange={e => setAudioUrl(e.target.value)} placeholder="https://..." /></div>
+      <div><Label>音频文件（可选）</Label>
+        {existingAudioUrl && !audioFile && <p className="text-xs text-muted-foreground mb-1">已有音频，上传新文件将替换</p>}
+        <Input type="file" accept="audio/*" onChange={e => setAudioFile(e.target.files?.[0] || null)} /></div>
       <div><Label>PPT/幻灯片文件（可选）</Label>
         {existingPptUrl && !pptFile && <p className="text-xs text-muted-foreground mb-1">已有文件，上传新文件将替换</p>}
         <Input type="file" accept=".ppt,.pptx,.pdf" onChange={e => setPptFile(e.target.files?.[0] || null)} /></div>
