@@ -109,22 +109,49 @@ function SundaySchoolContent() {
                               />
                             </div>
                           )}
-                          <div className="flex flex-wrap gap-3">
-                            {item.song_links.map((link, i) => (
-                              <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 text-sm text-accent hover:underline">
-                                <Music className="h-3.5 w-3.5" />
-                                {link.title}
-                              </a>
-                            ))}
-                            {item.video_links.map((link, i) => (
-                              <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
-                                <Video className="h-3.5 w-3.5" />
-                                {link.title}
-                              </a>
-                            ))}
-                          </div>
+                          {/* Embedded Videos */}
+                          {item.video_links.length > 0 && (
+                            <div className="space-y-3 mb-3">
+                              {item.video_links.map((link, i) => {
+                                const embedUrl = getEmbedUrl(link.url);
+                                return embedUrl ? (
+                                  <div key={i}>
+                                    <p className="text-sm font-medium text-foreground mb-1 flex items-center gap-1.5">
+                                      <Video className="h-3.5 w-3.5 text-primary" />
+                                      {link.title}
+                                    </p>
+                                    <div className="relative w-full rounded-lg overflow-hidden border border-border" style={{ paddingBottom: '56.25%' }}>
+                                      <iframe
+                                        src={embedUrl}
+                                        className="absolute inset-0 w-full h-full"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        title={link.title}
+                                      />
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+                                    <Video className="h-3.5 w-3.5" />
+                                    {link.title}
+                                  </a>
+                                );
+                              })}
+                            </div>
+                          )}
+                          {/* Song Links */}
+                          {item.song_links.length > 0 && (
+                            <div className="flex flex-wrap gap-3">
+                              {item.song_links.map((link, i) => (
+                                <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 text-sm text-accent hover:underline">
+                                  <Music className="h-3.5 w-3.5" />
+                                  {link.title}
+                                </a>
+                              ))}
+                            </div>
+                          )}
                         </CardContent>
                       </Card>
                     ))}
