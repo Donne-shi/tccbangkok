@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen } from 'lucide-react';
+import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface LinkItem { title: string; url: string; }
@@ -268,10 +268,64 @@ function SermonForm({ initial, onSave, onCancel }: { initial?: SermonItem; onSav
   );
 }
 
+/* ── Finance Report Form ── */
+function FinanceForm({ initial, onSave, onCancel }: { initial?: { id: string; year: number; image_url: string }; onSave: () => void; onCancel: () => void }) {
+  const { toast } = useToast();
+  const [year, setYear] = useState(initial?.year?.toString() || '');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); setSaving(true);
+    try {
+      let imageUrl = initial?.image_url || '';
+      if (imageFile) {
+        const ext = imageFile.name.split('.').pop() || 'jpg';
+        const fileName = `finance_${year}_${Date.now()}.${ext}`;
+        const { error: ue } = await supabase.storage.from('finance-assets').upload(fileName, imageFile);
+        if (ue) throw ue;
+        imageUrl = supabase.storage.from('finance-assets').getPublicUrl(fileName).data.publicUrl;
+      }
+      if (!imageUrl) throw new Error('请上传图片');
+      const record = { year: parseInt(year), image_url: imageUrl };
+      if (initial) {
+        const { error } = await supabase.from('finance_reports').update(record).eq('id', initial.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('finance_reports').insert(record);
+        if (error) throw error;
+      }
+      toast({ title: initial ? '更新成功' : '添加成功' }); onSave();
+    } catch (err: any) { toast({ title: '保存失败', description: err.message, variant: 'destructive' }); }
+    setSaving(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div><Label>年份</Label><Input type="number" value={year} onChange={e => setYear(e.target.value)} required placeholder="例如 2025" /></div>
+      <div><Label>财务报告图片</Label>
+        {initial?.image_url && !imageFile && <p className="text-xs text-muted-foreground mb-1">已有图片，上传新图片将替换</p>}
+        <Input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} required={!initial} />
+      </div>
+      <div className="flex gap-3 pt-2">
+        <Button type="submit" disabled={saving}>{saving ? '保存中...' : initial ? '更新' : '添加'}</Button>
+        <Button type="button" variant="outline" onClick={onCancel}>取消</Button>
+      </div>
+    </form>
+  );
+}
+
 /* ── Admin Dashboard ── */
 function AdminDashboard() {
   const { toast } = useToast();
   const [mainTab, setMainTab] = useState('sunday-school');
+
+  // Finance reports state
+  const [financeReports, setFinanceReports] = useState<{ id: string; year: number; image_url: string }[]>([]);
+  const [financeLoading, setFinanceLoading] = useState(true);
+  const [financeShowForm, setFinanceShowForm] = useState(false);
+  const [financeEditing, setFinanceEditing] = useState<{ id: string; year: number; image_url: string } | undefined>();
+
 
   // Sunday School state
   const [ssContents, setSsContents] = useState<SSContent[]>([]);
@@ -298,7 +352,13 @@ function AdminDashboard() {
     setSermonsLoading(false);
   }, []);
 
-  useEffect(() => { fetchSS(); fetchSermons(); }, [fetchSS, fetchSermons]);
+  const fetchFinance = useCallback(async () => {
+    const { data } = await supabase.from('finance_reports').select('*').order('year', { ascending: false });
+    if (data) setFinanceReports(data as any);
+    setFinanceLoading(false);
+  }, []);
+
+  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); }, [fetchSS, fetchSermons, fetchFinance]);
 
   const handleDeleteSS = async (id: string) => {
     if (!confirm('确定删除？')) return;
@@ -310,6 +370,12 @@ function AdminDashboard() {
     if (!confirm('确定删除此讲道？')) return;
     const { error } = await supabase.from('sermons').delete().eq('id', id);
     if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchSermons(); }
+  };
+
+  const handleDeleteFinance = async (id: string) => {
+    if (!confirm('确定删除此财务报告？')) return;
+    const { error } = await supabase.from('finance_reports').delete().eq('id', id);
+    if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchFinance(); }
   };
 
   const ssFiltered = ssContents.filter(c => c.category === ssTab);
@@ -326,6 +392,7 @@ function AdminDashboard() {
           <TabsList className="mb-6">
             <TabsTrigger value="sunday-school">主日学管理</TabsTrigger>
             <TabsTrigger value="sermons">讲道管理</TabsTrigger>
+            <TabsTrigger value="finance">财务报告</TabsTrigger>
           </TabsList>
 
           {/* ── Sunday School Tab ── */}
@@ -390,6 +457,37 @@ function AdminDashboard() {
                       <div className="flex gap-2 flex-shrink-0">
                         <Button variant="ghost" size="icon" onClick={() => setSermonEditing(item)}><Edit2 className="h-4 w-4" /></Button>
                         <Button variant="ghost" size="icon" onClick={() => handleDeleteSermon(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </div>
+                    </CardContent></Card>
+                  ))}</div>}
+              </>
+            )}
+          </TabsContent>
+
+          {/* ── Finance Tab ── */}
+          <TabsContent value="finance">
+            {financeShowForm || financeEditing ? (
+              <Card><CardHeader><CardTitle>{financeEditing ? '编辑财务报告' : '添加财务报告'}</CardTitle></CardHeader>
+                <CardContent><FinanceForm initial={financeEditing} onSave={() => { setFinanceShowForm(false); setFinanceEditing(undefined); fetchFinance(); }} onCancel={() => { setFinanceShowForm(false); setFinanceEditing(undefined); }} /></CardContent></Card>
+            ) : (
+              <>
+                <div className="flex items-center justify-end mb-6">
+                  <Button onClick={() => setFinanceShowForm(true)}><Plus className="h-4 w-4 mr-1" /> 添加报告</Button>
+                </div>
+                {financeLoading ? <div className="text-center py-12 text-muted-foreground">加载中...</div> :
+                  financeReports.length === 0 ? <div className="text-center py-12 text-muted-foreground">暂无报告</div> :
+                  <div className="space-y-3">{financeReports.map(item => (
+                    <Card key={item.id}><CardContent className="py-4 flex items-center justify-between gap-4">
+                      <div className="min-w-0 flex-1 flex items-center gap-3">
+                        <Image className="h-5 w-5 text-muted-foreground shrink-0" />
+                        <div>
+                          <p className="font-medium">{item.year} 年度财务报告</p>
+                          <p className="text-xs text-muted-foreground truncate">{item.image_url}</p>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 flex-shrink-0">
+                        <Button variant="ghost" size="icon" onClick={() => setFinanceEditing(item)}><Edit2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleDeleteFinance(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                       </div>
                     </CardContent></Card>
                   ))}</div>}

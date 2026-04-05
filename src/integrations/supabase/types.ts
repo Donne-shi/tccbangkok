@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      finance_reports: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
       sermons: {
         Row: {
           audio_url: string | null
