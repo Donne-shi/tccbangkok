@@ -581,6 +581,41 @@ function AdminDashboard() {
             )}
           </TabsContent>
 
+          {/* ── Devotionals Tab ── */}
+          <TabsContent value="devotionals">
+            {devotionalShowForm || devotionalEditing ? (
+              <Card><CardHeader><CardTitle>{devotionalEditing ? '编辑灵修分享' : '添加灵修分享'}</CardTitle></CardHeader>
+                <CardContent><DevotionalForm initial={devotionalEditing} onSave={() => { setDevotionalShowForm(false); setDevotionalEditing(undefined); fetchDevotionals(); }} onCancel={() => { setDevotionalShowForm(false); setDevotionalEditing(undefined); }} /></CardContent></Card>
+            ) : (
+              <>
+                <div className="flex items-center justify-end mb-6">
+                  <Button onClick={() => setDevotionalShowForm(true)}><Plus className="h-4 w-4 mr-1" /> 添加灵修分享</Button>
+                </div>
+                {devotionalsLoading ? <div className="text-center py-12 text-muted-foreground">加载中...</div> :
+                  devotionals.length === 0 ? <div className="text-center py-12 text-muted-foreground">暂无灵修分享</div> :
+                  <div className="space-y-3">{devotionals.map(item => (
+                    <Card key={item.id}><CardContent className="py-4 flex items-center justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium truncate">{item.title_zh || item.title_en}</p>
+                          {!item.published && <span className="text-xs bg-muted px-1.5 py-0.5 rounded">草稿</span>}
+                        </div>
+                        <p className="text-sm text-muted-foreground">{item.date} · {item.author}</p>
+                        <div className="flex gap-3 mt-1 text-xs text-muted-foreground">
+                          {item.audio_url && <span className="flex items-center gap-1"><Music className="h-3 w-3" /> 有音频</span>}
+                          <span className="flex items-center gap-1"><FileText className="h-3 w-3" /> {item.content.length}字</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 flex-shrink-0">
+                        <Button variant="ghost" size="icon" onClick={() => setDevotionalEditing(item)}><Edit2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleDeleteDevotional(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </div>
+                    </CardContent></Card>
+                  ))}</div>}
+              </>
+            )}
+          </TabsContent>
+
           {/* ── Finance Tab ── */}
           <TabsContent value="finance">
             {financeShowForm || financeEditing ? (
