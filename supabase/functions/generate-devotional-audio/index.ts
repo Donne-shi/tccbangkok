@@ -18,76 +18,83 @@ serve(async (req) => {
       });
     }
 
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY not configured");
+    const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
+    if (!OPENAI_API_KEY) throw new Error("OPENAI_API_KEY not configured");
 
-    // Use Lovable AI to generate a spoken-word script, then use TTS-like approach
-    // For now, we'll use Lovable AI with a text-to-speech prompt approach
-    // Generate a clean reading version of the content
-    const aiResponse = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    // Prepare text for TTS - clean up markdown and add title
+    const ttsText = `${title}\n\n${content}`.slice(0, 4096);
+
+    // Call OpenAI TTS API
+    const ttsResponse = await fetch("https://api.openai.com/v1/audio/speech", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        "Authorization": `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          {
-            role: "system",
-            content: "你是一个教会灵修朗读助手。请将以下灵修内容整理成适合朗读的文字版本，去除不必要的格式标记，保持内容完整，语言流畅自然。在开头加上标题介绍。"
-          },
-          {
-            role: "user",
-            content: `标题：${title}\n\n内容：${content}`
-          }
-        ],
+        model: "tts-1",
+        input: ttsText,
+        voice: "nova",
+        response_format: "mp3",
+        speed: 0.95,
       }),
     });
 
-    if (!aiResponse.ok) {
-      const errText = await aiResponse.text();
-      console.error("AI error:", aiResponse.status, errText);
-      
-      if (aiResponse.status === 429) {
+    if (!ttsResponse.ok) {
+      const errText = await ttsResponse.text();
+      console.error("OpenAI TTS error:", ttsResponse.status, errText);
+
+      if (ttsResponse.status === 429) {
         return new Response(JSON.stringify({ error: "请求频率过高，请稍后再试" }), {
           status: 429,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      if (aiResponse.status === 402) {
-        return new Response(JSON.stringify({ error: "AI额度不足，请充值" }), {
+      if (ttsResponse.status === 402 || ttsResponse.status === 401) {
+        return new Response(JSON.stringify({ error: "OpenAI API Key无效或余额不足" }), {
           status: 402,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      throw new Error("AI processing failed");
+      throw new Error(`OpenAI TTS failed: ${ttsResponse.status}`);
     }
 
-    const aiData = await aiResponse.json();
-    const processedText = aiData.choices?.[0]?.message?.content || content;
+    const audioBuffer = await ttsResponse.arrayBuffer();
 
-    // Store the processed text as a simple text-based audio placeholder
-    // In production, integrate a proper TTS service
-    // For now, we use the browser's built-in speech synthesis on the client side
-    // and store the processed script
-
+    // Upload to Supabase Storage
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
     const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Store processed text and mark for client-side TTS
+    const fileName = `${devotionalId}.mp3`;
+    const { error: uploadError } = await supabaseAdmin.storage
+      .from("devotional-audio")
+      .upload(fileName, audioBuffer, {
+        contentType: "audio/mpeg",
+        upsert: true,
+      });
+
+    if (uploadError) throw uploadError;
+
+    // Get public URL
+    const { data: urlData } = supabaseAdmin.storage
+      .from("devotional-audio")
+      .getPublicUrl(fileName);
+
+    const audioUrl = urlData.publicUrl;
+
+    // Update devotional post with audio URL
     const { error: updateError } = await supabaseAdmin
       .from("devotional_posts")
-      .update({ audio_url: `tts:${processedText.slice(0, 5000)}` })
+      .update({ audio_url: audioUrl })
       .eq("id", devotionalId);
 
     if (updateError) throw updateError;
 
-    return new Response(JSON.stringify({ 
-      success: true, 
-      processedText: processedText.slice(0, 500) + "...",
-      message: "音频文字已生成，将使用浏览器语音合成播放"
+    return new Response(JSON.stringify({
+      success: true,
+      audioUrl,
+      message: "音频已生成并保存",
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
