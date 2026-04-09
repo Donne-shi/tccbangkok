@@ -2,7 +2,7 @@ import { LanguageProvider } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
-import { BookOpen, ScrollText, FileText, ChevronRight } from 'lucide-react';
+import { BookOpen, ScrollText, FileText, Globe, ChevronRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const categories = [
@@ -23,6 +23,21 @@ const categories = [
     icon: FileText,
     title: { zh: '教理问答与信条', en: 'Catechisms & Confessions', th: 'คำสอนและคำสารภาพ' },
     desc: { zh: '威斯敏斯特信条、威斯敏斯特小要理问答、海德堡要理问答。', en: 'Westminster Confession, Westminster Shorter Catechism, Heidelberg Catechism.', th: 'คำสารภาพเวสต์มินสเตอร์ คำสอนเวสต์มินสเตอร์ คำสอนไฮเดลเบิร์ก' },
+  },
+];
+
+const onlineResources = [
+  {
+    url: 'https://bibleproject.com/',
+    icon: '📖',
+    title: { zh: 'Bible Project', en: 'Bible Project', th: 'Bible Project' },
+    desc: { zh: '通过精美的动画视频和学习资源，帮助您理解圣经的整体叙事和每卷书的核心信息。', en: 'Beautiful animated videos and study resources to help you understand the Bible\'s unified narrative.', th: 'วิดีโอแอนิเมชันและแหล่งเรียนรู้เพื่อช่วยให้เข้าใจเรื่องราวในพระคัมภีร์' },
+  },
+  {
+    url: 'https://www.youtube.com/@baborgroup',
+    icon: '🎬',
+    title: { zh: 'Bible Project 中文频道', en: 'Bible Project Chinese Channel', th: 'ช่อง Bible Project ภาษาจีน' },
+    desc: { zh: 'Bible Project 中文版 YouTube 频道，提供中文字幕和配音的圣经动画视频。', en: 'Bible Project Chinese YouTube channel with Chinese subtitles and dubbing.', th: 'ช่อง YouTube ภาษาจีนของ Bible Project' },
   },
 ];
 
