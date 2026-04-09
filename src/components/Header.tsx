@@ -31,9 +31,11 @@ export default function Header() {
       ],
     },
     {
-      label: t(nav.sundayService, language),
-      to: '/sermons',
-      single: true,
+      label: t(nav.shepherding, language),
+      items: [
+        { label: t(nav.sundayService, language), to: '/sermons' },
+        { label: t(nav.devotional, language), to: '/devotionals' },
+      ],
     },
     {
       label: t(nav.ministries, language),

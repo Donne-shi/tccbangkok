@@ -10,6 +10,8 @@ export const translations = {
     location: { en: 'Location', zh: '教会地址', th: 'ที่ตั้ง' },
     annualTheme: { en: 'Annual Theme', zh: '今年主题', th: 'ธีมประจำปี' },
     sundayService: { en: 'Sermon Series', zh: '系列讲道', th: 'ชุดคำเทศนา' },
+    shepherding: { en: 'Church Shepherding', zh: '教会牧养', th: 'การอภิบาล' },
+    devotional: { en: 'Devotional Sharing', zh: '灵修分享', th: 'การแบ่งปันภักดี' },
     joinUs: { en: 'Join Us', zh: '加入我们', th: 'เข้าร่วม' },
     membershipApplication: { en: 'Membership Application', zh: '申请会友', th: 'สมัครสมาชิก' },
     ministries: { en: 'Ministries', zh: '教会服侍', th: 'การรับใช้' },
