@@ -1,15 +1,16 @@
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
 import { Music, Users, Baby } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function MinistriesSection() {
   const { language } = useLanguage();
   const ms = translations.ministriesSection;
 
   const ministries = [
-    { ...ms.choir, icon: Music },
-    { ...ms.youth, icon: Users },
-    { ...ms.children, icon: Baby },
+    { ...ms.choir, icon: Music, hasHymns: true },
+    { ...ms.youth, icon: Users, hasHymns: false },
+    { ...ms.children, icon: Baby, hasHymns: false },
   ];
 
   return (
@@ -27,9 +28,18 @@ export default function MinistriesSection() {
               <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
                 {t(ministry.title, language)}
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                 {t(ministry.desc, language)}
               </p>
+              {ministry.hasHymns && (
+                <Link
+                  to="/ministries/hymns"
+                  className="inline-flex items-center gap-1.5 text-sm text-accent hover:underline font-medium"
+                >
+                  <Music className="h-3.5 w-3.5" />
+                  {{ en: 'Hymn Recommendations', zh: '诗歌推荐', th: 'แนะนำเพลง' }[language] || 'Hymn Recommendations'}
+                </Link>
+              )}
             </div>
           ))}
         </div>
