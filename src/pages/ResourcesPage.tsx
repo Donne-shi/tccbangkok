@@ -3,10 +3,8 @@ import PageLayout from '@/components/PageLayout';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
 import type { Language } from '@/i18n/translations';
-import { BookOpen, Download, Eye, FileText } from 'lucide-react';
+import { BookOpen, Download, Eye, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const creedItems: { slug: string; title: Record<Language, string>; desc: Record<Language, string> }[] = [
   {
