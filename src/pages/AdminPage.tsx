@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image } from 'lucide-react';
+import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface LinkItem { title: string; url: string; }
@@ -25,6 +25,13 @@ interface SermonItem {
   series_en: string | null; series_zh: string | null; series_th: string | null;
   scripture_en: string | null; scripture_zh: string | null; scripture_th: string | null;
   audio_url: string | null; ppt_url: string | null;
+}
+
+interface DevotionalItem {
+  id: string; slug: string; date: string; year: number;
+  title_zh: string; title_en: string; title_th: string;
+  content: string; author: string;
+  audio_url: string | null; published: boolean;
 }
 
 /* ── Login ── */
@@ -315,6 +322,97 @@ function FinanceForm({ initial, onSave, onCancel }: { initial?: { id: string; ye
   );
 }
 
+/* ── Devotional Form ── */
+function DevotionalForm({ initial, onSave, onCancel }: { initial?: DevotionalItem; onSave: () => void; onCancel: () => void }) {
+  const { toast } = useToast();
+  const [date, setDate] = useState(initial?.date || '');
+  const [titleZh, setTitleZh] = useState(initial?.title_zh || '');
+  const [titleEn, setTitleEn] = useState(initial?.title_en || '');
+  const [titleTh, setTitleTh] = useState(initial?.title_th || '');
+  const [content, setContent] = useState(initial?.content || '');
+  const [author, setAuthor] = useState(initial?.author || '');
+  const [published, setPublished] = useState(initial?.published ?? false);
+  const [saving, setSaving] = useState(false);
+  const [generatingAudio, setGeneratingAudio] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); setSaving(true);
+    try {
+      const slugBase = titleZh.trim() || titleEn.trim() || 'devotional';
+      const slug = initial?.slug || `${date}-${slugBase.replace(/[^a-z0-9\u4e00-\u9fff]+/gi, '-').replace(/(^-|-$)/g, '')}`;
+      const year = new Date(date).getFullYear();
+      const record = {
+        slug, date, year, author: author.trim(), published,
+        title_zh: titleZh.trim(), title_en: titleEn.trim(), title_th: titleTh.trim(),
+        content: content.trim(), audio_url: initial?.audio_url || null,
+      };
+      if (initial) {
+        const { error } = await supabase.from('devotional_posts').update(record).eq('id', initial.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('devotional_posts').insert(record);
+        if (error) throw error;
+      }
+      toast({ title: initial ? '更新成功' : '添加成功' }); onSave();
+    } catch (err: any) { toast({ title: '保存失败', description: err.message, variant: 'destructive' }); }
+    setSaving(false);
+  };
+
+  const handleGenerateAudio = async () => {
+    if (!initial?.id) { toast({ title: '请先保存文章再生成音频', variant: 'destructive' }); return; }
+    setGeneratingAudio(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-devotional-audio', {
+        body: { devotionalId: initial.id, content: content.trim(), title: titleZh.trim() || titleEn.trim() },
+      });
+      if (error) throw error;
+      toast({ title: '音频生成成功', description: data?.message || '已生成语音版本' });
+      onSave();
+    } catch (err: any) { toast({ title: '音频生成失败', description: err.message, variant: 'destructive' }); }
+    setGeneratingAudio(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><Label>日期</Label><Input type="date" value={date} onChange={e => setDate(e.target.value)} required /></div>
+        <div><Label>作者</Label><Input value={author} onChange={e => setAuthor(e.target.value)} required placeholder="作者名称" /></div>
+      </div>
+      <div className="space-y-2">
+        <Label>标题（中/英/泰）</Label>
+        <Input value={titleZh} onChange={e => setTitleZh(e.target.value)} required placeholder="中文标题" />
+        <Input value={titleEn} onChange={e => setTitleEn(e.target.value)} placeholder="English Title (可选)" />
+        <Input value={titleTh} onChange={e => setTitleTh(e.target.value)} placeholder="ชื่อภาษาไทย (可选)" />
+      </div>
+      <div><Label>正文内容</Label>
+        <Textarea value={content} onChange={e => setContent(e.target.value)} required placeholder="灵修分享内容..." rows={12} />
+      </div>
+      <div className="flex items-center gap-2">
+        <input type="checkbox" id="published" checked={published} onChange={e => setPublished(e.target.checked)} className="rounded" />
+        <Label htmlFor="published">发布（勾选后前端可见）</Label>
+      </div>
+      {initial && (
+        <div className="border border-border rounded-lg p-4 bg-secondary/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium">AI 音频生成</p>
+              <p className="text-xs text-muted-foreground">使用AI生成灵修内容的语音版本</p>
+              {initial.audio_url && <p className="text-xs text-accent mt-1">✓ 已有音频</p>}
+            </div>
+            <Button type="button" variant="outline" size="sm" onClick={handleGenerateAudio} disabled={generatingAudio}>
+              {generatingAudio ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" /> 生成中...</> : '生成音频'}
+            </Button>
+          </div>
+        </div>
+      )}
+      <div className="flex gap-3 pt-2">
+        <Button type="submit" disabled={saving}>{saving ? '保存中...' : initial ? '更新' : '添加'}</Button>
+        <Button type="button" variant="outline" onClick={onCancel}>取消</Button>
+      </div>
+    </form>
+  );
+}
+
 /* ── Admin Dashboard ── */
 function AdminDashboard() {
   const { toast } = useToast();
@@ -340,6 +438,12 @@ function AdminDashboard() {
   const [sermonShowForm, setSermonShowForm] = useState(false);
   const [sermonEditing, setSermonEditing] = useState<SermonItem | undefined>();
 
+  // Devotional state
+  const [devotionals, setDevotionals] = useState<DevotionalItem[]>([]);
+  const [devotionalsLoading, setDevotionalsLoading] = useState(true);
+  const [devotionalShowForm, setDevotionalShowForm] = useState(false);
+  const [devotionalEditing, setDevotionalEditing] = useState<DevotionalItem | undefined>();
+
   const fetchSS = useCallback(async () => {
     const { data } = await supabase.from('sunday_school_content').select('*').order('date', { ascending: false });
     if (data) setSsContents(data.map(d => ({ ...d, song_links: (d.song_links as any) || [], video_links: (d.video_links as any) || [] })));
@@ -358,7 +462,13 @@ function AdminDashboard() {
     setFinanceLoading(false);
   }, []);
 
-  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); }, [fetchSS, fetchSermons, fetchFinance]);
+  const fetchDevotionals = useCallback(async () => {
+    const { data } = await supabase.from('devotional_posts').select('*').order('date', { ascending: false });
+    if (data) setDevotionals(data as any);
+    setDevotionalsLoading(false);
+  }, []);
+
+  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals]);
 
   const handleDeleteSS = async (id: string) => {
     if (!confirm('确定删除？')) return;
@@ -378,6 +488,12 @@ function AdminDashboard() {
     if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchFinance(); }
   };
 
+  const handleDeleteDevotional = async (id: string) => {
+    if (!confirm('确定删除此灵修分享？')) return;
+    const { error } = await supabase.from('devotional_posts').delete().eq('id', id);
+    if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchDevotionals(); }
+  };
+
   const ssFiltered = ssContents.filter(c => c.category === ssTab);
 
   return (
@@ -389,9 +505,10 @@ function AdminDashboard() {
 
       <div className="container mx-auto px-4 py-6 max-w-5xl">
         <Tabs value={mainTab} onValueChange={setMainTab}>
-          <TabsList className="mb-6">
+          <TabsList className="mb-6 flex-wrap">
             <TabsTrigger value="sunday-school">主日学管理</TabsTrigger>
             <TabsTrigger value="sermons">讲道管理</TabsTrigger>
+            <TabsTrigger value="devotionals">灵修分享</TabsTrigger>
             <TabsTrigger value="finance">财务报告</TabsTrigger>
           </TabsList>
 
@@ -457,6 +574,41 @@ function AdminDashboard() {
                       <div className="flex gap-2 flex-shrink-0">
                         <Button variant="ghost" size="icon" onClick={() => setSermonEditing(item)}><Edit2 className="h-4 w-4" /></Button>
                         <Button variant="ghost" size="icon" onClick={() => handleDeleteSermon(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </div>
+                    </CardContent></Card>
+                  ))}</div>}
+              </>
+            )}
+          </TabsContent>
+
+          {/* ── Devotionals Tab ── */}
+          <TabsContent value="devotionals">
+            {devotionalShowForm || devotionalEditing ? (
+              <Card><CardHeader><CardTitle>{devotionalEditing ? '编辑灵修分享' : '添加灵修分享'}</CardTitle></CardHeader>
+                <CardContent><DevotionalForm initial={devotionalEditing} onSave={() => { setDevotionalShowForm(false); setDevotionalEditing(undefined); fetchDevotionals(); }} onCancel={() => { setDevotionalShowForm(false); setDevotionalEditing(undefined); }} /></CardContent></Card>
+            ) : (
+              <>
+                <div className="flex items-center justify-end mb-6">
+                  <Button onClick={() => setDevotionalShowForm(true)}><Plus className="h-4 w-4 mr-1" /> 添加灵修分享</Button>
+                </div>
+                {devotionalsLoading ? <div className="text-center py-12 text-muted-foreground">加载中...</div> :
+                  devotionals.length === 0 ? <div className="text-center py-12 text-muted-foreground">暂无灵修分享</div> :
+                  <div className="space-y-3">{devotionals.map(item => (
+                    <Card key={item.id}><CardContent className="py-4 flex items-center justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium truncate">{item.title_zh || item.title_en}</p>
+                          {!item.published && <span className="text-xs bg-muted px-1.5 py-0.5 rounded">草稿</span>}
+                        </div>
+                        <p className="text-sm text-muted-foreground">{item.date} · {item.author}</p>
+                        <div className="flex gap-3 mt-1 text-xs text-muted-foreground">
+                          {item.audio_url && <span className="flex items-center gap-1"><Music className="h-3 w-3" /> 有音频</span>}
+                          <span className="flex items-center gap-1"><FileText className="h-3 w-3" /> {item.content.length}字</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 flex-shrink-0">
+                        <Button variant="ghost" size="icon" onClick={() => setDevotionalEditing(item)}><Edit2 className="h-4 w-4" /></Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleDeleteDevotional(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                       </div>
                     </CardContent></Card>
                   ))}</div>}
