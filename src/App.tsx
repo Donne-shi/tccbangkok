@@ -12,6 +12,7 @@ import SermonDetailPage from "./pages/SermonDetailPage.tsx";
 import MembershipPage from "./pages/MembershipPage.tsx";
 import MinistriesPage from "./pages/MinistriesPage.tsx";
 import ResourcesPage from "./pages/ResourcesPage.tsx";
+import TheologySeriesPage from "./pages/TheologySeriesPage.tsx";
 import ResourceViewPage from "./pages/ResourceViewPage.tsx";
 import CreedViewPage from "./pages/CreedViewPage.tsx";
 import EventsPage from "./pages/EventsPage.tsx";
