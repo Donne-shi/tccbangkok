@@ -12,6 +12,7 @@ import SermonDetailPage from "./pages/SermonDetailPage.tsx";
 import MembershipPage from "./pages/MembershipPage.tsx";
 import MinistriesPage from "./pages/MinistriesPage.tsx";
 import ResourcesPage from "./pages/ResourcesPage.tsx";
+import HymnRecommendationPage from "./pages/HymnRecommendationPage.tsx";
 import TheologySeriesPage from "./pages/TheologySeriesPage.tsx";
 import CreedsListPage from "./pages/CreedsListPage.tsx";
 import ConfessionsListPage from "./pages/ConfessionsListPage.tsx";
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/sermons/:slug" element={<SermonDetailPage />} />
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/ministries" element={<MinistriesPage />} />
+          <Route path="/ministries/hymns" element={<HymnRecommendationPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/resources/theology-series" element={<TheologySeriesPage />} />
           <Route path="/resources/creeds" element={<CreedsListPage />} />
