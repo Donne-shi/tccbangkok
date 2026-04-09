@@ -36,11 +36,6 @@ export default function Header() {
       single: true,
     },
     {
-      label: t(nav.joinUs, language),
-      to: '/membership',
-      single: true,
-    },
-    {
       label: t(nav.ministries, language),
       to: '/ministries',
       single: true,
@@ -64,6 +59,12 @@ export default function Header() {
       label: t(nav.resources, language),
       to: '/resources',
       single: true,
+    },
+    {
+      label: t(nav.contactUs, language),
+      items: [
+        { label: t(nav.joinUs, language), to: '/membership' },
+      ],
     },
   ];
 

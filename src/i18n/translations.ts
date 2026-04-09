@@ -29,6 +29,7 @@ export const translations = {
     events: { en: 'Events', zh: '活动日历', th: 'กิจกรรม' },
     giving: { en: 'Giving & Finance', zh: '奉献与财务', th: 'การถวายและการเงิน' },
     sundaySchool: { en: 'Sunday School', zh: '主日学', th: 'โรงเรียนวันอาทิตย์' },
+    contactUs: { en: 'Contact Us', zh: '联系我们', th: 'ติดต่อเรา' },
   },
 
   // Hero section
