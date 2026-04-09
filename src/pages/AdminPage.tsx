@@ -488,6 +488,12 @@ function AdminDashboard() {
     if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchFinance(); }
   };
 
+  const handleDeleteDevotional = async (id: string) => {
+    if (!confirm('确定删除此灵修分享？')) return;
+    const { error } = await supabase.from('devotional_posts').delete().eq('id', id);
+    if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchDevotionals(); }
+  };
+
   const ssFiltered = ssContents.filter(c => c.category === ssTab);
 
   return (
@@ -499,9 +505,10 @@ function AdminDashboard() {
 
       <div className="container mx-auto px-4 py-6 max-w-5xl">
         <Tabs value={mainTab} onValueChange={setMainTab}>
-          <TabsList className="mb-6">
+          <TabsList className="mb-6 flex-wrap">
             <TabsTrigger value="sunday-school">主日学管理</TabsTrigger>
             <TabsTrigger value="sermons">讲道管理</TabsTrigger>
+            <TabsTrigger value="devotionals">灵修分享</TabsTrigger>
             <TabsTrigger value="finance">财务报告</TabsTrigger>
           </TabsList>
 
