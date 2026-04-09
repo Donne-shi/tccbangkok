@@ -2,7 +2,7 @@ import { LanguageProvider } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
-import { BookOpen, ScrollText, FileText, ChevronRight } from 'lucide-react';
+import { BookOpen, ScrollText, FileText, Globe, ChevronRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const categories = [
@@ -23,6 +23,21 @@ const categories = [
     icon: FileText,
     title: { zh: '教理问答与信条', en: 'Catechisms & Confessions', th: 'คำสอนและคำสารภาพ' },
     desc: { zh: '威斯敏斯特信条、威斯敏斯特小要理问答、海德堡要理问答。', en: 'Westminster Confession, Westminster Shorter Catechism, Heidelberg Catechism.', th: 'คำสารภาพเวสต์มินสเตอร์ คำสอนเวสต์มินสเตอร์ คำสอนไฮเดลเบิร์ก' },
+  },
+];
+
+const onlineResources = [
+  {
+    url: 'https://bibleproject.com/',
+    icon: '📖',
+    title: { zh: 'Bible Project', en: 'Bible Project', th: 'Bible Project' },
+    desc: { zh: '通过精美的动画视频和学习资源，帮助您理解圣经的整体叙事和每卷书的核心信息。', en: 'Beautiful animated videos and study resources to help you understand the Bible\'s unified narrative.', th: 'วิดีโอแอนิเมชันและแหล่งเรียนรู้เพื่อช่วยให้เข้าใจเรื่องราวในพระคัมภีร์' },
+  },
+  {
+    url: 'https://www.youtube.com/@baborgroup',
+    icon: '🎬',
+    title: { zh: 'Bible Project 中文频道', en: 'Bible Project Chinese Channel', th: 'ช่อง Bible Project ภาษาจีน' },
+    desc: { zh: 'Bible Project 中文版 YouTube 频道，提供中文字幕和配音的圣经动画视频。', en: 'Bible Project Chinese YouTube channel with Chinese subtitles and dubbing.', th: 'ช่อง YouTube ภาษาจีนของ Bible Project' },
   },
 ];
 
@@ -61,6 +76,40 @@ function ResourcesContent() {
                 <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
               </div>
             </Link>
+          ))}
+        </div>
+
+        {/* Online Resources */}
+        <h2 className="font-heading text-2xl font-bold text-foreground mt-12 mb-4 flex items-center gap-2">
+          <Globe className="h-6 w-6 text-primary" />
+          {t({ zh: '网络资源', en: 'Online Resources', th: 'แหล่งข้อมูลออนไลน์' }, language)}
+        </h2>
+        <div className="space-y-4">
+          {onlineResources.map((res, i) => (
+            <a
+              key={i}
+              href={res.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/50 transition-colors group"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-xl">
+                    {res.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-heading text-lg font-semibold text-foreground mb-1">
+                      {t(res.title, language)}
+                    </h3>
+                    <p className="text-muted-foreground text-sm">
+                      {t(res.desc, language)}
+                    </p>
+                  </div>
+                </div>
+                <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+              </div>
+            </a>
           ))}
         </div>
       </div>
