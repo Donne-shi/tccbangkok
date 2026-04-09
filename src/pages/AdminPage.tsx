@@ -27,6 +27,13 @@ interface SermonItem {
   audio_url: string | null; ppt_url: string | null;
 }
 
+interface DevotionalItem {
+  id: string; slug: string; date: string; year: number;
+  title_zh: string; title_en: string; title_th: string;
+  content: string; author: string;
+  audio_url: string | null; published: boolean;
+}
+
 /* ── Login ── */
 function LoginForm({ onLogin }: { onLogin: () => void }) {
   const [password, setPassword] = useState('');
