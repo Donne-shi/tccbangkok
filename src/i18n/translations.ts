@@ -191,6 +191,10 @@ export const translations = {
       title: { en: "Children's Ministry", zh: '儿童服侍', th: 'พันธกิจเด็ก' },
       desc: { en: 'Teaching children the love of God through age-appropriate lessons and activities.', zh: '通过适龄课程和活动教导儿童认识上帝的爱。', th: 'สอนเด็กๆ เกี่ยวกับความรักของพระเจ้าผ่านบทเรียนและกิจกรรมที่เหมาะสมกับวัย' },
     },
+    visitation: {
+      title: { en: 'Visitation & Care', zh: '探访关怀', th: 'การเยี่ยมเยียนและดูแล' },
+      desc: { en: 'Visiting and caring for members in need, bringing the love of Christ through fellowship and prayer.', zh: '探访有需要的弟兄姐妹，以团契和祷告传递基督的爱与关怀。', th: 'เยี่ยมเยียนและดูแลสมาชิกที่ต้องการ นำความรักของพระคริสต์ผ่านสามัคคีธรรมและการอธิษฐาน' },
+    },
   },
 
   // Resources

@@ -1,6 +1,6 @@
 import { useLanguage } from '@/i18n/LanguageContext';
 import { translations, t } from '@/i18n/translations';
-import { Music, Users, Baby } from 'lucide-react';
+import { Music, Users, Baby, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function MinistriesSection() {
@@ -11,6 +11,7 @@ export default function MinistriesSection() {
     { ...ms.choir, icon: Music, hasHymns: true },
     { ...ms.youth, icon: Users, hasHymns: false },
     { ...ms.children, icon: Baby, hasHymns: false },
+    { ...ms.visitation, icon: Heart, hasHymns: false },
   ];
 
   return (
