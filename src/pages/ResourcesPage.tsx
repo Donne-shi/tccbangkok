@@ -78,6 +78,40 @@ function ResourcesContent() {
             </Link>
           ))}
         </div>
+
+        {/* Online Resources */}
+        <h2 className="font-heading text-2xl font-bold text-foreground mt-12 mb-4 flex items-center gap-2">
+          <Globe className="h-6 w-6 text-primary" />
+          {t({ zh: '网络资源', en: 'Online Resources', th: 'แหล่งข้อมูลออนไลน์' }, language)}
+        </h2>
+        <div className="space-y-4">
+          {onlineResources.map((res, i) => (
+            <a
+              key={i}
+              href={res.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block bg-card rounded-lg p-6 shadow-sm border border-border hover:border-primary/50 transition-colors group"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-xl">
+                    {res.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-heading text-lg font-semibold text-foreground mb-1">
+                      {t(res.title, language)}
+                    </h3>
+                    <p className="text-muted-foreground text-sm">
+                      {t(res.desc, language)}
+                    </p>
+                  </div>
+                </div>
+                <ExternalLink className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   );
