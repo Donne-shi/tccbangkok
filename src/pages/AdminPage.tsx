@@ -322,6 +322,97 @@ function FinanceForm({ initial, onSave, onCancel }: { initial?: { id: string; ye
   );
 }
 
+/* ── Devotional Form ── */
+function DevotionalForm({ initial, onSave, onCancel }: { initial?: DevotionalItem; onSave: () => void; onCancel: () => void }) {
+  const { toast } = useToast();
+  const [date, setDate] = useState(initial?.date || '');
+  const [titleZh, setTitleZh] = useState(initial?.title_zh || '');
+  const [titleEn, setTitleEn] = useState(initial?.title_en || '');
+  const [titleTh, setTitleTh] = useState(initial?.title_th || '');
+  const [content, setContent] = useState(initial?.content || '');
+  const [author, setAuthor] = useState(initial?.author || '');
+  const [published, setPublished] = useState(initial?.published ?? false);
+  const [saving, setSaving] = useState(false);
+  const [generatingAudio, setGeneratingAudio] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); setSaving(true);
+    try {
+      const slugBase = titleZh.trim() || titleEn.trim() || 'devotional';
+      const slug = initial?.slug || `${date}-${slugBase.replace(/[^a-z0-9\u4e00-\u9fff]+/gi, '-').replace(/(^-|-$)/g, '')}`;
+      const year = new Date(date).getFullYear();
+      const record = {
+        slug, date, year, author: author.trim(), published,
+        title_zh: titleZh.trim(), title_en: titleEn.trim(), title_th: titleTh.trim(),
+        content: content.trim(), audio_url: initial?.audio_url || null,
+      };
+      if (initial) {
+        const { error } = await supabase.from('devotional_posts').update(record).eq('id', initial.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('devotional_posts').insert(record);
+        if (error) throw error;
+      }
+      toast({ title: initial ? '更新成功' : '添加成功' }); onSave();
+    } catch (err: any) { toast({ title: '保存失败', description: err.message, variant: 'destructive' }); }
+    setSaving(false);
+  };
+
+  const handleGenerateAudio = async () => {
+    if (!initial?.id) { toast({ title: '请先保存文章再生成音频', variant: 'destructive' }); return; }
+    setGeneratingAudio(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-devotional-audio', {
+        body: { devotionalId: initial.id, content: content.trim(), title: titleZh.trim() || titleEn.trim() },
+      });
+      if (error) throw error;
+      toast({ title: '音频生成成功', description: data?.message || '已生成语音版本' });
+      onSave();
+    } catch (err: any) { toast({ title: '音频生成失败', description: err.message, variant: 'destructive' }); }
+    setGeneratingAudio(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><Label>日期</Label><Input type="date" value={date} onChange={e => setDate(e.target.value)} required /></div>
+        <div><Label>作者</Label><Input value={author} onChange={e => setAuthor(e.target.value)} required placeholder="作者名称" /></div>
+      </div>
+      <div className="space-y-2">
+        <Label>标题（中/英/泰）</Label>
+        <Input value={titleZh} onChange={e => setTitleZh(e.target.value)} required placeholder="中文标题" />
+        <Input value={titleEn} onChange={e => setTitleEn(e.target.value)} placeholder="English Title (可选)" />
+        <Input value={titleTh} onChange={e => setTitleTh(e.target.value)} placeholder="ชื่อภาษาไทย (可选)" />
+      </div>
+      <div><Label>正文内容</Label>
+        <Textarea value={content} onChange={e => setContent(e.target.value)} required placeholder="灵修分享内容..." rows={12} />
+      </div>
+      <div className="flex items-center gap-2">
+        <input type="checkbox" id="published" checked={published} onChange={e => setPublished(e.target.checked)} className="rounded" />
+        <Label htmlFor="published">发布（勾选后前端可见）</Label>
+      </div>
+      {initial && (
+        <div className="border border-border rounded-lg p-4 bg-secondary/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium">AI 音频生成</p>
+              <p className="text-xs text-muted-foreground">使用AI生成灵修内容的语音版本</p>
+              {initial.audio_url && <p className="text-xs text-accent mt-1">✓ 已有音频</p>}
+            </div>
+            <Button type="button" variant="outline" size="sm" onClick={handleGenerateAudio} disabled={generatingAudio}>
+              {generatingAudio ? <><Loader2 className="h-4 w-4 mr-1 animate-spin" /> 生成中...</> : '生成音频'}
+            </Button>
+          </div>
+        </div>
+      )}
+      <div className="flex gap-3 pt-2">
+        <Button type="submit" disabled={saving}>{saving ? '保存中...' : initial ? '更新' : '添加'}</Button>
+        <Button type="button" variant="outline" onClick={onCancel}>取消</Button>
+      </div>
+    </form>
+  );
+}
+
 /* ── Admin Dashboard ── */
 function AdminDashboard() {
   const { toast } = useToast();
