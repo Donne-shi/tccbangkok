@@ -438,6 +438,12 @@ function AdminDashboard() {
   const [sermonShowForm, setSermonShowForm] = useState(false);
   const [sermonEditing, setSermonEditing] = useState<SermonItem | undefined>();
 
+  // Devotional state
+  const [devotionals, setDevotionals] = useState<DevotionalItem[]>([]);
+  const [devotionalsLoading, setDevotionalsLoading] = useState(true);
+  const [devotionalShowForm, setDevotionalShowForm] = useState(false);
+  const [devotionalEditing, setDevotionalEditing] = useState<DevotionalItem | undefined>();
+
   const fetchSS = useCallback(async () => {
     const { data } = await supabase.from('sunday_school_content').select('*').order('date', { ascending: false });
     if (data) setSsContents(data.map(d => ({ ...d, song_links: (d.song_links as any) || [], video_links: (d.video_links as any) || [] })));
@@ -456,7 +462,13 @@ function AdminDashboard() {
     setFinanceLoading(false);
   }, []);
 
-  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); }, [fetchSS, fetchSermons, fetchFinance]);
+  const fetchDevotionals = useCallback(async () => {
+    const { data } = await supabase.from('devotional_posts').select('*').order('date', { ascending: false });
+    if (data) setDevotionals(data as any);
+    setDevotionalsLoading(false);
+  }, []);
+
+  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals]);
 
   const handleDeleteSS = async (id: string) => {
     if (!confirm('确定删除？')) return;
