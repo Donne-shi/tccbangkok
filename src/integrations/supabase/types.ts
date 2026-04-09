@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      devotional_posts: {
+        Row: {
+          audio_url: string | null
+          author: string
+          content: string
+          created_at: string
+          date: string
+          id: string
+          published: boolean
+          slug: string
+          title_en: string
+          title_th: string
+          title_zh: string
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          audio_url?: string | null
+          author?: string
+          content?: string
+          created_at?: string
+          date: string
+          id?: string
+          published?: boolean
+          slug: string
+          title_en?: string
+          title_th?: string
+          title_zh?: string
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          audio_url?: string | null
+          author?: string
+          content?: string
+          created_at?: string
+          date?: string
+          id?: string
+          published?: boolean
+          slug?: string
+          title_en?: string
+          title_th?: string
+          title_zh?: string
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
       finance_reports: {
         Row: {
           created_at: string
