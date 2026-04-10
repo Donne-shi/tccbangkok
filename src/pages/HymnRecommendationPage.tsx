@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { LanguageProvider, useLanguage } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
-import { ArrowLeft, Music, ExternalLink, BookOpen, Youtube } from 'lucide-react';
+import { ArrowLeft, Music, ExternalLink, BookOpen, Youtube, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -329,6 +330,42 @@ const hymnGroups: HymnGroup[] = [
   },
 ];
 
+function HymnItem({ hymn, idx, videoId }: { hymn: HymnGroup['hymns'][number]; idx: number; videoId: string | null }) {
+  const [playing, setPlaying] = useState(false);
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-start gap-2 text-sm">
+        <span className="text-muted-foreground min-w-[1.5rem] text-right">{idx + 1}.</span>
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-foreground font-medium">{hymn.zh}</span>
+          {hymn.en && <span className="text-muted-foreground">{hymn.en}</span>}
+          {videoId && (
+            <button
+              onClick={() => setPlaying(!playing)}
+              className="text-destructive hover:text-destructive/80 inline-flex items-center gap-1 text-xs"
+              title={playing ? '关闭' : '播放'}
+            >
+              {playing ? <X className="h-4 w-4" /> : <Youtube className="h-4 w-4" />}
+            </button>
+          )}
+        </div>
+      </div>
+      {playing && videoId && (
+        <div className="ml-8 rounded-lg overflow-hidden aspect-video max-w-md">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="w-full h-full"
+            title={hymn.zh}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function HymnContent() {
   const { language } = useLanguage();
 
@@ -393,20 +430,12 @@ function HymnContent() {
             </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-2 pb-2">
-                {group.hymns.map((hymn, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-sm">
-                    <span className="text-muted-foreground min-w-[1.5rem] text-right">{idx + 1}.</span>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-foreground font-medium">{hymn.zh}</span>
-                      {hymn.en && <span className="text-muted-foreground">{hymn.en}</span>}
-                      {hymn.video && (
-                        <a href={hymn.video} target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-600 inline-flex items-center" title="YouTube">
-                          <Youtube className="h-4 w-4" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                {group.hymns.map((hymn, idx) => {
+                  const videoId = hymn.video ? new URL(hymn.video).searchParams.get('v') : null;
+                  return (
+                    <HymnItem key={idx} hymn={hymn} idx={idx} videoId={videoId} />
+                  );
+                })}
               </div>
             </AccordionContent>
           </AccordionItem>
