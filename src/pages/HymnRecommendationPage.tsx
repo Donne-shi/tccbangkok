@@ -1,94 +1,94 @@
 import { LanguageProvider, useLanguage } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
-import { ArrowLeft, Music, ExternalLink, BookOpen } from 'lucide-react';
+import { ArrowLeft, Music, ExternalLink, BookOpen, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 type HymnGroup = {
   id: string;
   title: string;
-  hymns: { zh: string; en?: string; audioZh?: string; audioEn?: string }[];
+  hymns: { zh: string; en?: string; audioZh?: string; audioEn?: string; video?: string }[];
 };
 
 const hymnGroups: HymnGroup[] = [
   {
     id: 'i101', title: '01、团组聚会1月份诗歌',
     hymns: [
-      { zh: '快来拥祂为王', en: 'Crown Him with Many Crowns', audioZh: 'https://cmacmc.org/wp-content/uploads/2024/10/crown-him-with-many-crowns-ch.mp3', audioEn: 'https://cmacmc.org/wp-content/uploads/2024/10/crown-him-with-many-crowns.mp3' },
-      { zh: '我知谁掌管明天', en: 'I Know Who Holds Tomorrow' },
-      { zh: '万福源头', en: 'Come Thou Fount of Every Blessing' },
+      { zh: '快来拥祂为王', en: 'Crown Him with Many Crowns', audioZh: 'https://cmacmc.org/wp-content/uploads/2024/10/crown-him-with-many-crowns-ch.mp3', audioEn: 'https://cmacmc.org/wp-content/uploads/2024/10/crown-him-with-many-crowns.mp3', video: 'https://www.youtube.com/watch?v=q6od8s_xOJ8' },
+      { zh: '我知谁掌管明天', en: 'I Know Who Holds Tomorrow', video: 'https://www.youtube.com/watch?v=ifG3JDA9ezk' },
+      { zh: '万福源头', en: 'Come Thou Fount of Every Blessing', video: 'https://www.youtube.com/watch?v=Qy85IAWenIs' },
     ],
   },
   {
     id: 'i102', title: '02、团组聚会2月份诗歌',
     hymns: [
-      { zh: '祢真伟大', en: 'How Great Thou Art' },
-      { zh: '全程主领', en: 'All the Way My Savior Leads Me' },
-      { zh: '我宁愿有耶稣', en: "I'd Rather Have Jesus" },
+      { zh: '祢真伟大', en: 'How Great Thou Art', video: 'https://www.youtube.com/watch?v=2A6yUWnpPig' },
+      { zh: '全程主领', en: 'All the Way My Savior Leads Me', video: 'https://www.youtube.com/watch?v=oM3wMt5lLSw' },
+      { zh: '我宁愿有耶稣', en: "I'd Rather Have Jesus", video: 'https://www.youtube.com/watch?v=Xs-l5GkOERw' },
     ],
   },
   {
     id: 'i103', title: '03、团组聚会3月份诗歌',
     hymns: [
-      { zh: '圣哉、圣哉、圣哉', en: 'Holy, Holy, Holy!' },
-      { zh: '坐在宝座上圣洁羔羊' },
-      { zh: '古旧十架', en: 'The Old Rugged Cross' },
+      { zh: '圣哉、圣哉、圣哉', en: 'Holy, Holy, Holy!', video: 'https://www.youtube.com/watch?v=9xlosxk20fg' },
+      { zh: '坐在宝座上圣洁羔羊', video: 'https://www.youtube.com/watch?v=HtGiy4M6NMI' },
+      { zh: '古旧十架', en: 'The Old Rugged Cross', video: 'https://www.youtube.com/watch?v=C9Iz8bliBwc' },
     ],
   },
   {
     id: 'i104', title: '04、团组聚会4月份诗歌',
     hymns: [
-      { zh: '因祂活着', en: 'Because He Lives' },
-      { zh: '祢若不压橄榄成渣' },
-      { zh: '祢信实何广大', en: 'Great Is Thy Faithfulness' },
+      { zh: '因祂活着', en: 'Because He Lives', video: 'https://www.youtube.com/watch?v=r1Fzv-GHN7k' },
+      { zh: '祢若不压橄榄成渣', video: 'https://www.youtube.com/watch?v=SjHYej6Lm10' },
+      { zh: '祢信实何广大', en: 'Great Is Thy Faithfulness', video: 'https://www.youtube.com/watch?v=sdZnsZ3AH-A' },
     ],
   },
   {
     id: 'i105', title: '05、团组聚会5月份诗歌',
     hymns: [
-      { zh: '我深知所信的是谁', en: 'I Know Whom I Have Believed' },
-      { zh: '愿开我眼', en: 'Open My Eyes, That I May See' },
-      { zh: '一生跟随祢' },
+      { zh: '我深知所信的是谁', en: 'I Know Whom I Have Believed', video: 'https://www.youtube.com/watch?v=MZCmhponHiw' },
+      { zh: '愿开我眼', en: 'Open My Eyes, That I May See', video: 'https://www.youtube.com/watch?v=XxuU-D5sfRw' },
+      { zh: '一生跟随祢', video: 'https://www.youtube.com/watch?v=QREPLcsOyWU' },
     ],
   },
   {
     id: 'i106', title: '06、团组聚会6月份诗歌',
     hymns: [
-      { zh: '奇妙的策士' },
-      { zh: '奇妙生命之道', en: 'Wonderful Words of Life' },
-      { zh: '成为我异象', en: 'Be Thou My Vision' },
+      { zh: '奇妙的策士', video: 'https://www.youtube.com/watch?v=tX8bLLiHJBA' },
+      { zh: '奇妙生命之道', en: 'Wonderful Words of Life', video: 'https://www.youtube.com/watch?v=KLGAO-rmZuo' },
+      { zh: '成为我异象', en: 'Be Thou My Vision', video: 'https://www.youtube.com/watch?v=THZIg3XV0k8' },
     ],
   },
   {
     id: 'i107', title: '07、团组聚会7月份诗歌',
     hymns: [
-      { zh: '惟在基督里', en: 'In Christ Alone' },
-      { zh: '奇异恩典', en: 'Amazing Grace' },
-      { zh: '坚固保障', en: 'A Mighty Fortress Is Our God' },
+      { zh: '惟在基督里', en: 'In Christ Alone', video: 'https://www.youtube.com/watch?v=8NfvW3gJ16s' },
+      { zh: '奇异恩典', en: 'Amazing Grace', video: 'https://www.youtube.com/watch?v=GIu-Zw5lf0s' },
+      { zh: '坚固保障', en: 'A Mighty Fortress Is Our God', video: 'https://www.youtube.com/watch?v=qF1r4Tg24mw' },
     ],
   },
   {
     id: 'i108', title: '08、团组聚会8月份诗歌',
     hymns: [
-      { zh: '神哪！我要赞美祢' },
-      { zh: '祂藏我灵', en: 'He Hideth My Soul' },
-      { zh: '恳求全能王来临', en: 'Come, Thou Almighty King' },
+      { zh: '神哪！我要赞美祢', video: 'https://www.youtube.com/watch?v=T3Nvsx4b7CQ' },
+      { zh: '祂藏我灵', en: 'He Hideth My Soul', video: 'https://www.youtube.com/watch?v=f0VfzCiw8js' },
+      { zh: '恳求全能王来临', en: 'Come, Thou Almighty King', video: 'https://www.youtube.com/watch?v=K6hRnB7iGSU' },
     ],
   },
   {
     id: 'i109', title: '09、团组聚会9月份诗歌',
     hymns: [
-      { zh: '有一位神' },
-      { zh: '主耶和华是我牧者', en: "The Lord's My Shepherd" },
-      { zh: '耶稣恩友', en: 'What a Friend We Have in Jesus' },
+      { zh: '有一位神', video: 'https://www.youtube.com/watch?v=b3oivk4W7EY' },
+      { zh: '主耶和华是我牧者', en: "The Lord's My Shepherd", video: 'https://www.youtube.com/watch?v=jyqv9DVK8u8' },
+      { zh: '耶稣恩友', en: 'What a Friend We Have in Jesus', video: 'https://www.youtube.com/watch?v=_EkytZFcA70' },
     ],
   },
   {
     id: 'i110', title: '10、团组聚会10月份诗歌',
     hymns: [
-      { zh: '我的神，我的父，我的磐石' },
-      { zh: '赞祂赞祂', en: 'Praise Him! Praise Him!' },
-      { zh: '齐颂耶稣之名大能', en: "All Hail the Power of Jesus' Name" },
+      { zh: '我的神，我的父，我的磐石', video: 'https://www.youtube.com/watch?v=YGKAdp-i7TE' },
+      { zh: '赞祂赞祂', en: 'Praise Him! Praise Him!', video: 'https://www.youtube.com/watch?v=8r8sfjdhoTo' },
+      { zh: '齐颂耶稣之名大能', en: "All Hail the Power of Jesus' Name", video: 'https://www.youtube.com/watch?v=_J65SxPZwAE' },
     ],
   },
   {
@@ -396,9 +396,14 @@ function HymnContent() {
                 {group.hymns.map((hymn, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-sm">
                     <span className="text-muted-foreground min-w-[1.5rem] text-right">{idx + 1}.</span>
-                    <div>
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-foreground font-medium">{hymn.zh}</span>
-                      {hymn.en && <span className="text-muted-foreground ml-2">{hymn.en}</span>}
+                      {hymn.en && <span className="text-muted-foreground">{hymn.en}</span>}
+                      {hymn.video && (
+                        <a href={hymn.video} target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-600 inline-flex items-center" title="YouTube">
+                          <Youtube className="h-4 w-4" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 ))}
