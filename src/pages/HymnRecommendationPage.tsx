@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 type HymnGroup = {
   id: string;
   title: string;
-  hymns: { zh: string; en?: string; audioZh?: string; audioEn?: string }[];
+  hymns: { zh: string; en?: string; audioZh?: string; audioEn?: string; video?: string }[];
 };
 
 const hymnGroups: HymnGroup[] = [
