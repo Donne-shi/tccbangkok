@@ -330,6 +330,42 @@ const hymnGroups: HymnGroup[] = [
   },
 ];
 
+function HymnItem({ hymn, idx, videoId }: { hymn: HymnGroup['hymns'][number]; idx: number; videoId: string | null }) {
+  const [playing, setPlaying] = useState(false);
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-start gap-2 text-sm">
+        <span className="text-muted-foreground min-w-[1.5rem] text-right">{idx + 1}.</span>
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-foreground font-medium">{hymn.zh}</span>
+          {hymn.en && <span className="text-muted-foreground">{hymn.en}</span>}
+          {videoId && (
+            <button
+              onClick={() => setPlaying(!playing)}
+              className="text-destructive hover:text-destructive/80 inline-flex items-center gap-1 text-xs"
+              title={playing ? '关闭' : '播放'}
+            >
+              {playing ? <X className="h-4 w-4" /> : <Youtube className="h-4 w-4" />}
+            </button>
+          )}
+        </div>
+      </div>
+      {playing && videoId && (
+        <div className="ml-8 rounded-lg overflow-hidden aspect-video max-w-md">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="w-full h-full"
+            title={hymn.zh}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function HymnContent() {
   const { language } = useLanguage();
 
