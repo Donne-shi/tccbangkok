@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { LanguageProvider, useLanguage } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
-import { ArrowLeft, Music, ExternalLink, BookOpen, Youtube } from 'lucide-react';
+import { ArrowLeft, Music, ExternalLink, BookOpen, Youtube, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
@@ -393,20 +394,12 @@ function HymnContent() {
             </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-2 pb-2">
-                {group.hymns.map((hymn, idx) => (
-                  <div key={idx} className="flex items-start gap-2 text-sm">
-                    <span className="text-muted-foreground min-w-[1.5rem] text-right">{idx + 1}.</span>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-foreground font-medium">{hymn.zh}</span>
-                      {hymn.en && <span className="text-muted-foreground">{hymn.en}</span>}
-                      {hymn.video && (
-                        <a href={hymn.video} target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-600 inline-flex items-center" title="YouTube">
-                          <Youtube className="h-4 w-4" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                {group.hymns.map((hymn, idx) => {
+                  const videoId = hymn.video ? new URL(hymn.video).searchParams.get('v') : null;
+                  return (
+                    <HymnItem key={idx} hymn={hymn} idx={idx} videoId={videoId} />
+                  );
+                })}
               </div>
             </AccordionContent>
           </AccordionItem>
