@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function ConfessionsListContent() {
   const { language } = useLanguage();
   const rs = translations.resourcesSection;
-  const pdfResources = [rs.westminsterConfession, rs.westminsterCatechism, rs.heidelberg];
+  const pdfResources = [rs.westminsterConfession, rs.westminsterCatechism, rs.westminsterLargerCatechism, rs.heidelberg];
 
   return (
     <section className="py-12 pb-20">

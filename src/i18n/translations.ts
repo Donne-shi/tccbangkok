@@ -225,6 +225,16 @@ export const translations = {
       slug: 'westminster-catechism',
       pdfPath: '/documents/westminster-shorter-catechism.pdf',
     },
+    westminsterLargerCatechism: {
+      title: { en: 'Westminster Larger Catechism', zh: '威斯敏斯特大教理问答', th: 'คำสอนใหญ่เวสต์มินสเตอร์' },
+      desc: {
+        en: 'The Westminster Larger Catechism was produced alongside the Shorter Catechism by the Westminster Assembly in 1647. It provides a more detailed and comprehensive treatment of Christian doctrine in 196 questions and answers, intended for public teaching and preaching.',
+        zh: '《威斯敏斯特大教理问答》与小教理问答同为1647年威斯敏斯特会议的成果。它以196个问答的形式，更加详尽、全面地阐述了基督教教义，主要用于公开教导和讲道。',
+        th: 'คำสอนใหญ่เวสต์มินสเตอร์จัดทำพร้อมกับคำสอนสั้นโดยสมัชชาเวสต์มินสเตอร์ในปี 1647 ให้การอธิบายหลักคำสอนคริสเตียนอย่างละเอียดใน 196 คำถามและคำตอบ',
+      },
+      slug: 'westminster-larger-catechism',
+      pdfPath: '/documents/westminster-larger-catechism.pdf',
+    },
     heidelberg: {
       title: { en: 'Heidelberg Catechism', zh: '海德堡教理问答', th: 'คำสอนไฮเดลเบิร์ก' },
       desc: {

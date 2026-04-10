@@ -13,6 +13,7 @@ function ResourceViewContent() {
   const resourceMap: Record<string, typeof rs.heidelberg> = {
     'westminster-confession': rs.westminsterConfession,
     'westminster-catechism': rs.westminsterCatechism,
+    'westminster-larger-catechism': rs.westminsterLargerCatechism,
     'heidelberg': rs.heidelberg,
   };
 
