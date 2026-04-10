@@ -22,7 +22,7 @@ const categories = [
     to: '/resources/confessions',
     icon: FileText,
     title: { zh: '教理问答与信条', en: 'Catechisms & Confessions', th: 'คำสอนและคำสารภาพ' },
-    desc: { zh: '威斯敏斯特信条、威斯敏斯特小要理问答、海德堡要理问答。', en: 'Westminster Confession, Westminster Shorter Catechism, Heidelberg Catechism.', th: 'คำสารภาพเวสต์มินสเตอร์ คำสอนเวสต์มินสเตอร์ คำสอนไฮเดลเบิร์ก' },
+    desc: { zh: '威斯敏斯特信条、威斯敏斯特小要理问答、威斯敏斯特大教理问答、海德堡要理问答。', en: 'Westminster Confession, Westminster Shorter & Larger Catechism, Heidelberg Catechism.', th: 'คำสารภาพเวสต์มินสเตอร์ คำสอนสั้นและใหญ่เวสต์มินสเตอร์ คำสอนไฮเดลเบิร์ก' },
   },
 ];
 
