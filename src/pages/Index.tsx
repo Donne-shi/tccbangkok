@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { BookOpen, Music, Users, FileText, Heart, Church, CalendarDays, HandHeart } from 'lucide-react';
 import { ScrollReveal } from '@/hooks/useScrollReveal';
 import ThisWeekSermon from '@/components/ThisWeekSermon';
+import FeedbackButton from '@/components/FeedbackButton';
 
 function QuickLinksSection() {
   const { language } = useLanguage();
@@ -86,6 +87,7 @@ const Index = () => {
           <LocationSectionAnimated />
         </main>
         <Footer />
+        <FeedbackButton />
       </div>
     </LanguageProvider>
   );
