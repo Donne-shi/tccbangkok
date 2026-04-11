@@ -508,6 +508,17 @@ function AdminDashboard() {
     if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchDevotionals(); }
   };
 
+  const handleDeleteFeedback = async (id: string) => {
+    if (!confirm('确定删除此反馈？')) return;
+    const { error } = await supabase.from('feedback').delete().eq('id', id);
+    if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchFeedback(); }
+  };
+
+  const handleUpdateFeedbackStatus = async (id: string, status: string) => {
+    const { error } = await supabase.from('feedback').update({ status }).eq('id', id);
+    if (error) toast({ title: '更新失败', variant: 'destructive' }); else { toast({ title: '状态已更新' }); fetchFeedback(); }
+  };
+
   const ssFiltered = ssContents.filter(c => c.category === ssTab);
 
   return (
