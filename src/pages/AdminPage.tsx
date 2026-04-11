@@ -12,6 +12,11 @@ import { useToast } from '@/hooks/use-toast';
 
 interface LinkItem { title: string; url: string; }
 
+interface FeedbackItem {
+  id: string; name: string; email: string; message: string;
+  status: string; created_at: string;
+}
+
 interface SSContent {
   id: string; category: string; title: string; date: string; year: number;
   summary: string | null; ppt_url: string | null;
@@ -425,7 +430,10 @@ function AdminDashboard() {
   const [financeEditing, setFinanceEditing] = useState<{ id: string; year: number; image_url: string } | undefined>();
 
 
-  // Sunday School state
+  // Feedback state
+  const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
+  const [feedbackLoading, setFeedbackLoading] = useState(true);
+
   const [ssContents, setSsContents] = useState<SSContent[]>([]);
   const [ssTab, setSsTab] = useState('youth');
   const [ssLoading, setSsLoading] = useState(true);
@@ -468,7 +476,13 @@ function AdminDashboard() {
     setDevotionalsLoading(false);
   }, []);
 
-  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals]);
+  const fetchFeedback = useCallback(async () => {
+    const { data } = await supabase.from('feedback').select('*').order('created_at', { ascending: false });
+    if (data) setFeedbacks(data as any);
+    setFeedbackLoading(false);
+  }, []);
+
+  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); fetchFeedback(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals, fetchFeedback]);
 
   const handleDeleteSS = async (id: string) => {
     if (!confirm('确定删除？')) return;
