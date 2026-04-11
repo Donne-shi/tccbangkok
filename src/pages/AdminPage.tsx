@@ -535,6 +535,14 @@ function AdminDashboard() {
             <TabsTrigger value="sermons">讲道管理</TabsTrigger>
             <TabsTrigger value="devotionals">灵修分享</TabsTrigger>
             <TabsTrigger value="finance">财务报告</TabsTrigger>
+            <TabsTrigger value="feedback" className="flex items-center gap-1">
+              <MessageSquare className="h-4 w-4" /> 反馈管理
+              {feedbacks.filter(f => f.status === 'pending').length > 0 && (
+                <span className="ml-1 bg-destructive text-destructive-foreground text-xs rounded-full px-1.5 py-0.5 leading-none">
+                  {feedbacks.filter(f => f.status === 'pending').length}
+                </span>
+              )}
+            </TabsTrigger>
           </TabsList>
 
           {/* ── Sunday School Tab ── */}
@@ -670,6 +678,54 @@ function AdminDashboard() {
                   ))}</div>}
               </>
             )}
+          </TabsContent>
+
+          {/* ── Feedback Tab ── */}
+          <TabsContent value="feedback">
+            {feedbackLoading ? <div className="text-center py-12 text-muted-foreground">加载中...</div> :
+              feedbacks.length === 0 ? <div className="text-center py-12 text-muted-foreground">暂无反馈</div> :
+              <div className="space-y-3">{feedbacks.map(item => (
+                <Card key={item.id} className={item.status === 'pending' ? 'border-accent/50' : ''}>
+                  <CardContent className="py-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          {item.status === 'pending' && <Clock className="h-4 w-4 text-amber-500" />}
+                          {item.status === 'reviewed' && <Eye className="h-4 w-4 text-blue-500" />}
+                          {item.status === 'resolved' && <CheckCircle className="h-4 w-4 text-green-500" />}
+                          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-muted">
+                            {item.status === 'pending' ? '待处理' : item.status === 'reviewed' ? '已查看' : '已解决'}
+                          </span>
+                          <span className="text-xs text-muted-foreground">{new Date(item.created_at).toLocaleString('zh-CN')}</span>
+                        </div>
+                        <p className="text-sm text-foreground whitespace-pre-wrap">{item.message}</p>
+                        {(item.name || item.email) && (
+                          <p className="text-xs text-muted-foreground mt-2">
+                            {item.name && <span>姓名: {item.name}</span>}
+                            {item.name && item.email && <span> · </span>}
+                            {item.email && <span>邮箱: {item.email}</span>}
+                          </p>
+                        )}
+                      </div>
+                      <div className="flex gap-1 flex-shrink-0">
+                        {item.status !== 'reviewed' && (
+                          <Button variant="ghost" size="sm" onClick={() => handleUpdateFeedbackStatus(item.id, 'reviewed')} title="标记已查看">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        )}
+                        {item.status !== 'resolved' && (
+                          <Button variant="ghost" size="sm" onClick={() => handleUpdateFeedbackStatus(item.id, 'resolved')} title="标记已解决">
+                            <CheckCircle className="h-4 w-4" />
+                          </Button>
+                        )}
+                        <Button variant="ghost" size="icon" onClick={() => handleDeleteFeedback(item.id)}>
+                          <Trash2 className="h-4 w-4 text-destructive" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}</div>}
           </TabsContent>
         </Tabs>
       </div>
