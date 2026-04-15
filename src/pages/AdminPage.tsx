@@ -616,6 +616,13 @@ function AdminDashboard() {
     if (error) toast({ title: '更新失败', variant: 'destructive' }); else { toast({ title: '状态已更新' }); fetchFeedback(); }
   };
 
+  const handleDeleteResource = async (id: string) => {
+    if (!confirm('确定删除此资源？')) return;
+    const { error } = await supabase.from('learning_resources').delete().eq('id', id);
+    if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchResources(); }
+  };
+
+  const filteredResources = resourceTypeFilter === 'all' ? resources : resources.filter(r => r.type === resourceTypeFilter);
   const ssFiltered = ssContents.filter(c => c.category === ssTab);
 
   return (
