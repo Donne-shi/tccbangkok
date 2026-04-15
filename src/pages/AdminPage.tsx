@@ -834,6 +834,51 @@ function AdminDashboard() {
                 </Card>
               ))}</div>}
           </TabsContent>
+
+          {/* ── Resources Tab ── */}
+          <TabsContent value="resources">
+            {resourceShowForm || resourceEditing ? (
+              <Card><CardHeader><CardTitle>{resourceEditing ? '编辑资源' : '添加新资源'}</CardTitle></CardHeader>
+                <CardContent><ResourceForm initial={resourceEditing} onSave={() => { setResourceShowForm(false); setResourceEditing(undefined); fetchResources(); }} onCancel={() => { setResourceShowForm(false); setResourceEditing(undefined); }} /></CardContent></Card>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+                  <Tabs value={resourceTypeFilter} onValueChange={setResourceTypeFilter}>
+                    <TabsList>
+                      <TabsTrigger value="all">全部</TabsTrigger>
+                      <TabsTrigger value="category">分类</TabsTrigger>
+                      <TabsTrigger value="online_resource">网络资源</TabsTrigger>
+                      <TabsTrigger value="document">文档</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                  <Button onClick={() => setResourceShowForm(true)}><Plus className="h-4 w-4 mr-1" /> 添加资源</Button>
+                </div>
+                {resourcesLoading ? <div className="text-center py-12 text-muted-foreground">加载中...</div> :
+                  filteredResources.length === 0 ? <div className="text-center py-12 text-muted-foreground">暂无资源</div> :
+                  <div className="space-y-3">{filteredResources.map(item => (
+                    <Card key={item.id} className={!item.published ? 'opacity-60' : ''}>
+                      <CardContent className="py-4 flex items-center justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium truncate">{item.title_zh || item.title_en}</p>
+                            <span className="text-xs bg-muted px-1.5 py-0.5 rounded">
+                              {item.type === 'category' ? '分类' : item.type === 'online_resource' ? '网络' : '文档'}
+                            </span>
+                            {!item.published && <span className="text-xs bg-muted px-1.5 py-0.5 rounded">草稿</span>}
+                          </div>
+                          <p className="text-sm text-muted-foreground truncate">{item.description_zh}</p>
+                          {item.url && <p className="text-xs text-muted-foreground truncate mt-0.5">{item.url}</p>}
+                        </div>
+                        <div className="flex gap-2 flex-shrink-0">
+                          <Button variant="ghost" size="icon" onClick={() => setResourceEditing(item)}><Edit2 className="h-4 w-4" /></Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteResource(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}</div>}
+              </>
+            )}
+          </TabsContent>
         </Tabs>
       </div>
     </div>
