@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2, MessageSquare, CheckCircle, Clock, Eye } from 'lucide-react';
+import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2, MessageSquare, CheckCircle, Clock, Eye, Globe } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface LinkItem { title: string; url: string; }
@@ -37,6 +37,14 @@ interface DevotionalItem {
   title_zh: string; title_en: string; title_th: string;
   content: string; author: string;
   audio_url: string | null; published: boolean;
+}
+
+interface ResourceItem {
+  id: string; type: string; parent_type: string | null;
+  title_zh: string; title_en: string; title_th: string;
+  description_zh: string; description_en: string; description_th: string;
+  url: string | null; file_url: string | null; icon: string | null;
+  sort_order: number; published: boolean;
 }
 
 /* ── Login ── */
@@ -418,6 +426,82 @@ function DevotionalForm({ initial, onSave, onCancel }: { initial?: DevotionalIte
   );
 }
 
+/* ── Resource Form ── */
+function ResourceForm({ initial, onSave, onCancel }: { initial?: ResourceItem; onSave: () => void; onCancel: () => void }) {
+  const { toast } = useToast();
+  const [type, setType] = useState(initial?.type || 'online_resource');
+  const [titleZh, setTitleZh] = useState(initial?.title_zh || '');
+  const [titleEn, setTitleEn] = useState(initial?.title_en || '');
+  const [titleTh, setTitleTh] = useState(initial?.title_th || '');
+  const [descZh, setDescZh] = useState(initial?.description_zh || '');
+  const [descEn, setDescEn] = useState(initial?.description_en || '');
+  const [descTh, setDescTh] = useState(initial?.description_th || '');
+  const [url, setUrl] = useState(initial?.url || '');
+  const [icon, setIcon] = useState(initial?.icon || '');
+  const [sortOrder, setSortOrder] = useState(initial?.sort_order ?? 0);
+  const [published, setPublished] = useState(initial?.published ?? true);
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); setSaving(true);
+    try {
+      const record = {
+        type, title_zh: titleZh.trim(), title_en: titleEn.trim(), title_th: titleTh.trim(),
+        description_zh: descZh.trim(), description_en: descEn.trim(), description_th: descTh.trim(),
+        url: url.trim() || null, icon: icon.trim() || null,
+        sort_order: sortOrder, published,
+      };
+      if (initial) {
+        const { error } = await supabase.from('learning_resources').update(record).eq('id', initial.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('learning_resources').insert(record);
+        if (error) throw error;
+      }
+      toast({ title: initial ? '更新成功' : '添加成功' }); onSave();
+    } catch (err: any) { toast({ title: '保存失败', description: err.message, variant: 'destructive' }); }
+    setSaving(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><Label>资源类型</Label>
+          <Select value={type} onValueChange={setType}><SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="category">资源分类</SelectItem>
+              <SelectItem value="online_resource">网络资源</SelectItem>
+              <SelectItem value="document">文档资源</SelectItem>
+            </SelectContent>
+          </Select></div>
+        <div><Label>排序</Label><Input type="number" value={sortOrder} onChange={e => setSortOrder(Number(e.target.value))} /></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div><Label>中文标题</Label><Input value={titleZh} onChange={e => setTitleZh(e.target.value)} required placeholder="中文标题" /></div>
+        <div><Label>英文标题</Label><Input value={titleEn} onChange={e => setTitleEn(e.target.value)} placeholder="English Title" /></div>
+        <div><Label>泰文标题</Label><Input value={titleTh} onChange={e => setTitleTh(e.target.value)} placeholder="ชื่อภาษาไทย" /></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div><Label>中文描述</Label><Textarea value={descZh} onChange={e => setDescZh(e.target.value)} rows={2} placeholder="中文描述" /></div>
+        <div><Label>英文描述</Label><Textarea value={descEn} onChange={e => setDescEn(e.target.value)} rows={2} placeholder="English description" /></div>
+        <div><Label>泰文描述</Label><Textarea value={descTh} onChange={e => setDescTh(e.target.value)} rows={2} placeholder="คำอธิบายภาษาไทย" /></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><Label>链接URL</Label><Input value={url} onChange={e => setUrl(e.target.value)} placeholder={type === 'category' ? '页面路径如 /resources/creeds' : 'https://...'} /></div>
+        <div><Label>图标</Label><Input value={icon} onChange={e => setIcon(e.target.value)} placeholder="图标标识（如 BookOpen、📖）" /></div>
+      </div>
+      <div className="flex items-center gap-2">
+        <input type="checkbox" id="res-published" checked={published} onChange={e => setPublished(e.target.checked)} />
+        <Label htmlFor="res-published">发布</Label>
+      </div>
+      <div className="flex gap-3 pt-2">
+        <Button type="submit" disabled={saving}>{saving ? '保存中...' : initial ? '更新' : '添加'}</Button>
+        <Button type="button" variant="outline" onClick={onCancel}>取消</Button>
+      </div>
+    </form>
+  );
+}
+
 /* ── Admin Dashboard ── */
 function AdminDashboard() {
   const { toast } = useToast();
@@ -433,6 +517,13 @@ function AdminDashboard() {
   // Feedback state
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
   const [feedbackLoading, setFeedbackLoading] = useState(true);
+
+  // Resources state
+  const [resources, setResources] = useState<ResourceItem[]>([]);
+  const [resourcesLoading, setResourcesLoading] = useState(true);
+  const [resourceShowForm, setResourceShowForm] = useState(false);
+  const [resourceEditing, setResourceEditing] = useState<ResourceItem | undefined>();
+  const [resourceTypeFilter, setResourceTypeFilter] = useState('all');
 
   const [ssContents, setSsContents] = useState<SSContent[]>([]);
   const [ssTab, setSsTab] = useState('youth');
@@ -482,7 +573,13 @@ function AdminDashboard() {
     setFeedbackLoading(false);
   }, []);
 
-  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); fetchFeedback(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals, fetchFeedback]);
+  const fetchResources = useCallback(async () => {
+    const { data } = await supabase.from('learning_resources').select('*').order('sort_order', { ascending: true });
+    if (data) setResources(data as any);
+    setResourcesLoading(false);
+  }, []);
+
+  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); fetchFeedback(); fetchResources(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals, fetchFeedback, fetchResources]);
 
   const handleDeleteSS = async (id: string) => {
     if (!confirm('确定删除？')) return;
@@ -519,6 +616,13 @@ function AdminDashboard() {
     if (error) toast({ title: '更新失败', variant: 'destructive' }); else { toast({ title: '状态已更新' }); fetchFeedback(); }
   };
 
+  const handleDeleteResource = async (id: string) => {
+    if (!confirm('确定删除此资源？')) return;
+    const { error } = await supabase.from('learning_resources').delete().eq('id', id);
+    if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchResources(); }
+  };
+
+  const filteredResources = resourceTypeFilter === 'all' ? resources : resources.filter(r => r.type === resourceTypeFilter);
   const ssFiltered = ssContents.filter(c => c.category === ssTab);
 
   return (
@@ -542,6 +646,9 @@ function AdminDashboard() {
                   {feedbacks.filter(f => f.status === 'pending').length}
                 </span>
               )}
+            </TabsTrigger>
+            <TabsTrigger value="resources" className="flex items-center gap-1">
+              <Globe className="h-4 w-4" /> 学习资源
             </TabsTrigger>
           </TabsList>
 
@@ -726,6 +833,51 @@ function AdminDashboard() {
                   </CardContent>
                 </Card>
               ))}</div>}
+          </TabsContent>
+
+          {/* ── Resources Tab ── */}
+          <TabsContent value="resources">
+            {resourceShowForm || resourceEditing ? (
+              <Card><CardHeader><CardTitle>{resourceEditing ? '编辑资源' : '添加新资源'}</CardTitle></CardHeader>
+                <CardContent><ResourceForm initial={resourceEditing} onSave={() => { setResourceShowForm(false); setResourceEditing(undefined); fetchResources(); }} onCancel={() => { setResourceShowForm(false); setResourceEditing(undefined); }} /></CardContent></Card>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+                  <Tabs value={resourceTypeFilter} onValueChange={setResourceTypeFilter}>
+                    <TabsList>
+                      <TabsTrigger value="all">全部</TabsTrigger>
+                      <TabsTrigger value="category">分类</TabsTrigger>
+                      <TabsTrigger value="online_resource">网络资源</TabsTrigger>
+                      <TabsTrigger value="document">文档</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                  <Button onClick={() => setResourceShowForm(true)}><Plus className="h-4 w-4 mr-1" /> 添加资源</Button>
+                </div>
+                {resourcesLoading ? <div className="text-center py-12 text-muted-foreground">加载中...</div> :
+                  filteredResources.length === 0 ? <div className="text-center py-12 text-muted-foreground">暂无资源</div> :
+                  <div className="space-y-3">{filteredResources.map(item => (
+                    <Card key={item.id} className={!item.published ? 'opacity-60' : ''}>
+                      <CardContent className="py-4 flex items-center justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium truncate">{item.title_zh || item.title_en}</p>
+                            <span className="text-xs bg-muted px-1.5 py-0.5 rounded">
+                              {item.type === 'category' ? '分类' : item.type === 'online_resource' ? '网络' : '文档'}
+                            </span>
+                            {!item.published && <span className="text-xs bg-muted px-1.5 py-0.5 rounded">草稿</span>}
+                          </div>
+                          <p className="text-sm text-muted-foreground truncate">{item.description_zh}</p>
+                          {item.url && <p className="text-xs text-muted-foreground truncate mt-0.5">{item.url}</p>}
+                        </div>
+                        <div className="flex gap-2 flex-shrink-0">
+                          <Button variant="ghost" size="icon" onClick={() => setResourceEditing(item)}><Edit2 className="h-4 w-4" /></Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteResource(item.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}</div>}
+              </>
+            )}
           </TabsContent>
         </Tabs>
       </div>

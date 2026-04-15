@@ -116,6 +116,63 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_resources: {
+        Row: {
+          created_at: string
+          description_en: string
+          description_th: string
+          description_zh: string
+          file_url: string | null
+          icon: string | null
+          id: string
+          parent_type: string | null
+          published: boolean
+          sort_order: number
+          title_en: string
+          title_th: string
+          title_zh: string
+          type: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          description_en?: string
+          description_th?: string
+          description_zh?: string
+          file_url?: string | null
+          icon?: string | null
+          id?: string
+          parent_type?: string | null
+          published?: boolean
+          sort_order?: number
+          title_en?: string
+          title_th?: string
+          title_zh?: string
+          type?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          description_en?: string
+          description_th?: string
+          description_zh?: string
+          file_url?: string | null
+          icon?: string | null
+          id?: string
+          parent_type?: string | null
+          published?: boolean
+          sort_order?: number
+          title_en?: string
+          title_th?: string
+          title_zh?: string
+          type?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       sermons: {
         Row: {
           audio_url: string | null
