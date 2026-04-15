@@ -426,6 +426,82 @@ function DevotionalForm({ initial, onSave, onCancel }: { initial?: DevotionalIte
   );
 }
 
+/* ── Resource Form ── */
+function ResourceForm({ initial, onSave, onCancel }: { initial?: ResourceItem; onSave: () => void; onCancel: () => void }) {
+  const { toast } = useToast();
+  const [type, setType] = useState(initial?.type || 'online_resource');
+  const [titleZh, setTitleZh] = useState(initial?.title_zh || '');
+  const [titleEn, setTitleEn] = useState(initial?.title_en || '');
+  const [titleTh, setTitleTh] = useState(initial?.title_th || '');
+  const [descZh, setDescZh] = useState(initial?.description_zh || '');
+  const [descEn, setDescEn] = useState(initial?.description_en || '');
+  const [descTh, setDescTh] = useState(initial?.description_th || '');
+  const [url, setUrl] = useState(initial?.url || '');
+  const [icon, setIcon] = useState(initial?.icon || '');
+  const [sortOrder, setSortOrder] = useState(initial?.sort_order ?? 0);
+  const [published, setPublished] = useState(initial?.published ?? true);
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); setSaving(true);
+    try {
+      const record = {
+        type, title_zh: titleZh.trim(), title_en: titleEn.trim(), title_th: titleTh.trim(),
+        description_zh: descZh.trim(), description_en: descEn.trim(), description_th: descTh.trim(),
+        url: url.trim() || null, icon: icon.trim() || null,
+        sort_order: sortOrder, published,
+      };
+      if (initial) {
+        const { error } = await supabase.from('learning_resources').update(record).eq('id', initial.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('learning_resources').insert(record);
+        if (error) throw error;
+      }
+      toast({ title: initial ? '更新成功' : '添加成功' }); onSave();
+    } catch (err: any) { toast({ title: '保存失败', description: err.message, variant: 'destructive' }); }
+    setSaving(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><Label>资源类型</Label>
+          <Select value={type} onValueChange={setType}><SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="category">资源分类</SelectItem>
+              <SelectItem value="online_resource">网络资源</SelectItem>
+              <SelectItem value="document">文档资源</SelectItem>
+            </SelectContent>
+          </Select></div>
+        <div><Label>排序</Label><Input type="number" value={sortOrder} onChange={e => setSortOrder(Number(e.target.value))} /></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div><Label>中文标题</Label><Input value={titleZh} onChange={e => setTitleZh(e.target.value)} required placeholder="中文标题" /></div>
+        <div><Label>英文标题</Label><Input value={titleEn} onChange={e => setTitleEn(e.target.value)} placeholder="English Title" /></div>
+        <div><Label>泰文标题</Label><Input value={titleTh} onChange={e => setTitleTh(e.target.value)} placeholder="ชื่อภาษาไทย" /></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div><Label>中文描述</Label><Textarea value={descZh} onChange={e => setDescZh(e.target.value)} rows={2} placeholder="中文描述" /></div>
+        <div><Label>英文描述</Label><Textarea value={descEn} onChange={e => setDescEn(e.target.value)} rows={2} placeholder="English description" /></div>
+        <div><Label>泰文描述</Label><Textarea value={descTh} onChange={e => setDescTh(e.target.value)} rows={2} placeholder="คำอธิบายภาษาไทย" /></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><Label>链接URL</Label><Input value={url} onChange={e => setUrl(e.target.value)} placeholder={type === 'category' ? '页面路径如 /resources/creeds' : 'https://...'} /></div>
+        <div><Label>图标</Label><Input value={icon} onChange={e => setIcon(e.target.value)} placeholder="图标标识（如 BookOpen、📖）" /></div>
+      </div>
+      <div className="flex items-center gap-2">
+        <input type="checkbox" id="res-published" checked={published} onChange={e => setPublished(e.target.checked)} />
+        <Label htmlFor="res-published">发布</Label>
+      </div>
+      <div className="flex gap-3 pt-2">
+        <Button type="submit" disabled={saving}>{saving ? '保存中...' : initial ? '更新' : '添加'}</Button>
+        <Button type="button" variant="outline" onClick={onCancel}>取消</Button>
+      </div>
+    </form>
+  );
+}
+
 /* ── Admin Dashboard ── */
 function AdminDashboard() {
   const { toast } = useToast();
