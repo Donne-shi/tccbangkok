@@ -573,7 +573,13 @@ function AdminDashboard() {
     setFeedbackLoading(false);
   }, []);
 
-  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); fetchFeedback(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals, fetchFeedback]);
+  const fetchResources = useCallback(async () => {
+    const { data } = await supabase.from('learning_resources').select('*').order('sort_order', { ascending: true });
+    if (data) setResources(data as any);
+    setResourcesLoading(false);
+  }, []);
+
+  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); fetchFeedback(); fetchResources(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals, fetchFeedback, fetchResources]);
 
   const handleDeleteSS = async (id: string) => {
     if (!confirm('确定删除？')) return;
