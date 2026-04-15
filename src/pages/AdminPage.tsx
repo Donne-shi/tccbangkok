@@ -39,6 +39,14 @@ interface DevotionalItem {
   audio_url: string | null; published: boolean;
 }
 
+interface ResourceItem {
+  id: string; type: string; parent_type: string | null;
+  title_zh: string; title_en: string; title_th: string;
+  description_zh: string; description_en: string; description_th: string;
+  url: string | null; file_url: string | null; icon: string | null;
+  sort_order: number; published: boolean;
+}
+
 /* ── Login ── */
 function LoginForm({ onLogin }: { onLogin: () => void }) {
   const [password, setPassword] = useState('');
