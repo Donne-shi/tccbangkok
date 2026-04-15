@@ -518,6 +518,13 @@ function AdminDashboard() {
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
   const [feedbackLoading, setFeedbackLoading] = useState(true);
 
+  // Resources state
+  const [resources, setResources] = useState<ResourceItem[]>([]);
+  const [resourcesLoading, setResourcesLoading] = useState(true);
+  const [resourceShowForm, setResourceShowForm] = useState(false);
+  const [resourceEditing, setResourceEditing] = useState<ResourceItem | undefined>();
+  const [resourceTypeFilter, setResourceTypeFilter] = useState('all');
+
   const [ssContents, setSsContents] = useState<SSContent[]>([]);
   const [ssTab, setSsTab] = useState('youth');
   const [ssLoading, setSsLoading] = useState(true);
