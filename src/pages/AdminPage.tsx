@@ -647,6 +647,9 @@ function AdminDashboard() {
                 </span>
               )}
             </TabsTrigger>
+            <TabsTrigger value="resources" className="flex items-center gap-1">
+              <Globe className="h-4 w-4" /> 学习资源
+            </TabsTrigger>
           </TabsList>
 
           {/* ── Sunday School Tab ── */}
