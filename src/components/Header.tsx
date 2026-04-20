@@ -149,14 +149,14 @@ export default function Header() {
         </div>
 
         {/* Mobile toggle */}
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden p-2 text-ink">
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="xl:hidden p-2 text-ink">
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden bg-parchment border-t border-gold/20 animate-fade-in">
+        <div className="xl:hidden bg-parchment border-t border-gold/20 animate-fade-in">
           <div className="container mx-auto py-4 px-4 space-y-2">
             <div className="flex items-center gap-2 pb-2 border-b border-gold/20 mb-2">
               {(Object.keys(langLabels) as Language[]).map((lang) => (
