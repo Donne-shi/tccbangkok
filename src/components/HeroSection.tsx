@@ -185,16 +185,6 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-20 text-center px-6 max-w-3xl mx-auto py-20">
-        {/* Anno Domini */}
-        <div
-          className="font-display text-[0.65rem] md:text-xs text-gold tracking-[0.45em] mb-10"
-          style={{
-            opacity: contentRevealed ? 1 : 0,
-            transition: 'opacity 1s ease 0.2s',
-          }}
-        >
-          ANNO&nbsp;DOMINI · MMXXVI
-        </div>
 
         {/* Theme label — small caption above title */}
         <div
