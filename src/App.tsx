@@ -22,6 +22,8 @@ import EventsPage from "./pages/EventsPage.tsx";
 import GivingPage from "./pages/GivingPage.tsx";
 import SundaySchoolPage from "./pages/SundaySchoolPage.tsx";
 import YouthWorshipPage from "./pages/YouthWorshipPage.tsx";
+import YouthResourcesPage from "./pages/YouthResourcesPage.tsx";
+import AlphaYouthPage from "./pages/AlphaYouthPage.tsx";
 import DevotionalsPage from "./pages/DevotionalsPage.tsx";
 import DevotionalDetailPage from "./pages/DevotionalDetailPage.tsx";
 import AdminPage from "./pages/AdminPage.tsx";
@@ -48,6 +50,8 @@ const App = () => (
           <Route path="/ministries/youth-worship" element={<YouthWorshipPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/resources/theology-series" element={<TheologySeriesPage />} />
+          <Route path="/resources/youth" element={<YouthResourcesPage />} />
+          <Route path="/resources/youth/alpha" element={<AlphaYouthPage />} />
           <Route path="/resources/creeds" element={<CreedsListPage />} />
           <Route path="/resources/confessions" element={<ConfessionsListPage />} />
           <Route path="/resources/:slug" element={<ResourceViewPage />} />

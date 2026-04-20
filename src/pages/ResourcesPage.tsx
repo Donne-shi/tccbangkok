@@ -22,6 +22,7 @@ function ResourcesContent() {
         .from('learning_resources')
         .select('*')
         .eq('published', true)
+        .is('parent_type', null)
         .order('sort_order', { ascending: true });
       if (data) {
         setCategories(data.filter((r: any) => r.type === 'category'));
