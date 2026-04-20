@@ -8,10 +8,10 @@ export default function MinistriesSection() {
   const ms = translations.ministriesSection;
 
   const ministries = [
-    { ...ms.choir, icon: Music, hasHymns: true, hasYouthWorship: false },
-    { ...ms.youth, icon: Users, hasHymns: false, hasYouthWorship: true },
-    { ...ms.children, icon: Baby, hasHymns: false, hasYouthWorship: false },
-    { ...ms.visitation, icon: Heart, hasHymns: false, hasYouthWorship: false },
+    { ...ms.choir, icon: Music, hasHymns: true, hasYouthWorship: false, hasYouthHub: false },
+    { ...ms.youth, icon: Users, hasHymns: false, hasYouthWorship: false, hasYouthHub: true },
+    { ...ms.children, icon: Baby, hasHymns: false, hasYouthWorship: false, hasYouthHub: false },
+    { ...ms.visitation, icon: Heart, hasHymns: false, hasYouthWorship: false, hasYouthHub: false },
   ];
 
   return (
@@ -48,6 +48,15 @@ export default function MinistriesSection() {
                 >
                   <Music className="h-3.5 w-3.5" />
                   {{ en: 'Youth Worship Songs', zh: '青少年敬拜歌曲', th: 'เพลงนมัสการเยาวชน' }[language] || 'Youth Worship Songs'}
+                </Link>
+              )}
+              {ministry.hasYouthHub && (
+                <Link
+                  to="/ministries/youth"
+                  className="inline-flex items-center gap-1.5 text-sm text-accent hover:underline font-medium"
+                >
+                  <Users className="h-3.5 w-3.5" />
+                  {{ en: 'Youth Ministry Hub', zh: '进入青少年服侍', th: 'เข้าสู่การรับใช้เยาวชน' }[language] || 'Youth Ministry Hub'}
                 </Link>
               )}
             </div>

@@ -22,6 +22,7 @@ import EventsPage from "./pages/EventsPage.tsx";
 import GivingPage from "./pages/GivingPage.tsx";
 import SundaySchoolPage from "./pages/SundaySchoolPage.tsx";
 import YouthWorshipPage from "./pages/YouthWorshipPage.tsx";
+import YouthMinistryPage from "./pages/YouthMinistryPage.tsx";
 import YouthResourcesPage from "./pages/YouthResourcesPage.tsx";
 import AlphaYouthPage from "./pages/AlphaYouthPage.tsx";
 import DevotionalsPage from "./pages/DevotionalsPage.tsx";
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/ministries" element={<MinistriesPage />} />
           <Route path="/ministries/hymns" element={<HymnRecommendationPage />} />
+          <Route path="/ministries/youth" element={<YouthMinistryPage />} />
           <Route path="/ministries/youth-worship" element={<YouthWorshipPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/resources/theology-series" element={<TheologySeriesPage />} />
