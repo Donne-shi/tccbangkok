@@ -88,7 +88,7 @@ export default function Header() {
               {dd.single ? (
                 <Link
                   to={dd.to!}
-                  className="flex items-center gap-1 px-2.5 py-2 text-sm text-ink hover:text-gold transition-colors duration-300"
+                  className="flex items-center gap-1 px-2 py-2 text-[0.82rem] whitespace-nowrap text-ink hover:text-gold transition-colors duration-300"
                 >
                   {dd.label}
                 </Link>
@@ -96,10 +96,10 @@ export default function Header() {
                 <>
                   <button
                     onClick={() => setOpenDropdown(openDropdown === dd.label ? null : dd.label)}
-                    className="flex items-center gap-1 px-2.5 py-2 text-sm text-ink hover:text-gold transition-colors duration-300"
+                    className="flex items-center gap-1 px-2 py-2 text-[0.82rem] whitespace-nowrap text-ink hover:text-gold transition-colors duration-300"
                   >
                     {dd.label}
-                    <ChevronDown className="h-3.5 w-3.5" />
+                    <ChevronDown className="h-3 w-3" />
                   </button>
                   {openDropdown === dd.label && (
                     <div className="absolute top-full left-0 bg-parchment border border-gold/30 py-1 min-w-[220px] animate-fade-in shadow-lg">
