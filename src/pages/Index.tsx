@@ -80,7 +80,7 @@ const Index = () => {
     <LanguageProvider>
       <div className="min-h-screen">
         <Header />
-        <main className="pt-[88px]">
+        <main className="pt-[68px]">
           <HeroSection />
           <ThisWeekSermon />
           <QuickLinksSection />
