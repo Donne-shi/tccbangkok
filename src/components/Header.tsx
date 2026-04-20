@@ -77,7 +77,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-0.5">
+        <nav className="hidden xl:flex items-center gap-0.5">
           {dropdowns.map((dd) => (
             <div
               key={dd.label}
