@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Noto+Serif:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,47 +6,65 @@
 
 @layer base {
   :root {
-    --background: 40 20% 98%;
-    --foreground: 20 14% 10%;
+    /* Cathedral · Dove (parchment white + antique gold + ink) */
+    --background: 38 30% 94%;
+    --foreground: 25 18% 14%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 20 14% 10%;
+    --card: 38 35% 96%;
+    --card-foreground: 25 18% 14%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 14% 10%;
+    --popover: 38 35% 96%;
+    --popover-foreground: 25 18% 14%;
 
-    --primary: 215 35% 17%;
-    --primary-foreground: 40 20% 98%;
+    --primary: 25 18% 14%;
+    --primary-foreground: 38 30% 96%;
 
-    --secondary: 40 15% 94%;
-    --secondary-foreground: 215 35% 17%;
+    --secondary: 38 25% 90%;
+    --secondary-foreground: 25 18% 14%;
 
-    --muted: 40 10% 93%;
-    --muted-foreground: 20 5% 40%;
+    --muted: 38 18% 88%;
+    --muted-foreground: 25 10% 38%;
 
-    --accent: 37 90% 44%;
-    --accent-foreground: 0 0% 100%;
+    /* Antique gold */
+    --accent: 36 55% 42%;
+    --accent-foreground: 38 35% 96%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 38 30% 96%;
 
-    --border: 40 10% 88%;
-    --input: 40 10% 88%;
-    --ring: 37 90% 44%;
+    --border: 36 20% 80%;
+    --input: 36 20% 80%;
+    --ring: 36 55% 42%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
-    --sidebar-background: 40 20% 97%;
-    --sidebar-foreground: 20 14% 10%;
-    --sidebar-primary: 215 35% 17%;
-    --sidebar-primary-foreground: 40 20% 98%;
-    --sidebar-accent: 40 15% 94%;
-    --sidebar-accent-foreground: 215 35% 17%;
-    --sidebar-border: 40 10% 88%;
-    --sidebar-ring: 37 90% 44%;
+    /* Cathedral semantic tokens */
+    --parchment: 38 32% 92%;
+    --parchment-deep: 36 28% 86%;
+    --gold: 36 55% 42%;
+    --gold-bright: 40 70% 55%;
+    --gold-soft: 38 45% 70%;
+    --ink: 25 18% 14%;
+    --ink-soft: 25 12% 28%;
 
-    --font-heading: 'Noto Serif', 'Noto Serif SC', 'Noto Serif Thai', serif;
-    --font-body: 'Noto Sans', 'Noto Sans SC', 'Noto Sans Thai', sans-serif;
+    --gradient-parchment: linear-gradient(180deg, hsl(38 32% 95%) 0%, hsl(36 26% 88%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(40 70% 55%) 0%, hsl(36 55% 42%) 100%);
+    --shadow-cathedral: 0 30px 80px -30px hsl(25 18% 14% / 0.25);
+    --shadow-gold: 0 10px 40px -10px hsl(36 55% 42% / 0.35);
+
+    --sidebar-background: 38 30% 94%;
+    --sidebar-foreground: 25 18% 14%;
+    --sidebar-primary: 25 18% 14%;
+    --sidebar-primary-foreground: 38 30% 96%;
+    --sidebar-accent: 38 25% 90%;
+    --sidebar-accent-foreground: 25 18% 14%;
+    --sidebar-border: 36 20% 80%;
+    --sidebar-ring: 36 55% 42%;
+
+    --font-display: 'Cinzel', 'Noto Serif SC', serif;
+    --font-heading: 'Cormorant Garamond', 'Noto Serif SC', 'Noto Serif Thai', serif;
+    --font-body: 'EB Garamond', 'Noto Serif SC', 'Noto Serif Thai', serif;
+    --font-sans: 'EB Garamond', 'Noto Sans SC', 'Noto Sans Thai', sans-serif;
   }
 
   .dark {
@@ -109,18 +127,83 @@
   50% { transform: translateY(6px); opacity: 0.5; }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.7s ease-out both;
+/* Cinematic curtain reveal */
+@keyframes curtain-open-top {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+@keyframes curtain-open-bottom {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
 }
 
-.animate-fade-in-delay-1 {
-  animation: fade-in 0.7s ease-out 0.15s both;
+/* Arch reveal — clip-path expand from arch top */
+@keyframes arch-reveal {
+  0% { clip-path: inset(0 50% 100% 50% round 50% 50% 0 0); opacity: 0; }
+  60% { opacity: 1; }
+  100% { clip-path: inset(0 0 0 0 round 0); opacity: 1; }
 }
 
-.animate-fade-in-delay-2 {
-  animation: fade-in 0.7s ease-out 0.3s both;
+/* Word fade up (per-word reveal) */
+@keyframes word-rise {
+  0% { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
-.animate-fade-in-delay-3 {
-  animation: fade-in 0.7s ease-out 0.45s both;
+/* Slow gold shimmer for text gradient */
+@keyframes gold-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
+
+/* Stained-glass tile pulse (very subtle) */
+@keyframes glass-pulse {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.28; }
+}
+
+@keyframes ornament-fade {
+  0% { opacity: 0; transform: scaleX(0); }
+  100% { opacity: 1; transform: scaleX(1); }
+}
+
+.animate-fade-in { animation: fade-in 0.7s ease-out both; }
+.animate-fade-in-delay-1 { animation: fade-in 0.7s ease-out 0.15s both; }
+.animate-fade-in-delay-2 { animation: fade-in 0.7s ease-out 0.3s both; }
+.animate-fade-in-delay-3 { animation: fade-in 0.7s ease-out 0.45s both; }
+
+/* Film grain overlay (CSS-only, no asset) */
+.film-grain {
+  position: relative;
+}
+.film-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(hsl(var(--ink) / 0.6) 1px, transparent 1.2px),
+    radial-gradient(hsl(var(--ink) / 0.4) 1px, transparent 1.2px);
+  background-size: 3px 3px, 5px 5px;
+  background-position: 0 0, 1px 2px;
+}
+
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--gold)) 0%,
+    hsl(var(--gold-bright)) 25%,
+    hsl(var(--gold)) 50%,
+    hsl(var(--gold-bright)) 75%,
+    hsl(var(--gold)) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 8s ease-in-out infinite;
+}
+
+.font-display { font-family: var(--font-display); letter-spacing: 0.08em; }

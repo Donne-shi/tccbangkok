@@ -14,8 +14,24 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Noto Serif', 'Noto Serif SC', 'Noto Serif Thai', 'serif'],
-        body: ['Noto Sans', 'Noto Sans SC', 'Noto Sans Thai', 'sans-serif'],
+        display: ['Cinzel', 'Noto Serif SC', 'serif'],
+        heading: ['Cormorant Garamond', 'Noto Serif SC', 'Noto Serif Thai', 'serif'],
+        body: ['EB Garamond', 'Noto Serif SC', 'Noto Serif Thai', 'serif'],
+      },
+      colors: {
+        parchment: {
+          DEFAULT: 'hsl(var(--parchment))',
+          deep: 'hsl(var(--parchment-deep))',
+        },
+        gold: {
+          DEFAULT: 'hsl(var(--gold))',
+          bright: 'hsl(var(--gold-bright))',
+          soft: 'hsl(var(--gold-soft))',
+        },
+        ink: {
+          DEFAULT: 'hsl(var(--ink))',
+          soft: 'hsl(var(--ink-soft))',
+        },
       },
       colors: {
         border: "hsl(var(--border))",
