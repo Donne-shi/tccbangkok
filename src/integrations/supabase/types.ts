@@ -278,6 +278,180 @@ export type Database = {
         }
         Relationships: []
       }
+      worship_survey_responses: {
+        Row: {
+          additional_comments: string | null
+          age_group: string | null
+          attendance_frequency: string | null
+          created_at: string
+          fellowship_feeling: number | null
+          flow_announcements: number | null
+          flow_av: number | null
+          flow_comments: string | null
+          flow_duration: number | null
+          flow_environment: number | null
+          flow_overall: number | null
+          flow_punctuality: number | null
+          flow_transitions: number | null
+          flow_welcome: number | null
+          id: string
+          language_used: string
+          member_status: string | null
+          ministry_interest: string | null
+          most_appreciated: string | null
+          most_improvement: string | null
+          music_band_quality: number | null
+          music_comments: string | null
+          music_leader: number | null
+          music_lyrics_display: number | null
+          music_singability: number | null
+          music_song_balance: number | null
+          music_song_selection: number | null
+          music_spiritual_atmosphere: number | null
+          music_theological_depth: number | null
+          music_volume: number | null
+          overall_satisfaction: number | null
+          pastoral_care: number | null
+          prayer_request: string | null
+          preferred_language: string | null
+          recommend_score: number | null
+          sermon_application: number | null
+          sermon_biblical: number | null
+          sermon_clarity: number | null
+          sermon_comments: string | null
+          sermon_delivery: number | null
+          sermon_depth: number | null
+          sermon_length: number | null
+          sermon_spiritual_growth: number | null
+          sermon_translation: number | null
+          ss_adult_quality: number | null
+          ss_children_program: number | null
+          ss_class_arrangement: number | null
+          ss_comments: string | null
+          ss_curriculum: number | null
+          ss_safety: number | null
+          ss_teacher_quality: number | null
+          ss_youth_program: number | null
+          status: string
+          topics_requested: string | null
+          updated_at: string
+        }
+        Insert: {
+          additional_comments?: string | null
+          age_group?: string | null
+          attendance_frequency?: string | null
+          created_at?: string
+          fellowship_feeling?: number | null
+          flow_announcements?: number | null
+          flow_av?: number | null
+          flow_comments?: string | null
+          flow_duration?: number | null
+          flow_environment?: number | null
+          flow_overall?: number | null
+          flow_punctuality?: number | null
+          flow_transitions?: number | null
+          flow_welcome?: number | null
+          id?: string
+          language_used?: string
+          member_status?: string | null
+          ministry_interest?: string | null
+          most_appreciated?: string | null
+          most_improvement?: string | null
+          music_band_quality?: number | null
+          music_comments?: string | null
+          music_leader?: number | null
+          music_lyrics_display?: number | null
+          music_singability?: number | null
+          music_song_balance?: number | null
+          music_song_selection?: number | null
+          music_spiritual_atmosphere?: number | null
+          music_theological_depth?: number | null
+          music_volume?: number | null
+          overall_satisfaction?: number | null
+          pastoral_care?: number | null
+          prayer_request?: string | null
+          preferred_language?: string | null
+          recommend_score?: number | null
+          sermon_application?: number | null
+          sermon_biblical?: number | null
+          sermon_clarity?: number | null
+          sermon_comments?: string | null
+          sermon_delivery?: number | null
+          sermon_depth?: number | null
+          sermon_length?: number | null
+          sermon_spiritual_growth?: number | null
+          sermon_translation?: number | null
+          ss_adult_quality?: number | null
+          ss_children_program?: number | null
+          ss_class_arrangement?: number | null
+          ss_comments?: string | null
+          ss_curriculum?: number | null
+          ss_safety?: number | null
+          ss_teacher_quality?: number | null
+          ss_youth_program?: number | null
+          status?: string
+          topics_requested?: string | null
+          updated_at?: string
+        }
+        Update: {
+          additional_comments?: string | null
+          age_group?: string | null
+          attendance_frequency?: string | null
+          created_at?: string
+          fellowship_feeling?: number | null
+          flow_announcements?: number | null
+          flow_av?: number | null
+          flow_comments?: string | null
+          flow_duration?: number | null
+          flow_environment?: number | null
+          flow_overall?: number | null
+          flow_punctuality?: number | null
+          flow_transitions?: number | null
+          flow_welcome?: number | null
+          id?: string
+          language_used?: string
+          member_status?: string | null
+          ministry_interest?: string | null
+          most_appreciated?: string | null
+          most_improvement?: string | null
+          music_band_quality?: number | null
+          music_comments?: string | null
+          music_leader?: number | null
+          music_lyrics_display?: number | null
+          music_singability?: number | null
+          music_song_balance?: number | null
+          music_song_selection?: number | null
+          music_spiritual_atmosphere?: number | null
+          music_theological_depth?: number | null
+          music_volume?: number | null
+          overall_satisfaction?: number | null
+          pastoral_care?: number | null
+          prayer_request?: string | null
+          preferred_language?: string | null
+          recommend_score?: number | null
+          sermon_application?: number | null
+          sermon_biblical?: number | null
+          sermon_clarity?: number | null
+          sermon_comments?: string | null
+          sermon_delivery?: number | null
+          sermon_depth?: number | null
+          sermon_length?: number | null
+          sermon_spiritual_growth?: number | null
+          sermon_translation?: number | null
+          ss_adult_quality?: number | null
+          ss_children_program?: number | null
+          ss_class_arrangement?: number | null
+          ss_comments?: string | null
+          ss_curriculum?: number | null
+          ss_safety?: number | null
+          ss_teacher_quality?: number | null
+          ss_youth_program?: number | null
+          status?: string
+          topics_requested?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
