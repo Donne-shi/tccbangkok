@@ -60,7 +60,7 @@ const T = {
   mostAppreciated: { en: 'What did you appreciate most about Sunday worship?', zh: '您最感恩 / 最喜欢主日崇拜的哪部分？', th: 'สิ่งใดที่คุณชื่นชอบมากที่สุดในการนมัสการ' },
   mostImprovement: { en: 'What would you most like to see improved?', zh: '您最希望我们改进哪一部分？', th: 'สิ่งใดที่คุณอยากให้ปรับปรุงมากที่สุด' },
   topicsRequested: { en: 'What sermon topics or Bible passages would you like to hear?', zh: '您希望听到的讲道主题或圣经经文？', th: 'หัวข้อคำเทศนาหรือพระคัมภีร์ที่อยากฟัง' },
-  additionalComments_label_keep: { en: '', zh: '', th: '' },
+  
   additionalComments: { en: 'Any other comments or suggestions?', zh: '其他建议或反馈？', th: 'ข้อเสนอแนะอื่น ๆ' },
 };
 
