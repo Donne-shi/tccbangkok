@@ -146,6 +146,7 @@ const Index = () => {
         <main className="pt-[68px]">
           <HeroSection />
           <ThisWeekSermon />
+          <SundayReminderSection />
           <QuickLinksSection />
           <LocationSectionAnimated />
         </main>
