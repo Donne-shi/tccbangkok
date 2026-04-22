@@ -197,15 +197,6 @@ export default function EventsCalendar() {
           </div>
         </div>
 
-        {/* Featured event poster */}
-        <div>
-          <h3 className="font-heading text-2xl font-bold text-foreground text-center mb-6">
-            {t(events.featuredTitle, language)}
-          </h3>
-          <div className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg border border-border">
-            <img src={goodFridayPoster} alt="Good Friday Service" className="w-full" />
-          </div>
-        </div>
       </div>
     </section>
   );
