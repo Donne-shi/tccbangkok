@@ -100,25 +100,25 @@ function SundayReminderSection() {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-[#1e3a5f] to-[#2d4a6f]">
+    <section className="py-16 bg-secondary">
       <div className="container mx-auto px-4 max-w-5xl">
         <ScrollReveal>
           <div className="text-center mb-10">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-white mb-2">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-2">
               {language === 'zh' ? t.title.zh : language === 'th' ? t.title.th : t.title.en}
             </h2>
-            <div className="w-16 h-1 bg-[#d4af37] mx-auto rounded-full" />
+            <div className="w-16 h-1 bg-accent mx-auto rounded-full" />
           </div>
         </ScrollReveal>
         
         <div className="grid md:grid-cols-3 gap-6">
           {t.items.map((item, i) => (
             <ScrollReveal key={i} delay={i * 100} direction="up">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 h-full">
-                <div className="w-12 h-12 rounded-full bg-[#d4af37]/20 flex items-center justify-center mb-4">
-                  <item.icon className="h-6 w-6 text-[#d4af37]" />
+              <div className="bg-card rounded-xl p-6 shadow-sm border border-border hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-accent/10">
+                  <item.icon className="h-6 w-6 text-accent" />
                 </div>
-                <p className="text-white/90 text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {language === 'zh' ? item.text.zh : language === 'th' ? item.text.th : item.text.en}
                 </p>
               </div>
