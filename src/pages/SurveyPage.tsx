@@ -82,7 +82,6 @@ const SECTION2_ITEMS: { key: string; label: Record<Lang, string> }[] = [
   { key: 'music_theological_depth', label: { en: 'Theological depth of lyrics', zh: '歌词的神学深度', th: 'ความลึกซึ้งทางเทววิทยาของเนื้อเพลง' } },
   { key: 'music_singability', label: { en: 'Easy for the congregation to sing', zh: '会众易于跟唱', th: 'ร้องตามได้ง่าย' } },
   { key: 'music_volume', label: { en: 'Volume balance', zh: '音量大小适中', th: 'ระดับเสียงที่เหมาะสม' } },
-  { key: 'music_band_quality', label: { en: 'Worship band performance', zh: '敬拜团演奏水平', th: 'คุณภาพวงนมัสการ' } },
   { key: 'music_leader', label: { en: 'Worship leader guidance', zh: '敬拜带领的引导', th: 'การนำของผู้นำนมัสการ' } },
   { key: 'music_lyrics_display', label: { en: 'Lyrics projection clarity', zh: '歌词投影清晰度', th: 'ความชัดเจนของเนื้อเพลงบนจอ' } },
   { key: 'music_spiritual_atmosphere', label: { en: 'Spiritual atmosphere', zh: '属灵氛围', th: 'บรรยากาศฝ่ายจิตวิญญาณ' } },
