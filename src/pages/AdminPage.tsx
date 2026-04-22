@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2, MessageSquare, CheckCircle, Clock, Eye, Globe } from 'lucide-react';
+import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2, MessageSquare, CheckCircle, Clock, Eye, Globe, ClipboardList, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface LinkItem { title: string; url: string; }
@@ -579,7 +579,13 @@ function AdminDashboard() {
     setResourcesLoading(false);
   }, []);
 
-  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); fetchFeedback(); fetchResources(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals, fetchFeedback, fetchResources]);
+  const fetchSurveys = useCallback(async () => {
+    const { data } = await supabase.from('worship_survey_responses').select('*').order('created_at', { ascending: false });
+    if (data) setSurveys(data as any);
+    setSurveysLoading(false);
+  }, []);
+
+  useEffect(() => { fetchSS(); fetchSermons(); fetchFinance(); fetchDevotionals(); fetchFeedback(); fetchResources(); fetchSurveys(); }, [fetchSS, fetchSermons, fetchFinance, fetchDevotionals, fetchFeedback, fetchResources, fetchSurveys]);
 
   const handleDeleteSS = async (id: string) => {
     if (!confirm('确定删除？')) return;
@@ -620,6 +626,17 @@ function AdminDashboard() {
     if (!confirm('确定删除此资源？')) return;
     const { error } = await supabase.from('learning_resources').delete().eq('id', id);
     if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchResources(); }
+  };
+
+  const handleDeleteSurvey = async (id: string) => {
+    if (!confirm('确定删除此问卷回应？')) return;
+    const { error } = await supabase.from('worship_survey_responses').delete().eq('id', id);
+    if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchSurveys(); }
+  };
+
+  const handleUpdateSurveyStatus = async (id: string, status: string) => {
+    const { error } = await supabase.from('worship_survey_responses').update({ status }).eq('id', id);
+    if (error) toast({ title: '更新失败', variant: 'destructive' }); else { toast({ title: '状态已更新' }); fetchSurveys(); }
   };
 
   const filteredResources = resourceTypeFilter === 'all' ? resources : resources.filter(r => r.type === resourceTypeFilter);
