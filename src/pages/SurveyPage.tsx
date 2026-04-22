@@ -60,8 +60,7 @@ const T = {
   mostAppreciated: { en: 'What did you appreciate most about Sunday worship?', zh: '您最感恩 / 最喜欢主日崇拜的哪部分？', th: 'สิ่งใดที่คุณชื่นชอบมากที่สุดในการนมัสการ' },
   mostImprovement: { en: 'What would you most like to see improved?', zh: '您最希望我们改进哪一部分？', th: 'สิ่งใดที่คุณอยากให้ปรับปรุงมากที่สุด' },
   topicsRequested: { en: 'What sermon topics or Bible passages would you like to hear?', zh: '您希望听到的讲道主题或圣经经文？', th: 'หัวข้อคำเทศนาหรือพระคัมภีร์ที่อยากฟัง' },
-  ministryInterest: { en: 'Are there any ministries you would like to serve in?', zh: '您是否愿意参与某项服事？', th: 'พันธกิจใดที่คุณอยากรับใช้' },
-  prayerRequest: { en: 'Any prayer requests you want to share? (anonymous)', zh: '是否有代祷事项愿意分享？（匿名）', th: 'มีคำอธิษฐานใดที่อยากแบ่งปันไหม' },
+  additionalComments_label_keep: { en: '', zh: '', th: '' },
   additionalComments: { en: 'Any other comments or suggestions?', zh: '其他建议或反馈？', th: 'ข้อเสนอแนะอื่น ๆ' },
 };
 
@@ -261,8 +260,6 @@ export default function SurveyPage() {
   const [mostAppreciated, setMostAppreciated] = useState('');
   const [mostImprovement, setMostImprovement] = useState('');
   const [topicsRequested, setTopicsRequested] = useState('');
-  const [ministryInterest, setMinistryInterest] = useState('');
-  const [prayerRequest, setPrayerRequest] = useState('');
   const [additionalComments, setAdditionalComments] = useState('');
 
   const reset = () => {
@@ -279,8 +276,6 @@ export default function SurveyPage() {
     setMostAppreciated('');
     setMostImprovement('');
     setTopicsRequested('');
-    setMinistryInterest('');
-    setPrayerRequest('');
     setAdditionalComments('');
     setSubmitted(false);
   };
@@ -302,8 +297,6 @@ export default function SurveyPage() {
         most_appreciated: mostAppreciated.trim() || null,
         most_improvement: mostImprovement.trim() || null,
         topics_requested: topicsRequested.trim() || null,
-        ministry_interest: ministryInterest.trim() || null,
-        prayer_request: prayerRequest.trim() || null,
         additional_comments: additionalComments.trim() || null,
         language_used: language,
       };
@@ -523,14 +516,6 @@ export default function SurveyPage() {
               <div>
                 <Label className="text-sm font-medium mb-1.5 block">{tt(T.topicsRequested, language)}</Label>
                 <Textarea value={topicsRequested} onChange={(e) => setTopicsRequested(e.target.value)} maxLength={1000} rows={2} />
-              </div>
-              <div>
-                <Label className="text-sm font-medium mb-1.5 block">{tt(T.ministryInterest, language)}</Label>
-                <Textarea value={ministryInterest} onChange={(e) => setMinistryInterest(e.target.value)} maxLength={1000} rows={2} />
-              </div>
-              <div>
-                <Label className="text-sm font-medium mb-1.5 block">{tt(T.prayerRequest, language)}</Label>
-                <Textarea value={prayerRequest} onChange={(e) => setPrayerRequest(e.target.value)} maxLength={1500} rows={3} />
               </div>
               <div>
                 <Label className="text-sm font-medium mb-1.5 block">{tt(T.additionalComments, language)}</Label>
