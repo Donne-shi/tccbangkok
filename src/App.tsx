@@ -25,6 +25,7 @@ import YouthWorshipPage from "./pages/YouthWorshipPage.tsx";
 import YouthMinistryPage from "./pages/YouthMinistryPage.tsx";
 import YouthResourcesPage from "./pages/YouthResourcesPage.tsx";
 import AlphaYouthPage from "./pages/AlphaYouthPage.tsx";
+import JohnSungBiographyPage from "./pages/JohnSungBiographyPage.tsx";
 import DevotionalsPage from "./pages/DevotionalsPage.tsx";
 import DevotionalDetailPage from "./pages/DevotionalDetailPage.tsx";
 import AdminPage from "./pages/AdminPage.tsx";
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/resources/theology-series" element={<TheologySeriesPage />} />
           <Route path="/resources/youth" element={<YouthResourcesPage />} />
           <Route path="/resources/youth/alpha" element={<AlphaYouthPage />} />
+          <Route path="/resources/youth/john-sung" element={<JohnSungBiographyPage />} />
           <Route path="/resources/creeds" element={<CreedsListPage />} />
           <Route path="/resources/confessions" element={<ConfessionsListPage />} />
           <Route path="/resources/:slug" element={<ResourceViewPage />} />
