@@ -60,8 +60,7 @@ const T = {
   mostAppreciated: { en: 'What did you appreciate most about Sunday worship?', zh: '您最感恩 / 最喜欢主日崇拜的哪部分？', th: 'สิ่งใดที่คุณชื่นชอบมากที่สุดในการนมัสการ' },
   mostImprovement: { en: 'What would you most like to see improved?', zh: '您最希望我们改进哪一部分？', th: 'สิ่งใดที่คุณอยากให้ปรับปรุงมากที่สุด' },
   topicsRequested: { en: 'What sermon topics or Bible passages would you like to hear?', zh: '您希望听到的讲道主题或圣经经文？', th: 'หัวข้อคำเทศนาหรือพระคัมภีร์ที่อยากฟัง' },
-  ministryInterest: { en: 'Are there any ministries you would like to serve in?', zh: '您是否愿意参与某项服事？', th: 'พันธกิจใดที่คุณอยากรับใช้' },
-  prayerRequest: { en: 'Any prayer requests you want to share? (anonymous)', zh: '是否有代祷事项愿意分享？（匿名）', th: 'มีคำอธิษฐานใดที่อยากแบ่งปันไหม' },
+  
   additionalComments: { en: 'Any other comments or suggestions?', zh: '其他建议或反馈？', th: 'ข้อเสนอแนะอื่น ๆ' },
 };
 
@@ -82,7 +81,6 @@ const SECTION2_ITEMS: { key: string; label: Record<Lang, string> }[] = [
   { key: 'music_theological_depth', label: { en: 'Theological depth of lyrics', zh: '歌词的神学深度', th: 'ความลึกซึ้งทางเทววิทยาของเนื้อเพลง' } },
   { key: 'music_singability', label: { en: 'Easy for the congregation to sing', zh: '会众易于跟唱', th: 'ร้องตามได้ง่าย' } },
   { key: 'music_volume', label: { en: 'Volume balance', zh: '音量大小适中', th: 'ระดับเสียงที่เหมาะสม' } },
-  { key: 'music_band_quality', label: { en: 'Worship band performance', zh: '敬拜团演奏水平', th: 'คุณภาพวงนมัสการ' } },
   { key: 'music_leader', label: { en: 'Worship leader guidance', zh: '敬拜带领的引导', th: 'การนำของผู้นำนมัสการ' } },
   { key: 'music_lyrics_display', label: { en: 'Lyrics projection clarity', zh: '歌词投影清晰度', th: 'ความชัดเจนของเนื้อเพลงบนจอ' } },
   { key: 'music_spiritual_atmosphere', label: { en: 'Spiritual atmosphere', zh: '属灵氛围', th: 'บรรยากาศฝ่ายจิตวิญญาณ' } },
@@ -96,7 +94,6 @@ const SECTION3_ITEMS: { key: string; label: Record<Lang, string> }[] = [
   { key: 'sermon_depth', label: { en: 'Spiritual / theological depth', zh: '属灵与神学深度', th: 'ความลึกซึ้งทางเทววิทยา' } },
   { key: 'sermon_delivery', label: { en: 'Delivery & engagement', zh: '讲员表达与感染力', th: 'การเทศนาและการสื่อสาร' } },
   { key: 'sermon_length', label: { en: 'Sermon length is appropriate', zh: '讲道长度合适', th: 'ความยาวของคำเทศนา' } },
-  { key: 'sermon_translation', label: { en: 'Translation quality (if applicable)', zh: '翻译质量（如有）', th: 'คุณภาพการแปล (ถ้ามี)' } },
   { key: 'sermon_spiritual_growth', label: { en: 'Helps your spiritual growth', zh: '对个人灵命的帮助', th: 'ช่วยให้เติบโตฝ่ายจิตวิญญาณ' } },
 ];
 
@@ -107,7 +104,6 @@ const SECTION4_ITEMS: { key: string; label: Record<Lang, string> }[] = [
   { key: 'ss_teacher_quality', label: { en: 'Teachers / leaders quality', zh: '教师 / 带领同工水平', th: 'คุณภาพของครูและผู้นำ' } },
   { key: 'ss_curriculum', label: { en: 'Curriculum & teaching content', zh: '课程内容与教材', th: 'หลักสูตรและเนื้อหา' } },
   { key: 'ss_safety', label: { en: 'Children safety & care', zh: '儿童安全与照顾', th: 'ความปลอดภัยและการดูแลเด็ก' } },
-  { key: 'ss_class_arrangement', label: { en: 'Class grouping & schedule', zh: '班级分组与时间安排', th: 'การจัดชั้นและตารางเวลา' } },
 ];
 
 const SECTION5_ITEMS: { key: string; label: Record<Lang, string> }[] = [
@@ -264,8 +260,6 @@ export default function SurveyPage() {
   const [mostAppreciated, setMostAppreciated] = useState('');
   const [mostImprovement, setMostImprovement] = useState('');
   const [topicsRequested, setTopicsRequested] = useState('');
-  const [ministryInterest, setMinistryInterest] = useState('');
-  const [prayerRequest, setPrayerRequest] = useState('');
   const [additionalComments, setAdditionalComments] = useState('');
 
   const reset = () => {
@@ -282,8 +276,6 @@ export default function SurveyPage() {
     setMostAppreciated('');
     setMostImprovement('');
     setTopicsRequested('');
-    setMinistryInterest('');
-    setPrayerRequest('');
     setAdditionalComments('');
     setSubmitted(false);
   };
@@ -305,8 +297,6 @@ export default function SurveyPage() {
         most_appreciated: mostAppreciated.trim() || null,
         most_improvement: mostImprovement.trim() || null,
         topics_requested: topicsRequested.trim() || null,
-        ministry_interest: ministryInterest.trim() || null,
-        prayer_request: prayerRequest.trim() || null,
         additional_comments: additionalComments.trim() || null,
         language_used: language,
       };
@@ -526,14 +516,6 @@ export default function SurveyPage() {
               <div>
                 <Label className="text-sm font-medium mb-1.5 block">{tt(T.topicsRequested, language)}</Label>
                 <Textarea value={topicsRequested} onChange={(e) => setTopicsRequested(e.target.value)} maxLength={1000} rows={2} />
-              </div>
-              <div>
-                <Label className="text-sm font-medium mb-1.5 block">{tt(T.ministryInterest, language)}</Label>
-                <Textarea value={ministryInterest} onChange={(e) => setMinistryInterest(e.target.value)} maxLength={1000} rows={2} />
-              </div>
-              <div>
-                <Label className="text-sm font-medium mb-1.5 block">{tt(T.prayerRequest, language)}</Label>
-                <Textarea value={prayerRequest} onChange={(e) => setPrayerRequest(e.target.value)} maxLength={1500} rows={3} />
               </div>
               <div>
                 <Label className="text-sm font-medium mb-1.5 block">{tt(T.additionalComments, language)}</Label>
