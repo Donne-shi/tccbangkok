@@ -44,7 +44,10 @@ export default function Header() {
     { label: t(nav.resources, language), to: '/resources', single: true },
     {
       label: t(nav.contactUs, language),
-      items: [{ label: t(nav.joinUs, language), to: '/membership' }],
+      items: [
+        { label: t(nav.joinUs, language), to: '/membership' },
+        { label: t(nav.survey, language), to: '/survey' },
+      ],
     },
   ];
 
