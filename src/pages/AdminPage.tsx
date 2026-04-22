@@ -543,6 +543,11 @@ function AdminDashboard() {
   const [devotionalShowForm, setDevotionalShowForm] = useState(false);
   const [devotionalEditing, setDevotionalEditing] = useState<DevotionalItem | undefined>();
 
+  // Survey state
+  const [surveys, setSurveys] = useState<any[]>([]);
+  const [surveysLoading, setSurveysLoading] = useState(true);
+  const [surveyExpandedId, setSurveyExpandedId] = useState<string | null>(null);
+
   const fetchSS = useCallback(async () => {
     const { data } = await supabase.from('sunday_school_content').select('*').order('date', { ascending: false });
     if (data) setSsContents(data.map(d => ({ ...d, song_links: (d.song_links as any) || [], video_links: (d.video_links as any) || [] })));
