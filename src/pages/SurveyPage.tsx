@@ -95,7 +95,6 @@ const SECTION3_ITEMS: { key: string; label: Record<Lang, string> }[] = [
   { key: 'sermon_depth', label: { en: 'Spiritual / theological depth', zh: '属灵与神学深度', th: 'ความลึกซึ้งทางเทววิทยา' } },
   { key: 'sermon_delivery', label: { en: 'Delivery & engagement', zh: '讲员表达与感染力', th: 'การเทศนาและการสื่อสาร' } },
   { key: 'sermon_length', label: { en: 'Sermon length is appropriate', zh: '讲道长度合适', th: 'ความยาวของคำเทศนา' } },
-  { key: 'sermon_translation', label: { en: 'Translation quality (if applicable)', zh: '翻译质量（如有）', th: 'คุณภาพการแปล (ถ้ามี)' } },
   { key: 'sermon_spiritual_growth', label: { en: 'Helps your spiritual growth', zh: '对个人灵命的帮助', th: 'ช่วยให้เติบโตฝ่ายจิตวิญญาณ' } },
 ];
 
@@ -106,7 +105,6 @@ const SECTION4_ITEMS: { key: string; label: Record<Lang, string> }[] = [
   { key: 'ss_teacher_quality', label: { en: 'Teachers / leaders quality', zh: '教师 / 带领同工水平', th: 'คุณภาพของครูและผู้นำ' } },
   { key: 'ss_curriculum', label: { en: 'Curriculum & teaching content', zh: '课程内容与教材', th: 'หลักสูตรและเนื้อหา' } },
   { key: 'ss_safety', label: { en: 'Children safety & care', zh: '儿童安全与照顾', th: 'ความปลอดภัยและการดูแลเด็ก' } },
-  { key: 'ss_class_arrangement', label: { en: 'Class grouping & schedule', zh: '班级分组与时间安排', th: 'การจัดชั้นและตารางเวลา' } },
 ];
 
 const SECTION5_ITEMS: { key: string; label: Record<Lang, string> }[] = [
