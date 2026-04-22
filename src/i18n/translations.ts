@@ -273,6 +273,12 @@ export const translations = {
     title: { en: 'Events & Calendar', zh: '活动日历', th: 'กิจกรรมและปฏิทิน' },
     subtitle: { en: 'Our weekly gatherings and special events', zh: '我们每周的聚会和特别活动', th: 'การรวมตัวประจำสัปดาห์และกิจกรรมพิเศษ' },
     featuredTitle: { en: 'Featured Event', zh: '本月活动', th: 'กิจกรรมเด่น' },
+    weeklyTitle: { en: 'Weekly Gatherings', zh: '每周聚会', th: 'การรวมตัวประจำสัปดาห์' },
+    calendarTitle: { en: '2026 Christian & Jewish Calendar', zh: '2026 基督教与犹太节日历', th: 'ปฏิทินคริสเตียนและยิว 2026' },
+    calendarHint: { en: 'Click a highlighted date to see the feast.', zh: '点击高亮日期查看节日。', th: 'คลิกวันที่เน้นเพื่อดูเทศกาล' },
+    legendChristian: { en: 'Christian Feast', zh: '基督教节日', th: 'เทศกาลคริสเตียน' },
+    legendJewish: { en: 'Jewish Feast', zh: '犹太节日', th: 'เทศกาลยิว' },
+    upcomingTitle: { en: 'Upcoming Feasts', zh: '即将到来的节日', th: 'เทศกาลที่กำลังจะมาถึง' },
     weekly: [
       {
         name: { en: 'Sunday Worship', zh: '主日聚会', th: 'นมัสการวันอาทิตย์' },
