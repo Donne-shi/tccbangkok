@@ -672,6 +672,14 @@ function AdminDashboard() {
             <TabsTrigger value="resources" className="flex items-center gap-1">
               <Globe className="h-4 w-4" /> 学习资源
             </TabsTrigger>
+            <TabsTrigger value="surveys" className="flex items-center gap-1">
+              <ClipboardList className="h-4 w-4" /> 满意度问卷
+              {surveys.filter(s => s.status === 'new').length > 0 && (
+                <span className="ml-1 bg-destructive text-destructive-foreground text-xs rounded-full px-1.5 py-0.5 leading-none">
+                  {surveys.filter(s => s.status === 'new').length}
+                </span>
+              )}
+            </TabsTrigger>
           </TabsList>
 
           {/* ── Sunday School Tab ── */}
