@@ -909,6 +909,177 @@ function AdminDashboard() {
               </>
             )}
           </TabsContent>
+
+          {/* ── Surveys Tab ── */}
+          <TabsContent value="surveys">
+            {surveysLoading ? <div className="text-center py-12 text-muted-foreground">加载中...</div> :
+              surveys.length === 0 ? <div className="text-center py-12 text-muted-foreground">暂无问卷回应</div> :
+              <div className="space-y-3">
+                {/* Summary stats */}
+                <Card className="bg-muted/30">
+                  <CardContent className="py-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <div>
+                      <p className="text-2xl font-bold text-primary">{surveys.length}</p>
+                      <p className="text-xs text-muted-foreground">总回应数</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-amber-500">{surveys.filter(s => s.status === 'new').length}</p>
+                      <p className="text-xs text-muted-foreground">未查看</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-green-500">
+                        {(() => {
+                          const vals = surveys.map(s => s.overall_satisfaction).filter(v => v);
+                          return vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '-';
+                        })()}
+                      </p>
+                      <p className="text-xs text-muted-foreground">整体满意度均值</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-blue-500">
+                        {(() => {
+                          const vals = surveys.map(s => s.recommend_score).filter(v => v !== null && v !== undefined);
+                          return vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : '-';
+                        })()}
+                      </p>
+                      <p className="text-xs text-muted-foreground">推荐指数均值/10</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {surveys.map(item => {
+                  const isOpen = surveyExpandedId === item.id;
+                  const ratingFields: { key: string; label: string }[] = [
+                    { key: 'flow_overall', label: '整体流程' },
+                    { key: 'flow_duration', label: '时长' },
+                    { key: 'flow_transitions', label: '环节衔接' },
+                    { key: 'flow_punctuality', label: '准时' },
+                    { key: 'flow_announcements', label: '报告清晰' },
+                    { key: 'flow_welcome', label: '招待迎新' },
+                    { key: 'flow_environment', label: '场地环境' },
+                    { key: 'flow_av', label: '音响投影' },
+                    { key: 'music_song_selection', label: '选曲' },
+                    { key: 'music_theological_depth', label: '神学深度' },
+                    { key: 'music_singability', label: '易跟唱' },
+                    { key: 'music_volume', label: '音量' },
+                    { key: 'music_band_quality', label: '敬拜团水平' },
+                    { key: 'music_leader', label: '敬拜带领' },
+                    { key: 'music_lyrics_display', label: '歌词投影' },
+                    { key: 'music_spiritual_atmosphere', label: '属灵氛围' },
+                    { key: 'music_song_balance', label: '新旧诗歌平衡' },
+                    { key: 'sermon_clarity', label: '讲道清晰' },
+                    { key: 'sermon_biblical', label: '忠于圣经' },
+                    { key: 'sermon_application', label: '生活应用' },
+                    { key: 'sermon_depth', label: '属灵深度' },
+                    { key: 'sermon_delivery', label: '表达感染' },
+                    { key: 'sermon_length', label: '长度合适' },
+                    { key: 'sermon_translation', label: '翻译质量' },
+                    { key: 'sermon_spiritual_growth', label: '灵命帮助' },
+                    { key: 'ss_adult_quality', label: '成人主日学' },
+                    { key: 'ss_children_program', label: '儿童事工' },
+                    { key: 'ss_youth_program', label: '青少年事工' },
+                    { key: 'ss_teacher_quality', label: '教师水平' },
+                    { key: 'ss_curriculum', label: '课程内容' },
+                    { key: 'ss_safety', label: '儿童安全' },
+                    { key: 'ss_class_arrangement', label: '班级安排' },
+                    { key: 'overall_satisfaction', label: '整体满意度' },
+                    { key: 'fellowship_feeling', label: '团契归属' },
+                    { key: 'pastoral_care', label: '牧养关怀' },
+                  ];
+                  const openFields: { key: string; label: string }[] = [
+                    { key: 'flow_comments', label: '流程建议' },
+                    { key: 'music_comments', label: '诗歌建议' },
+                    { key: 'sermon_comments', label: '讲道建议' },
+                    { key: 'ss_comments', label: '主日学建议' },
+                    { key: 'most_appreciated', label: '最感恩' },
+                    { key: 'most_improvement', label: '最希望改进' },
+                    { key: 'topics_requested', label: '希望讲题' },
+                    { key: 'ministry_interest', label: '愿意服事' },
+                    { key: 'prayer_request', label: '代祷事项' },
+                    { key: 'additional_comments', label: '其他建议' },
+                  ];
+                  return (
+                    <Card key={item.id} className={item.status === 'new' ? 'border-accent/50' : ''}>
+                      <CardContent className="py-4">
+                        <div className="flex items-start justify-between gap-4 mb-2">
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
+                              {item.status === 'new' && <Clock className="h-4 w-4 text-amber-500" />}
+                              {item.status === 'reviewed' && <Eye className="h-4 w-4 text-blue-500" />}
+                              {item.status === 'archived' && <CheckCircle className="h-4 w-4 text-green-500" />}
+                              <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-muted">
+                                {item.status === 'new' ? '新' : item.status === 'reviewed' ? '已查看' : '已归档'}
+                              </span>
+                              <span className="text-xs text-muted-foreground">{new Date(item.created_at).toLocaleString('zh-CN')}</span>
+                              <span className="text-xs text-muted-foreground">语言: {item.language_used}</span>
+                              {item.overall_satisfaction && (
+                                <span className="text-xs flex items-center gap-0.5 text-amber-600">
+                                  <Star className="h-3 w-3 fill-current" /> {item.overall_satisfaction}/5
+                                </span>
+                              )}
+                              {item.recommend_score !== null && item.recommend_score !== undefined && (
+                                <span className="text-xs text-blue-600">推荐: {item.recommend_score}/10</span>
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              {item.member_status && <>身份: {item.member_status} · </>}
+                              {item.age_group && <>年龄: {item.age_group} · </>}
+                              {item.attendance_frequency && <>频率: {item.attendance_frequency}</>}
+                            </p>
+                          </div>
+                          <div className="flex gap-1 flex-shrink-0">
+                            <Button variant="ghost" size="sm" onClick={() => setSurveyExpandedId(isOpen ? null : item.id)}>
+                              {isOpen ? '收起' : '查看详情'}
+                            </Button>
+                            {item.status !== 'reviewed' && (
+                              <Button variant="ghost" size="sm" onClick={() => handleUpdateSurveyStatus(item.id, 'reviewed')} title="标记已查看">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            )}
+                            {item.status !== 'archived' && (
+                              <Button variant="ghost" size="sm" onClick={() => handleUpdateSurveyStatus(item.id, 'archived')} title="归档">
+                                <CheckCircle className="h-4 w-4" />
+                              </Button>
+                            )}
+                            <Button variant="ghost" size="icon" onClick={() => handleDeleteSurvey(item.id)}>
+                              <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
+                          </div>
+                        </div>
+                        {isOpen && (
+                          <div className="mt-3 pt-3 border-t space-y-3">
+                            <div>
+                              <p className="text-xs font-semibold text-muted-foreground mb-2">评分明细 (1-5)</p>
+                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-1 text-xs">
+                                {ratingFields.filter(f => item[f.key]).map(f => (
+                                  <div key={f.key} className="flex justify-between">
+                                    <span className="text-muted-foreground truncate">{f.label}</span>
+                                    <span className="font-medium">{item[f.key]}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            {openFields.some(f => item[f.key]) && (
+                              <div>
+                                <p className="text-xs font-semibold text-muted-foreground mb-2">文字反馈</p>
+                                <div className="space-y-2">
+                                  {openFields.filter(f => item[f.key]).map(f => (
+                                    <div key={f.key} className="text-sm">
+                                      <p className="text-xs font-medium text-primary mb-0.5">{f.label}</p>
+                                      <p className="text-foreground whitespace-pre-wrap pl-2 border-l-2 border-border">{item[f.key]}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>}
+          </TabsContent>
         </Tabs>
       </div>
     </div>
