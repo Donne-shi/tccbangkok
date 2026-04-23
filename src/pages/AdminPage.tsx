@@ -585,7 +585,7 @@ function AdminDashboard() {
   }, []);
 
   const fetchSurveys = useCallback(async () => {
-    const { data } = await supabase.from('worship_survey_responses').select('*').order('created_at', { ascending: false });
+    const { data } = await supabase.from('church_survey_responses').select('*').order('created_at', { ascending: false });
     if (data) setSurveys(data as any);
     setSurveysLoading(false);
   }, []);
@@ -635,12 +635,12 @@ function AdminDashboard() {
 
   const handleDeleteSurvey = async (id: string) => {
     if (!confirm('确定删除此问卷回应？')) return;
-    const { error } = await supabase.from('worship_survey_responses').delete().eq('id', id);
+    const { error } = await supabase.from('church_survey_responses').delete().eq('id', id);
     if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchSurveys(); }
   };
 
   const handleUpdateSurveyStatus = async (id: string, status: string) => {
-    const { error } = await supabase.from('worship_survey_responses').update({ status }).eq('id', id);
+    const { error } = await supabase.from('church_survey_responses').update({ status }).eq('id', id);
     if (error) toast({ title: '更新失败', variant: 'destructive' }); else { toast({ title: '状态已更新' }); fetchSurveys(); }
   };
 
@@ -950,6 +950,13 @@ function AdminDashboard() {
                 {surveys.map(item => {
                   const isOpen = surveyExpandedId === item.id;
                   const ratingFields: { key: string; label: string }[] = [
+                    // 教会整体
+                    { key: 'overall_satisfaction', label: '整体满意度' },
+                    { key: 'belonging_feeling', label: '归属感' },
+                    { key: 'spiritual_growth', label: '属灵成长' },
+                    { key: 'vision_alignment', label: '异象认同' },
+                    { key: 'welcome_atmosphere', label: '欢迎氛围' },
+                    // 流程
                     { key: 'flow_overall', label: '整体流程' },
                     { key: 'flow_duration', label: '时长' },
                     { key: 'flow_transitions', label: '环节衔接' },
@@ -958,44 +965,62 @@ function AdminDashboard() {
                     { key: 'flow_welcome', label: '招待迎新' },
                     { key: 'flow_environment', label: '场地环境' },
                     { key: 'flow_av', label: '音响投影' },
+                    // 诗歌
                     { key: 'music_song_selection', label: '选曲' },
                     { key: 'music_theological_depth', label: '神学深度' },
                     { key: 'music_singability', label: '易跟唱' },
                     { key: 'music_volume', label: '音量' },
-                    { key: 'music_band_quality', label: '敬拜团水平' },
                     { key: 'music_leader', label: '敬拜带领' },
                     { key: 'music_lyrics_display', label: '歌词投影' },
                     { key: 'music_spiritual_atmosphere', label: '属灵氛围' },
                     { key: 'music_song_balance', label: '新旧诗歌平衡' },
+                    // 讲道
                     { key: 'sermon_clarity', label: '讲道清晰' },
                     { key: 'sermon_biblical', label: '忠于圣经' },
                     { key: 'sermon_application', label: '生活应用' },
                     { key: 'sermon_depth', label: '属灵深度' },
                     { key: 'sermon_delivery', label: '表达感染' },
                     { key: 'sermon_length', label: '长度合适' },
-                    { key: 'sermon_translation', label: '翻译质量' },
                     { key: 'sermon_spiritual_growth', label: '灵命帮助' },
+                    // 主日学
                     { key: 'ss_adult_quality', label: '成人主日学' },
                     { key: 'ss_children_program', label: '儿童事工' },
                     { key: 'ss_youth_program', label: '青少年事工' },
                     { key: 'ss_teacher_quality', label: '教师水平' },
                     { key: 'ss_curriculum', label: '课程内容' },
                     { key: 'ss_safety', label: '儿童安全' },
-                    { key: 'ss_class_arrangement', label: '班级安排' },
-                    { key: 'overall_satisfaction', label: '整体满意度' },
-                    { key: 'fellowship_feeling', label: '团契归属' },
+                    // 牧养
                     { key: 'pastoral_care', label: '牧养关怀' },
+                    { key: 'pastoral_availability', label: '牧者可接触' },
+                    { key: 'pastoral_visitation', label: '探访关怀' },
+                    { key: 'pastoral_counseling', label: '辅导支持' },
+                    // 小组团契
+                    { key: 'smallgroup_quality', label: '小组品质' },
+                    { key: 'smallgroup_belonging', label: '小组归属' },
+                    { key: 'fellowship_feeling', label: '团契相交' },
+                    // 事工
+                    { key: 'ministry_opportunity', label: '服事机会清晰' },
+                    { key: 'ministry_training', label: '培训装备' },
+                    { key: 'ministry_support', label: '服事支持' },
+                    // 沟通
+                    { key: 'comm_announcements', label: '通知及时' },
+                    { key: 'comm_website', label: '网站信息' },
+                    { key: 'comm_social_media', label: '社媒沟通' },
+                    { key: 'comm_transparency', label: '透明度' },
                   ];
                   const openFields: { key: string; label: string }[] = [
+                    { key: 'church_impression_comments', label: '教会整体建议' },
                     { key: 'flow_comments', label: '流程建议' },
                     { key: 'music_comments', label: '诗歌建议' },
                     { key: 'sermon_comments', label: '讲道建议' },
                     { key: 'ss_comments', label: '主日学建议' },
+                    { key: 'pastoral_comments', label: '牧养建议' },
+                    { key: 'fellowship_comments', label: '小组团契建议' },
+                    { key: 'ministry_comments', label: '事工参与建议' },
+                    { key: 'comm_comments', label: '沟通建议' },
                     { key: 'most_appreciated', label: '最感恩' },
                     { key: 'most_improvement', label: '最希望改进' },
                     { key: 'topics_requested', label: '希望讲题' },
-                    { key: 'ministry_interest', label: '愿意服事' },
-                    { key: 'prayer_request', label: '代祷事项' },
                     { key: 'additional_comments', label: '其他建议' },
                   ];
                   return (
