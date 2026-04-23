@@ -585,7 +585,7 @@ function AdminDashboard() {
   }, []);
 
   const fetchSurveys = useCallback(async () => {
-    const { data } = await supabase.from('worship_survey_responses').select('*').order('created_at', { ascending: false });
+    const { data } = await supabase.from('church_survey_responses').select('*').order('created_at', { ascending: false });
     if (data) setSurveys(data as any);
     setSurveysLoading(false);
   }, []);
@@ -635,12 +635,12 @@ function AdminDashboard() {
 
   const handleDeleteSurvey = async (id: string) => {
     if (!confirm('确定删除此问卷回应？')) return;
-    const { error } = await supabase.from('worship_survey_responses').delete().eq('id', id);
+    const { error } = await supabase.from('church_survey_responses').delete().eq('id', id);
     if (error) toast({ title: '删除失败', variant: 'destructive' }); else { toast({ title: '已删除' }); fetchSurveys(); }
   };
 
   const handleUpdateSurveyStatus = async (id: string, status: string) => {
-    const { error } = await supabase.from('worship_survey_responses').update({ status }).eq('id', id);
+    const { error } = await supabase.from('church_survey_responses').update({ status }).eq('id', id);
     if (error) toast({ title: '更新失败', variant: 'destructive' }); else { toast({ title: '状态已更新' }); fetchSurveys(); }
   };
 
