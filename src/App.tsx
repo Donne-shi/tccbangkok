@@ -23,6 +23,8 @@ import GivingPage from "./pages/GivingPage.tsx";
 import SundaySchoolPage from "./pages/SundaySchoolPage.tsx";
 import YouthWorshipPage from "./pages/YouthWorshipPage.tsx";
 import YouthMinistryPage from "./pages/YouthMinistryPage.tsx";
+import YouthVolunteerFormPage from "./pages/YouthVolunteerFormPage.tsx";
+import YouthFellowshipFormPage from "./pages/YouthFellowshipFormPage.tsx";
 import YouthResourcesPage from "./pages/YouthResourcesPage.tsx";
 import AlphaYouthPage from "./pages/AlphaYouthPage.tsx";
 import JohnSungBiographyPage from "./pages/JohnSungBiographyPage.tsx";
