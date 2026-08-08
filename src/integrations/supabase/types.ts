@@ -506,6 +506,221 @@ export type Database = {
         }
         Relationships: []
       }
+      youth_groups: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          leader: string
+          name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: string
+          leader?: string
+          name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          leader?: string
+          name?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      youth_members: {
+        Row: {
+          attendance: string | null
+          birth_date: string | null
+          care_notes: string | null
+          contact: string | null
+          contact_consent: boolean
+          created_at: string
+          current_serving: string | null
+          faith_status: string | null
+          fellowship_hope: string | null
+          first_attended_date: string | null
+          follow_up: string | null
+          full_name: string
+          gender: string | null
+          grade: string | null
+          group_id: string | null
+          growth_stage: string | null
+          guardian_consent: boolean
+          guardian_contact: string | null
+          guardian_name: string | null
+          guardian_relation: string | null
+          id: string
+          interests: Json
+          interests_other: string | null
+          mentor: string | null
+          nickname: string | null
+          profile_status: string
+          school: string | null
+          service_interests: Json
+          updated_at: string
+        }
+        Insert: {
+          attendance?: string | null
+          birth_date?: string | null
+          care_notes?: string | null
+          contact?: string | null
+          contact_consent?: boolean
+          created_at?: string
+          current_serving?: string | null
+          faith_status?: string | null
+          fellowship_hope?: string | null
+          first_attended_date?: string | null
+          follow_up?: string | null
+          full_name: string
+          gender?: string | null
+          grade?: string | null
+          group_id?: string | null
+          growth_stage?: string | null
+          guardian_consent?: boolean
+          guardian_contact?: string | null
+          guardian_name?: string | null
+          guardian_relation?: string | null
+          id?: string
+          interests?: Json
+          interests_other?: string | null
+          mentor?: string | null
+          nickname?: string | null
+          profile_status?: string
+          school?: string | null
+          service_interests?: Json
+          updated_at?: string
+        }
+        Update: {
+          attendance?: string | null
+          birth_date?: string | null
+          care_notes?: string | null
+          contact?: string | null
+          contact_consent?: boolean
+          created_at?: string
+          current_serving?: string | null
+          faith_status?: string | null
+          fellowship_hope?: string | null
+          first_attended_date?: string | null
+          follow_up?: string | null
+          full_name?: string
+          gender?: string | null
+          grade?: string | null
+          group_id?: string | null
+          growth_stage?: string | null
+          guardian_consent?: boolean
+          guardian_contact?: string | null
+          guardian_name?: string | null
+          guardian_relation?: string | null
+          id?: string
+          interests?: Json
+          interests_other?: string | null
+          mentor?: string | null
+          nickname?: string | null
+          profile_status?: string
+          school?: string | null
+          service_interests?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "youth_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "youth_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      youth_volunteer_applications: {
+        Row: {
+          admin_notes: string | null
+          age: number | null
+          agree_training: boolean
+          available_times: Json
+          available_times_other: string | null
+          baptized: string | null
+          church_relation: string | null
+          church_relation_other: string | null
+          commit_half_year: string | null
+          contact: string
+          created_at: string
+          desired_roles: Json
+          experience_detail: string | null
+          faith_years: string | null
+          full_name: string
+          gender: string | null
+          has_experience: string | null
+          id: string
+          monthly_frequency: string | null
+          motivation: string | null
+          skill_areas: Json
+          skill_areas_other: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          age?: number | null
+          agree_training?: boolean
+          available_times?: Json
+          available_times_other?: string | null
+          baptized?: string | null
+          church_relation?: string | null
+          church_relation_other?: string | null
+          commit_half_year?: string | null
+          contact?: string
+          created_at?: string
+          desired_roles?: Json
+          experience_detail?: string | null
+          faith_years?: string | null
+          full_name: string
+          gender?: string | null
+          has_experience?: string | null
+          id?: string
+          monthly_frequency?: string | null
+          motivation?: string | null
+          skill_areas?: Json
+          skill_areas_other?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          age?: number | null
+          agree_training?: boolean
+          available_times?: Json
+          available_times_other?: string | null
+          baptized?: string | null
+          church_relation?: string | null
+          church_relation_other?: string | null
+          commit_half_year?: string | null
+          contact?: string
+          created_at?: string
+          desired_roles?: Json
+          experience_detail?: string | null
+          faith_years?: string | null
+          full_name?: string
+          gender?: string | null
+          has_experience?: string | null
+          id?: string
+          monthly_frequency?: string | null
+          motivation?: string | null
+          skill_areas?: Json
+          skill_areas_other?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

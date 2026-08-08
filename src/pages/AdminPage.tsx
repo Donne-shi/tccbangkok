@@ -7,8 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2, MessageSquare, CheckCircle, Clock, Eye, Globe, ClipboardList, Star } from 'lucide-react';
+import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2, MessageSquare, CheckCircle, Clock, Eye, Globe, ClipboardList, Star, Users } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import YouthAdmin from '@/components/admin/YouthAdmin';
 
 interface LinkItem { title: string; url: string; }
 
@@ -680,7 +681,16 @@ function AdminDashboard() {
                 </span>
               )}
             </TabsTrigger>
+            <TabsTrigger value="youth" className="flex items-center gap-1">
+              <Users className="h-4 w-4" /> 青少年事工
+            </TabsTrigger>
           </TabsList>
+
+          {/* ── Youth Ministry Tab ── */}
+          <TabsContent value="youth">
+            <YouthAdmin />
+          </TabsContent>
+
 
           {/* ── Sunday School Tab ── */}
           <TabsContent value="sunday-school">

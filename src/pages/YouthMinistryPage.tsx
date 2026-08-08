@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { LanguageProvider, useLanguage } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
-import { ArrowLeft, BookOpen, Music, ExternalLink, Users } from 'lucide-react';
+import { ArrowLeft, BookOpen, Music, ExternalLink, Users, ClipboardList, HeartHandshake, UserPlus } from 'lucide-react';
 
 function YouthMinistryContent() {
   const { language } = useLanguage();
@@ -50,6 +50,60 @@ function YouthMinistryContent() {
           <h1 className="font-heading text-3xl md:text-4xl font-bold text-foreground">{heading}</h1>
         </div>
         <p className="text-muted-foreground mb-10">{subtitle}</p>
+        {/* Forms */}
+        <div className="mb-10">
+          <h2 className="font-heading text-2xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <ClipboardList className="h-5 w-5 text-accent" />
+            {language === 'zh' ? '表单登记' : language === 'th' ? 'แบบฟอร์มลงทะเบียน' : 'Registration Forms'}
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Link
+              to="/ministries/youth/volunteer-application"
+              className="block bg-card rounded-lg p-6 shadow-sm border border-border hover:border-accent/50 transition-colors group"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <HeartHandshake className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-1">
+                    {language === 'zh' ? '青少年服侍同工申请表'
+                      : language === 'th' ? 'ใบสมัครผู้รับใช้เยาวชน'
+                      : 'Youth Ministry Co-worker Application'}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {language === 'zh' ? '愿意加入青少年服侍团队的弟兄姊妹请填写。'
+                      : language === 'th' ? 'สำหรับผู้ที่ต้องการร่วมรับใช้ในทีมเยาวชน'
+                      : 'For those willing to serve on the youth ministry team.'}
+                  </p>
+                </div>
+              </div>
+            </Link>
+            <Link
+              to="/ministries/youth/fellowship-form"
+              className="block bg-card rounded-lg p-6 shadow-sm border border-border hover:border-accent/50 transition-colors group"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                  <UserPlus className="h-5 w-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-1">
+                    {language === 'zh' ? '青少年团契参与信息表'
+                      : language === 'th' ? 'แบบฟอร์มข้อมูลผู้เข้าร่วมกลุ่มเยาวชน'
+                      : 'Youth Fellowship Participation Form'}
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {language === 'zh' ? '参加团契的青少年请填写，我们将安排小组与关怀同工。'
+                      : language === 'th' ? 'สำหรับเยาวชนที่เข้าร่วมกลุ่ม เพื่อจัดกลุ่มและผู้ดูแล'
+                      : 'For youth joining fellowship; we will assign a group and mentor.'}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+
 
         {/* Youth Worship Team */}
         <div className="mb-10">
