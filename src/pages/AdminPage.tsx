@@ -680,7 +680,16 @@ function AdminDashboard() {
                 </span>
               )}
             </TabsTrigger>
+            <TabsTrigger value="youth" className="flex items-center gap-1">
+              <Users className="h-4 w-4" /> 青少年事工
+            </TabsTrigger>
           </TabsList>
+
+          {/* ── Youth Ministry Tab ── */}
+          <TabsContent value="youth">
+            <YouthAdmin />
+          </TabsContent>
+
 
           {/* ── Sunday School Tab ── */}
           <TabsContent value="sunday-school">
