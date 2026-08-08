@@ -89,7 +89,7 @@ export default function YouthAdmin() {
     const d = drafts[m.id];
     if (!d) return;
     setSavingId(m.id);
-    const { error } = await supabase.from('youth_members').update(d).eq('id', m.id);
+    const { error } = await supabase.from('youth_members').update(d as never).eq('id', m.id);
     setSavingId(null);
     if (error) { toast({ title: '保存失败', variant: 'destructive' }); return; }
     setDrafts(prev => { const n = { ...prev }; delete n[m.id]; return n; });
