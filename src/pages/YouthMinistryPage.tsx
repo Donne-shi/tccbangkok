@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { LanguageProvider, useLanguage } from '@/i18n/LanguageContext';
 import PageLayout from '@/components/PageLayout';
-import { ArrowLeft, BookOpen, Music, ExternalLink, Users } from 'lucide-react';
+import { ArrowLeft, BookOpen, Music, ExternalLink, Users, ClipboardList, HeartHandshake, UserPlus } from 'lucide-react';
 
 function YouthMinistryContent() {
   const { language } = useLanguage();
