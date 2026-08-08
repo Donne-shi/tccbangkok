@@ -53,6 +53,8 @@ const App = () => (
           <Route path="/ministries" element={<MinistriesPage />} />
           <Route path="/ministries/hymns" element={<HymnRecommendationPage />} />
           <Route path="/ministries/youth" element={<YouthMinistryPage />} />
+          <Route path="/ministries/youth/volunteer-application" element={<YouthVolunteerFormPage />} />
+          <Route path="/ministries/youth/fellowship-form" element={<YouthFellowshipFormPage />} />
           <Route path="/ministries/youth-worship" element={<YouthWorshipPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/resources/theology-series" element={<TheologySeriesPage />} />
