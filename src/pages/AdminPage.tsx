@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Trash2, Plus, X, Lock, Upload, Edit2, Music, Video, BookOpen, DollarSign, Image, FileText, Loader2, MessageSquare, CheckCircle, Clock, Eye, Globe, ClipboardList, Star, Users } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import YouthAdmin from '@/components/admin/YouthAdmin';
+import PastoralAdmin from '@/components/admin/PastoralAdmin';
+import { setPastoralPassword } from '@/lib/pastoral';
 
 interface LinkItem { title: string; url: string; }
 
@@ -60,7 +62,7 @@ function LoginForm({ onLogin }: { onLogin: () => void }) {
     try {
       const { data, error: fnError } = await supabase.functions.invoke('verify-admin', { body: { password } });
       if (fnError) throw fnError;
-      if (data?.valid) { sessionStorage.setItem('admin_verified', 'true'); onLogin(); }
+      if (data?.valid) { sessionStorage.setItem('admin_verified', 'true'); setPastoralPassword('admin', password); onLogin(); }
       else setError('密码错误');
     } catch { setError('验证失败，请稍后重试'); }
     setLoading(false);
@@ -681,12 +683,19 @@ function AdminDashboard() {
                 </span>
               )}
             </TabsTrigger>
+            <TabsTrigger value="pastoral" className="flex items-center gap-1">
+              <Users className="h-4 w-4" />会友牧养
+            </TabsTrigger>
             <TabsTrigger value="youth" className="flex items-center gap-1">
               <Users className="h-4 w-4" /> 青少年事工
             </TabsTrigger>
           </TabsList>
 
           {/* ── Youth Ministry Tab ── */}
+          <TabsContent value="pastoral">
+            <PastoralAdmin />
+          </TabsContent>
+
           <TabsContent value="youth">
             <YouthAdmin />
           </TabsContent>
