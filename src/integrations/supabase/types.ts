@@ -344,6 +344,96 @@ export type Database = {
         }
         Relationships: []
       }
+      household_members: {
+        Row: {
+          created_at: string
+          household_id: string
+          id: string
+          is_primary_contact: boolean
+          person_id: string
+          relationship: string
+        }
+        Insert: {
+          created_at?: string
+          household_id: string
+          id?: string
+          is_primary_contact?: boolean
+          person_id: string
+          relationship?: string
+        }
+        Update: {
+          created_at?: string
+          household_id?: string
+          id?: string
+          is_primary_contact?: boolean
+          person_id?: string
+          relationship?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "household_members_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "household_members_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      households: {
+        Row: {
+          address: string | null
+          created_at: string
+          group_id: string | null
+          household_name: string
+          id: string
+          notes: string | null
+          primary_contact_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          group_id?: string | null
+          household_name: string
+          id?: string
+          notes?: string | null
+          primary_contact_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          group_id?: string | null
+          household_name?: string
+          id?: string
+          notes?: string | null
+          primary_contact_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "households_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "youth_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "households_primary_contact_id_fkey"
+            columns: ["primary_contact_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       learning_resources: {
         Row: {
           created_at: string
@@ -400,6 +490,276 @@ export type Database = {
           url?: string | null
         }
         Relationships: []
+      }
+      member_applications: {
+        Row: {
+          agrees_confession: string | null
+          agrees_covenant: boolean
+          attending_duration: string | null
+          baptism_church: string | null
+          baptism_date: string | null
+          birth_date: string | null
+          created_at: string
+          current_group: string | null
+          email: string | null
+          faith_date: string | null
+          full_name: string
+          gender: string | null
+          id: string
+          internal_notes: string | null
+          is_baptized: string | null
+          is_believer: string | null
+          marital_status: string | null
+          occupation: string | null
+          person_id: string | null
+          phone: string
+          reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          updated_at: string
+          wechat: string | null
+        }
+        Insert: {
+          agrees_confession?: string | null
+          agrees_covenant?: boolean
+          attending_duration?: string | null
+          baptism_church?: string | null
+          baptism_date?: string | null
+          birth_date?: string | null
+          created_at?: string
+          current_group?: string | null
+          email?: string | null
+          faith_date?: string | null
+          full_name: string
+          gender?: string | null
+          id?: string
+          internal_notes?: string | null
+          is_baptized?: string | null
+          is_believer?: string | null
+          marital_status?: string | null
+          occupation?: string | null
+          person_id?: string | null
+          phone?: string
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          wechat?: string | null
+        }
+        Update: {
+          agrees_confession?: string | null
+          agrees_covenant?: boolean
+          attending_duration?: string | null
+          baptism_church?: string | null
+          baptism_date?: string | null
+          birth_date?: string | null
+          created_at?: string
+          current_group?: string | null
+          email?: string | null
+          faith_date?: string | null
+          full_name?: string
+          gender?: string | null
+          id?: string
+          internal_notes?: string | null
+          is_baptized?: string | null
+          is_believer?: string | null
+          marital_status?: string | null
+          occupation?: string | null
+          person_id?: string | null
+          phone?: string
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          wechat?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_applications_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      member_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          effective_date: string
+          id: string
+          member_id: string
+          new_status: string
+          note: string | null
+          previous_status: string | null
+          reason: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          effective_date?: string
+          id?: string
+          member_id: string
+          new_status: string
+          note?: string | null
+          previous_status?: string | null
+          reason?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          effective_date?: string
+          id?: string
+          member_id?: string
+          new_status?: string
+          note?: string | null
+          previous_status?: string | null
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_status_history_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "members"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      members: {
+        Row: {
+          application_id: string | null
+          approved_at: string | null
+          approved_by: string | null
+          baptism_church: string | null
+          baptism_date: string | null
+          baptism_status: string | null
+          created_at: string
+          faith_date: string | null
+          id: string
+          joined_at: string | null
+          member_number: string | null
+          member_status: string
+          person_id: string
+          updated_at: string
+        }
+        Insert: {
+          application_id?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          baptism_church?: string | null
+          baptism_date?: string | null
+          baptism_status?: string | null
+          created_at?: string
+          faith_date?: string | null
+          id?: string
+          joined_at?: string | null
+          member_number?: string | null
+          member_status?: string
+          person_id: string
+          updated_at?: string
+        }
+        Update: {
+          application_id?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          baptism_church?: string | null
+          baptism_date?: string | null
+          baptism_status?: string | null
+          created_at?: string
+          faith_date?: string | null
+          id?: string
+          joined_at?: string | null
+          member_number?: string | null
+          member_status?: string
+          person_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "members_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "member_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "members_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: true
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      people: {
+        Row: {
+          address: string | null
+          birth_date: string | null
+          created_at: string
+          email: string | null
+          full_name: string
+          gender: string | null
+          group_id: string | null
+          id: string
+          marital_status: string | null
+          notes: string | null
+          occupation: string | null
+          phone: string | null
+          photo_url: string | null
+          updated_at: string
+          user_id: string | null
+          wechat: string | null
+        }
+        Insert: {
+          address?: string | null
+          birth_date?: string | null
+          created_at?: string
+          email?: string | null
+          full_name: string
+          gender?: string | null
+          group_id?: string | null
+          id?: string
+          marital_status?: string | null
+          notes?: string | null
+          occupation?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          updated_at?: string
+          user_id?: string | null
+          wechat?: string | null
+        }
+        Update: {
+          address?: string | null
+          birth_date?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          gender?: string | null
+          group_id?: string | null
+          id?: string
+          marital_status?: string | null
+          notes?: string | null
+          occupation?: string | null
+          phone?: string | null
+          photo_url?: string | null
+          updated_at?: string
+          user_id?: string | null
+          wechat?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "people_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "youth_groups"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sermons: {
         Row: {
@@ -505,6 +865,254 @@ export type Database = {
           year?: number
         }
         Relationships: []
+      }
+      visit_expenses: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          expense_type: string | null
+          id: string
+          paid_by: string | null
+          reimbursement_id: string | null
+          reimbursement_status: string
+          visit_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          description?: string
+          expense_type?: string | null
+          id?: string
+          paid_by?: string | null
+          reimbursement_id?: string | null
+          reimbursement_status?: string
+          visit_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          expense_type?: string | null
+          id?: string
+          paid_by?: string | null
+          reimbursement_id?: string | null
+          reimbursement_status?: string
+          visit_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visit_expenses_visit_id_fkey"
+            columns: ["visit_id"]
+            isOneToOne: false
+            referencedRelation: "visits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      visit_people: {
+        Row: {
+          created_at: string
+          id: string
+          person_id: string
+          visit_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          person_id: string
+          visit_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          person_id?: string
+          visit_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visit_people_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "visit_people_visit_id_fkey"
+            columns: ["visit_id"]
+            isOneToOne: false
+            referencedRelation: "visits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      visit_staff: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          name: string
+          person_id: string | null
+          role_title: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          person_id?: string | null
+          role_title?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          person_id?: string | null
+          role_title?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visit_staff_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      visit_visitors: {
+        Row: {
+          created_at: string
+          id: string
+          visit_id: string
+          visitor_id: string | null
+          visitor_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          visit_id: string
+          visitor_id?: string | null
+          visitor_name?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          visit_id?: string
+          visitor_id?: string | null
+          visitor_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visit_visitors_visit_id_fkey"
+            columns: ["visit_id"]
+            isOneToOne: false
+            referencedRelation: "visits"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "visit_visitors_visitor_id_fkey"
+            columns: ["visitor_id"]
+            isOneToOne: false
+            referencedRelation: "visit_staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      visits: {
+        Row: {
+          created_at: string
+          follow_up_completed_at: string | null
+          follow_up_completed_by: string | null
+          follow_up_completed_note: string | null
+          follow_up_date: string | null
+          follow_up_note: string | null
+          follow_up_required: boolean
+          follow_up_status: string
+          household_id: string | null
+          id: string
+          notes: string | null
+          primary_person_id: string | null
+          recorder_id: string | null
+          recorder_name: string | null
+          updated_at: string
+          visit_date: string
+          visit_method: string
+          visit_time: string | null
+          visit_type: string
+        }
+        Insert: {
+          created_at?: string
+          follow_up_completed_at?: string | null
+          follow_up_completed_by?: string | null
+          follow_up_completed_note?: string | null
+          follow_up_date?: string | null
+          follow_up_note?: string | null
+          follow_up_required?: boolean
+          follow_up_status?: string
+          household_id?: string | null
+          id?: string
+          notes?: string | null
+          primary_person_id?: string | null
+          recorder_id?: string | null
+          recorder_name?: string | null
+          updated_at?: string
+          visit_date?: string
+          visit_method?: string
+          visit_time?: string | null
+          visit_type?: string
+        }
+        Update: {
+          created_at?: string
+          follow_up_completed_at?: string | null
+          follow_up_completed_by?: string | null
+          follow_up_completed_note?: string | null
+          follow_up_date?: string | null
+          follow_up_note?: string | null
+          follow_up_required?: boolean
+          follow_up_status?: string
+          household_id?: string | null
+          id?: string
+          notes?: string | null
+          primary_person_id?: string | null
+          recorder_id?: string | null
+          recorder_name?: string | null
+          updated_at?: string
+          visit_date?: string
+          visit_method?: string
+          visit_time?: string | null
+          visit_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visits_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "visits_primary_person_id_fkey"
+            columns: ["primary_person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "visits_recorder_id_fkey"
+            columns: ["recorder_id"]
+            isOneToOne: false
+            referencedRelation: "visit_staff"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       youth_groups: {
         Row: {
