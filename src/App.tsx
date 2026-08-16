@@ -31,6 +31,7 @@ import JohnSungBiographyPage from "./pages/JohnSungBiographyPage.tsx";
 import DevotionalsPage from "./pages/DevotionalsPage.tsx";
 import DevotionalDetailPage from "./pages/DevotionalDetailPage.tsx";
 import AdminPage from "./pages/AdminPage.tsx";
+import VisitPage from "./pages/VisitPage.tsx";
 import SurveyPage from "./pages/SurveyPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -71,6 +72,7 @@ const App = () => (
           <Route path="/devotionals" element={<DevotionalsPage />} />
           <Route path="/devotionals/:slug" element={<DevotionalDetailPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/visit" element={<VisitPage />} />
           <Route path="/survey" element={<SurveyPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
