@@ -227,33 +227,42 @@ async function handle(action: string, payload: Record<string, unknown>, role: Ro
     /* ---------- 人员 ---------- */
     case 'people.search': {
       const q = str(payload.q, 80) ?? '';
-      let query = supabase.from('people').select('*').order('full_name').limit(role === 'visit' ? 20 : 500);
+      let query = supabase.from('people').select('*').order('full_name').limit(role === 'visit' ? 20 : 1000);
       if (q) query = query.or(`full_name.ilike.${like(q)},phone.ilike.${like(q)},email.ilike.${like(q)}`);
       const { data, error } = await query;
       if (error) throw error;
       if (role === 'visit') {
         return { people: (data ?? []).map((p) => ({ id: p.id, full_name: p.full_name, phone: p.phone, gender: p.gender })) };
       }
+      const cfg = await ageConfig();
       const ids = (data ?? []).map((p) => p.id);
-      const [{ data: members }, { data: hms }, { data: hhs }] = await Promise.all([
-        supabase.from('members').select('person_id, member_status, joined_at, member_number').in('person_id', ids),
+      const [{ data: hms }, { data: hhs }, { data: youth }] = await Promise.all([
         supabase.from('household_members').select('person_id, household_id, relationship').in('person_id', ids),
-        supabase.from('households').select('id, household_name'),
+        supabase.from('households').select('id, household_name, membership_status'),
+        supabase.from('youth_members').select('id, person_id').in('person_id', ids),
       ]);
-      const mMap = new Map((members ?? []).map((m) => [m.person_id, m]));
-      const hMap = new Map((hhs ?? []).map((h) => [h.id, h.household_name]));
-      return {
-        people: (data ?? []).map((p) => {
-          const hm = (hms ?? []).find((h) => h.person_id === p.id);
-          return {
-            ...p,
-            member: mMap.get(p.id) ?? null,
-            household_id: hm?.household_id ?? null,
-            household_name: hm ? hMap.get(hm.household_id) ?? null : null,
-          };
-        }),
-      };
+      const hMap = new Map((hhs ?? []).map((h) => [h.id, h]));
+      const ySet = new Set((youth ?? []).map((y) => y.person_id));
+      let people = (data ?? []).map((p) => {
+        const hm = (hms ?? []).find((h) => h.person_id === p.id);
+        const hh = hm ? hMap.get(hm.household_id) : null;
+        return {
+          ...decoratePerson(p, cfg),
+          household_id: hm?.household_id ?? null,
+          household_name: hh?.household_name ?? null,
+          household_status: hh?.membership_status ?? null,
+          relationship: hm?.relationship ?? null,
+          in_youth_ministry: ySet.has(p.id),
+        };
+      });
+      const ag = str(payload.age_group, 20);
+      if (ag && ag !== 'all') people = people.filter((p) => p.age_group === ag);
+      const hhFilter = str(payload.household_state, 20);
+      if (hhFilter === 'member') people = people.filter((p) => p.household_status === 'active');
+      else if (hhFilter === 'none') people = people.filter((p) => !p.household_id);
+      return { people, age_groups: cfg };
     }
+
     case 'people.save': {
       const row = {
         full_name: str(payload.full_name, 120) ?? '',
