@@ -281,24 +281,17 @@ async function handle(action: string, payload: Record<string, unknown>, role: Ro
     }
     case 'people.detail': {
       const id = payload.id as string;
+      const cfg = await ageConfig();
       const { data: person, error } = await supabase.from('people').select('*').eq('id', id).single();
       if (error) throw error;
-      const [{ data: member }, { data: hms }] = await Promise.all([
-        supabase.from('members').select('*').eq('person_id', id).maybeSingle(),
+      const [{ data: hms }, { data: youth }] = await Promise.all([
         supabase.from('household_members').select('*, households(*)').eq('person_id', id),
+        supabase.from('youth_members').select('*').eq('person_id', id).maybeSingle(),
       ]);
-      let history: unknown[] = [];
-      if (member) {
-        const { data } = await supabase
-          .from('member_status_history')
-          .select('*')
-          .eq('member_id', member.id)
-          .order('effective_date', { ascending: false });
-        history = data ?? [];
-      }
       const visits = await visitsForPersonIds([id], (hms ?? []).map((h) => h.household_id));
-      return { person, member, households: hms ?? [], history, visits };
+      return { person: decoratePerson(person, cfg), households: hms ?? [], youth, visits };
     }
+
     case 'people.delete': {
       const { error } = await supabase.from('people').delete().eq('id', payload.id as string);
       if (error) throw error;
