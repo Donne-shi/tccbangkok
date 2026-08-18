@@ -11,7 +11,7 @@ const json = (body: unknown, status = 200) =>
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   });
 
-type Role = 'admin' | 'visit';
+type Role = 'admin' | 'visit' | 'public';
 
 // Actions the visitation portal (visit password) may call.
 const VISIT_ACTIONS = new Set([
@@ -22,6 +22,19 @@ const VISIT_ACTIONS = new Set([
   'people.search',
   'visits.create',
 ]);
+
+// Actions reachable without a password, guarded by a secret profile token.
+const PUBLIC_ACTIONS = new Set(['profile.get', 'profile.submit']);
+
+const HH_APP_STATUSES = new Set([
+  'pending',
+  'reviewing',
+  'approved_pending_profile',
+  'active',
+  'on_hold',
+  'rejected',
+]);
+const HH_STATUSES = new Set(['pending_profile', 'active', 'inactive', 'transferred', 'removed']);
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL')!,
@@ -34,6 +47,75 @@ const str = (v: unknown, max = 4000) =>
 const nullableDate = (v: unknown) => (typeof v === 'string' && v ? v : null);
 const like = (s: string) => `%${s.replace(/[%,]/g, '')}%`;
 
+/* ---------- 年龄与人员分类 ---------- */
+type AgeCfg = { child_max: number; youth_max: number };
+let ageCfgCache: AgeCfg | null = null;
+
+async function ageConfig(force = false): Promise<AgeCfg> {
+  if (ageCfgCache && !force) return ageCfgCache;
+  const { data } = await supabase.from('app_settings').select('value').eq('key', 'age_groups').maybeSingle();
+  const v = (data?.value ?? {}) as Partial<AgeCfg>;
+  ageCfgCache = { child_max: Number(v.child_max ?? 11), youth_max: Number(v.youth_max ?? 17) };
+  return ageCfgCache;
+}
+
+function ageOf(birth?: string | null): number | null {
+  if (!birth) return null;
+  const b = new Date(birth);
+  if (Number.isNaN(b.getTime())) return null;
+  const now = new Date();
+  let age = now.getUTCFullYear() - b.getUTCFullYear();
+  const m = now.getUTCMonth() - b.getUTCMonth();
+  if (m < 0 || (m === 0 && now.getUTCDate() < b.getUTCDate())) age--;
+  return age;
+}
+
+function groupOf(age: number | null, cfg: AgeCfg): 'child' | 'youth' | 'adult' | null {
+  if (age === null) return null;
+  if (age <= cfg.child_max) return 'child';
+  if (age <= cfg.youth_max) return 'youth';
+  return 'adult';
+}
+
+function decoratePerson<T extends Record<string, any>>(p: T, cfg: AgeCfg) {
+  const age = ageOf(p.birth_date);
+  return { ...p, age, age_group: groupOf(age, cfg) };
+}
+
+/** People 查重：手机 → 邮箱 → 姓名+生日；命中则补全资料，否则创建。 */
+async function findOrCreatePerson(fields: Record<string, unknown>, knownId?: string) {
+  const clean: Record<string, unknown> = {};
+  Object.entries(fields).forEach(([k, v]) => {
+    if (v !== null && v !== undefined && v !== '') clean[k] = v;
+  });
+  let existingId = knownId ?? null;
+  if (!existingId && fields.phone) {
+    const { data } = await supabase.from('people').select('id').eq('phone', fields.phone as string).limit(1);
+    existingId = data?.[0]?.id ?? null;
+  }
+  if (!existingId && fields.email) {
+    const { data } = await supabase.from('people').select('id').eq('email', fields.email as string).limit(1);
+    existingId = data?.[0]?.id ?? null;
+  }
+  if (!existingId && fields.birth_date) {
+    const { data } = await supabase
+      .from('people')
+      .select('id')
+      .eq('full_name', fields.full_name as string)
+      .eq('birth_date', fields.birth_date as string)
+      .limit(1);
+    existingId = data?.[0]?.id ?? null;
+  }
+  if (existingId) {
+    const { error } = await supabase.from('people').update(clean).eq('id', existingId);
+    if (error) throw error;
+    return existingId;
+  }
+  const { data, error } = await supabase.from('people').insert(clean).select('id').single();
+  if (error) throw error;
+  return data.id as string;
+}
+
 async function personSummaries(ids: string[]) {
   if (!ids.length) return [];
   const { data } = await supabase
@@ -42,6 +124,7 @@ async function personSummaries(ids: string[]) {
     .in('id', ids);
   return data ?? [];
 }
+
 
 async function visitsForPersonIds(personIds: string[], householdIds: string[]) {
   const visitIds = new Set<string>();
