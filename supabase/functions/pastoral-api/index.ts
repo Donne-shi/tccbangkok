@@ -277,6 +277,16 @@ async function handle(action: string, payload: Record<string, unknown>, role: Ro
         notes: str(payload.notes, 4000),
         photo_url: str(payload.photo_url, 500),
         group_id: (payload.group_id as string) || null,
+        is_believer: str(payload.is_believer, 20),
+        faith_date: nullableDate(payload.faith_date),
+        is_baptized: str(payload.is_baptized, 20),
+        baptism_date: nullableDate(payload.baptism_date),
+        baptism_church: str(payload.baptism_church, 160),
+        is_serving: payload.is_serving === true,
+        serving_notes: str(payload.serving_notes, 1000),
+        school: str(payload.school, 160),
+        grade: str(payload.grade, 60),
+
       };
       if (!row.full_name) throw new Error('姓名不能为空');
       if (payload.id) {
