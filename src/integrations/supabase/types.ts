@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          created_at: string
+          key: string
+          updated_at: string
+          value: Json
+        }
+        Insert: {
+          created_at?: string
+          key: string
+          updated_at?: string
+          value: Json
+        }
+        Update: {
+          created_at?: string
+          key?: string
+          updated_at?: string
+          value?: Json
+        }
+        Relationships: []
+      }
       church_survey_responses: {
         Row: {
           additional_comments: string | null
@@ -386,38 +407,202 @@ export type Database = {
           },
         ]
       }
-      households: {
+      household_membership_applications: {
         Row: {
           address: string | null
+          agrees_confession: string | null
+          agrees_covenant: boolean
+          applicant_name: string
+          attending_duration: string | null
           created_at: string
-          group_id: string | null
+          current_group: string | null
+          email: string | null
+          extra_info: string | null
+          household_id: string | null
           household_name: string
           id: string
-          notes: string | null
-          primary_contact_id: string | null
+          internal_notes: string | null
+          marital_status: string | null
+          phone: string
+          profile_submitted_at: string | null
+          profile_token: string
+          reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
           updated_at: string
+          wechat: string | null
         }
         Insert: {
           address?: string | null
+          agrees_confession?: string | null
+          agrees_covenant?: boolean
+          applicant_name: string
+          attending_duration?: string | null
           created_at?: string
-          group_id?: string | null
+          current_group?: string | null
+          email?: string | null
+          extra_info?: string | null
+          household_id?: string | null
           household_name: string
           id?: string
-          notes?: string | null
-          primary_contact_id?: string | null
+          internal_notes?: string | null
+          marital_status?: string | null
+          phone: string
+          profile_submitted_at?: string | null
+          profile_token?: string
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
           updated_at?: string
+          wechat?: string | null
         }
         Update: {
           address?: string | null
+          agrees_confession?: string | null
+          agrees_covenant?: boolean
+          applicant_name?: string
+          attending_duration?: string | null
           created_at?: string
+          current_group?: string | null
+          email?: string | null
+          extra_info?: string | null
+          household_id?: string | null
+          household_name?: string
+          id?: string
+          internal_notes?: string | null
+          marital_status?: string | null
+          phone?: string
+          profile_submitted_at?: string | null
+          profile_token?: string
+          reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          wechat?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "household_membership_applications_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      household_membership_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string
+          effective_date: string
+          household_id: string
+          id: string
+          internal_note: string | null
+          new_status: string
+          previous_status: string | null
+          reason: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string
+          effective_date?: string
+          household_id: string
+          id?: string
+          internal_note?: string | null
+          new_status: string
+          previous_status?: string | null
+          reason?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string
+          effective_date?: string
+          household_id?: string
+          id?: string
+          internal_note?: string | null
+          new_status?: string
+          previous_status?: string | null
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "household_membership_status_history_household_id_fkey"
+            columns: ["household_id"]
+            isOneToOne: false
+            referencedRelation: "households"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      households: {
+        Row: {
+          address: string | null
+          application_id: string | null
+          approved_at: string | null
+          approved_by: string | null
+          attending_since: string | null
+          created_at: string
+          email: string | null
+          group_id: string | null
+          household_name: string
+          id: string
+          membership_date: string | null
+          membership_status: string
+          notes: string | null
+          phone: string | null
+          primary_contact_id: string | null
+          updated_at: string
+          wechat: string | null
+        }
+        Insert: {
+          address?: string | null
+          application_id?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          attending_since?: string | null
+          created_at?: string
+          email?: string | null
+          group_id?: string | null
+          household_name: string
+          id?: string
+          membership_date?: string | null
+          membership_status?: string
+          notes?: string | null
+          phone?: string | null
+          primary_contact_id?: string | null
+          updated_at?: string
+          wechat?: string | null
+        }
+        Update: {
+          address?: string | null
+          application_id?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          attending_since?: string | null
+          created_at?: string
+          email?: string | null
           group_id?: string | null
           household_name?: string
           id?: string
+          membership_date?: string | null
+          membership_status?: string
           notes?: string | null
+          phone?: string | null
           primary_contact_id?: string | null
           updated_at?: string
+          wechat?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "households_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "household_membership_applications"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "households_group_id_fkey"
             columns: ["group_id"]
@@ -699,54 +884,81 @@ export type Database = {
       people: {
         Row: {
           address: string | null
+          baptism_church: string | null
+          baptism_date: string | null
           birth_date: string | null
           created_at: string
           email: string | null
+          faith_date: string | null
           full_name: string
           gender: string | null
+          grade: string | null
           group_id: string | null
           id: string
+          is_baptized: string | null
+          is_believer: string | null
+          is_serving: boolean
           marital_status: string | null
           notes: string | null
           occupation: string | null
           phone: string | null
           photo_url: string | null
+          school: string | null
+          serving_notes: string | null
           updated_at: string
           user_id: string | null
           wechat: string | null
         }
         Insert: {
           address?: string | null
+          baptism_church?: string | null
+          baptism_date?: string | null
           birth_date?: string | null
           created_at?: string
           email?: string | null
+          faith_date?: string | null
           full_name: string
           gender?: string | null
+          grade?: string | null
           group_id?: string | null
           id?: string
+          is_baptized?: string | null
+          is_believer?: string | null
+          is_serving?: boolean
           marital_status?: string | null
           notes?: string | null
           occupation?: string | null
           phone?: string | null
           photo_url?: string | null
+          school?: string | null
+          serving_notes?: string | null
           updated_at?: string
           user_id?: string | null
           wechat?: string | null
         }
         Update: {
           address?: string | null
+          baptism_church?: string | null
+          baptism_date?: string | null
           birth_date?: string | null
           created_at?: string
           email?: string | null
+          faith_date?: string | null
           full_name?: string
           gender?: string | null
+          grade?: string | null
           group_id?: string | null
           id?: string
+          is_baptized?: string | null
+          is_believer?: string | null
+          is_serving?: boolean
           marital_status?: string | null
           notes?: string | null
           occupation?: string | null
           phone?: string | null
           photo_url?: string | null
+          school?: string | null
+          serving_notes?: string | null
           updated_at?: string
           user_id?: string | null
           wechat?: string | null
@@ -1171,6 +1383,7 @@ export type Database = {
           interests_other: string | null
           mentor: string | null
           nickname: string | null
+          person_id: string | null
           profile_status: string
           school: string | null
           service_interests: Json
@@ -1202,6 +1415,7 @@ export type Database = {
           interests_other?: string | null
           mentor?: string | null
           nickname?: string | null
+          person_id?: string | null
           profile_status?: string
           school?: string | null
           service_interests?: Json
@@ -1233,6 +1447,7 @@ export type Database = {
           interests_other?: string | null
           mentor?: string | null
           nickname?: string | null
+          person_id?: string | null
           profile_status?: string
           school?: string | null
           service_interests?: Json
@@ -1244,6 +1459,13 @@ export type Database = {
             columns: ["group_id"]
             isOneToOne: false
             referencedRelation: "youth_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "youth_members_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "people"
             referencedColumns: ["id"]
           },
         ]
@@ -1334,7 +1556,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      age_group: { Args: { _birth_date: string }; Returns: string }
+      calc_age: { Args: { _birth_date: string }; Returns: number }
     }
     Enums: {
       [_ in never]: never
