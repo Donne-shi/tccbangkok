@@ -723,40 +723,43 @@ async function handle(action: string, payload: Record<string, unknown>, role: Ro
       return { ok: true };
     }
 
-    /* ---------- Dashboard ---------- */
+    /* ---------- Dashboard（以家庭为单位） ---------- */
     case 'dashboard': {
       const now = new Date();
       const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString().slice(0, 10);
+      const cfg = await ageConfig();
       const [
-        { count: activeMembers },
-        { count: households },
-        { count: newMembers },
+        { data: activeHouseholds },
         { count: pendingApps },
+        { count: pendingProfiles },
         { data: monthVisits },
         { data: recentApps },
         { data: recentVisitRows },
         { data: recentHistory },
         { data: followUpRows },
+        { data: recentHouseholds },
       ] = await Promise.all([
-        supabase.from('members').select('id', { count: 'exact', head: true }).eq('member_status', 'active'),
-        supabase.from('households').select('id', { count: 'exact', head: true }),
+        supabase.from('households').select('id, household_name, membership_date').eq('membership_status', 'active'),
         supabase
-          .from('members')
-          .select('id', { count: 'exact', head: true })
-          .eq('member_status', 'active')
-          .gte('joined_at', monthStart),
-        supabase
-          .from('member_applications')
+          .from('household_membership_applications')
           .select('id', { count: 'exact', head: true })
           .in('status', ['pending', 'reviewing']),
-        supabase.from('visits').select('id').gte('visit_date', monthStart),
         supabase
-          .from('member_applications')
-          .select('id, full_name, status, created_at')
+          .from('household_membership_applications')
+          .select('id', { count: 'exact', head: true })
+          .eq('status', 'approved_pending_profile'),
+        supabase.from('visits').select('id, household_id').gte('visit_date', monthStart),
+        supabase
+          .from('household_membership_applications')
+          .select('id, household_name, applicant_name, status, created_at')
           .order('created_at', { ascending: false })
           .limit(5),
         supabase.from('visits').select('*').order('visit_date', { ascending: false }).limit(5),
-        supabase.from('member_status_history').select('*').order('created_at', { ascending: false }).limit(5),
+        supabase
+          .from('household_membership_status_history')
+          .select('*, households(household_name)')
+          .order('created_at', { ascending: false })
+          .limit(5),
         supabase
           .from('visits')
           .select('*')
@@ -764,37 +767,66 @@ async function handle(action: string, payload: Record<string, unknown>, role: Ro
           .neq('follow_up_status', 'completed')
           .order('follow_up_date', { ascending: true })
           .limit(5),
+        supabase
+          .from('households')
+          .select('id, household_name, membership_date, membership_status')
+          .eq('membership_status', 'active')
+          .order('membership_date', { ascending: false })
+          .limit(5),
       ]);
+
+      const activeIds = (activeHouseholds ?? []).map((h) => h.id);
+      let totals = { people: 0, adult: 0, youth: 0, child: 0 };
+      if (activeIds.length) {
+        const { data: hms } = await supabase.from('household_members').select('person_id').in('household_id', activeIds);
+        const pids = [...new Set((hms ?? []).map((r) => r.person_id))];
+        if (pids.length) {
+          const { data: ppl } = await supabase.from('people').select('id, birth_date').in('id', pids);
+          totals.people = (ppl ?? []).length;
+          (ppl ?? []).forEach((p) => {
+            const g = groupOf(ageOf(p.birth_date), cfg);
+            if (g === 'adult') totals.adult++;
+            else if (g === 'youth') totals.youth++;
+            else if (g === 'child') totals.child++;
+          });
+        }
+      }
+
       const monthVisitIds = (monthVisits ?? []).map((v) => v.id);
       let monthExpense = 0;
       if (monthVisitIds.length) {
         const { data } = await supabase.from('visit_expenses').select('amount').in('visit_id', monthVisitIds);
         monthExpense = (data ?? []).reduce((s, e) => s + Number(e.amount || 0), 0);
       }
-      const historyMemberIds = [...new Set((recentHistory ?? []).map((h) => h.member_id))];
-      let historyNames: Record<string, string> = {};
-      if (historyMemberIds.length) {
-        const { data: ms } = await supabase.from('members').select('id, person_id').in('id', historyMemberIds);
-        const people = await personSummaries((ms ?? []).map((m) => m.person_id));
-        const pMap = new Map(people.map((p) => [p.id, p.full_name]));
-        historyNames = Object.fromEntries((ms ?? []).map((m) => [m.id, pMap.get(m.person_id) ?? '']));
-      }
+
       return {
         stats: {
-          active_members: activeMembers ?? 0,
-          households: households ?? 0,
-          new_members_this_month: newMembers ?? 0,
+          member_households: activeIds.length,
+          member_people: totals.people,
+          adults: totals.adult,
+          youths: totals.youth,
+          children: totals.child,
           pending_applications: pendingApps ?? 0,
+          pending_profiles: pendingProfiles ?? 0,
+          new_households_this_month: (activeHouseholds ?? []).filter(
+            (h) => h.membership_date && h.membership_date >= monthStart,
+          ).length,
           visits_this_month: monthVisitIds.length,
+          visit_households_this_month: new Set((monthVisits ?? []).map((v) => v.household_id).filter(Boolean)).size,
           visit_expense_this_month: monthExpense,
           pending_follow_ups: (followUpRows ?? []).length,
         },
         recent_applications: recentApps ?? [],
+        recent_households: recentHouseholds ?? [],
         recent_visits: await decorateVisits(recentVisitRows ?? []),
         upcoming_follow_ups: await decorateVisits(followUpRows ?? []),
-        recent_status_changes: (recentHistory ?? []).map((h) => ({ ...h, person_name: historyNames[h.member_id] ?? '' })),
+        recent_status_changes: (recentHistory ?? []).map((h: Record<string, any>) => ({
+          ...h,
+          household_name: h.households?.household_name ?? '',
+        })),
       };
     }
+
 
     /* ---------- 小组（复用现有小组表） ---------- */
     case 'groups.list': {
