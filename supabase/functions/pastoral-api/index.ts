@@ -350,30 +350,45 @@ async function handle(action: string, payload: Record<string, unknown>, role: Ro
     }
     case 'households.detail': {
       const id = payload.id as string;
+      const cfg = await ageConfig();
       const { data: household, error } = await supabase.from('households').select('*').eq('id', id).single();
       if (error) throw error;
       const { data: hms } = await supabase.from('household_members').select('*').eq('household_id', id);
       const personIds = (hms ?? []).map((h) => h.person_id);
-      const [{ data: fullPeople }, { data: members }] = await Promise.all([
+      const [{ data: fullPeople }, { data: youth }, { data: history }, { data: groups }] = await Promise.all([
         personIds.length ? supabase.from('people').select('*').in('id', personIds) : Promise.resolve({ data: [] }),
         personIds.length
-          ? supabase.from('members').select('*').in('person_id', personIds)
+          ? supabase.from('youth_members').select('id, person_id, group_id, mentor, growth_stage').in('person_id', personIds)
           : Promise.resolve({ data: [] }),
+        supabase
+          .from('household_membership_status_history')
+          .select('*')
+          .eq('household_id', id)
+          .order('effective_date', { ascending: false }),
+        supabase.from('youth_groups').select('id, name'),
       ]);
-      const pMap = new Map((fullPeople ?? []).map((p) => [p.id, p]));
-      const mMap = new Map((members ?? []).map((m) => [m.person_id, m]));
+      const pMap = new Map((fullPeople ?? []).map((p) => [p.id, decoratePerson(p, cfg)]));
+      const yMap = new Map((youth ?? []).map((y) => [y.person_id, y]));
       const visits = await visitsForPersonIds([], [id]);
+      const members = (hms ?? []).map((m) => ({
+        ...m,
+        person: pMap.get(m.person_id) ?? null,
+        youth: yMap.get(m.person_id) ?? null,
+      }));
+      const gMap = new Map((groups ?? []).map((g) => [g.id, g.name]));
       return {
-        household,
-        members: (hms ?? []).map((m) => ({
-          ...m,
-          person: pMap.get(m.person_id) ?? null,
-          member: mMap.get(m.person_id) ?? null,
-        })),
+        household: {
+          ...household,
+          group_name: household.group_id ? gMap.get(household.group_id) ?? null : null,
+        },
+        members,
+        youth_candidates: members.filter((m) => m.person?.age_group === 'youth' && !m.youth),
+        history: history ?? [],
         visits,
         follow_ups: visits.filter((v) => v.follow_up_required && v.follow_up_status !== 'completed'),
       };
     }
+
     case 'households.save': {
       const row = {
         household_name: str(payload.household_name, 160) ?? '',
