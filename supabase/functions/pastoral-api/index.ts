@@ -817,6 +817,14 @@ Deno.serve(async (req) => {
     const action = typeof body.action === 'string' ? body.action : '';
     const payload = (body.payload ?? {}) as Record<string, unknown>;
 
+    if (!action) return json({ error: '缺少操作' }, 400);
+
+    // 公开动作：仅凭安全链接 token 访问自己家庭的资料填写
+    if (PUBLIC_ACTIONS.has(action)) {
+      const result = await handle(action, payload, 'public');
+      return json({ role: 'public', ...(result as Record<string, unknown>) });
+    }
+
     const adminPassword = Deno.env.get('ADMIN_PASSWORD');
     const visitPassword = Deno.env.get('VISIT_PASSWORD');
     if (!adminPassword) return json({ error: '服务端未配置密码' }, 500);
@@ -826,7 +834,6 @@ Deno.serve(async (req) => {
     else if (visitPassword && password && password === visitPassword) role = 'visit';
 
     if (!role) return json({ error: '密码错误' }, 401);
-    if (!action) return json({ error: '缺少操作' }, 400);
     if (role === 'visit' && !VISIT_ACTIONS.has(action)) return json({ error: '无权限执行此操作' }, 403);
 
     const result = await handle(action, payload, role);
@@ -836,3 +843,4 @@ Deno.serve(async (req) => {
     return json({ error: message }, 400);
   }
 });
+
