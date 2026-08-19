@@ -10,6 +10,8 @@ import ConstitutionPage from "./pages/ConstitutionPage.tsx";
 import SermonsPage from "./pages/SermonsPage.tsx";
 import SermonDetailPage from "./pages/SermonDetailPage.tsx";
 import MembershipPage from "./pages/MembershipPage.tsx";
+import MembershipProfilePage from "./pages/MembershipProfilePage.tsx";
+
 import MinistriesPage from "./pages/MinistriesPage.tsx";
 import ResourcesPage from "./pages/ResourcesPage.tsx";
 import HymnRecommendationPage from "./pages/HymnRecommendationPage.tsx";
