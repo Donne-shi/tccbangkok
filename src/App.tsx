@@ -51,6 +51,8 @@ const App = () => (
           <Route path="/sermons" element={<SermonsPage />} />
           <Route path="/sermons/:slug" element={<SermonDetailPage />} />
           <Route path="/membership" element={<MembershipPage />} />
+          <Route path="/membership/profile/:token" element={<MembershipProfilePage />} />
+
           <Route path="/ministries" element={<MinistriesPage />} />
           <Route path="/ministries/hymns" element={<HymnRecommendationPage />} />
           <Route path="/ministries/youth" element={<YouthMinistryPage />} />
