@@ -39,6 +39,29 @@ export async function pastoralApi<T = any>(
 }
 
 /* ── 中文标签 ── */
+export const HOUSEHOLD_STATUS_LABELS: Record<string, string> = {
+  pending_profile: '待完善成员资料',
+  active: '正式会友家庭',
+  inactive: '暂停聚会',
+  transferred: '转出',
+  removed: '除籍',
+};
+
+export const HH_APP_STATUS_LABELS: Record<string, string> = {
+  pending: '待处理',
+  reviewing: '面谈中',
+  approved_pending_profile: '已通过 · 待完善成员资料',
+  active: '已完成入会',
+  on_hold: '暂缓',
+  rejected: '未通过',
+};
+
+export const AGE_GROUP_LABELS: Record<string, string> = {
+  child: '儿童',
+  youth: '青少年',
+  adult: '成人',
+};
+
 export const MEMBER_STATUS_LABELS: Record<string, string> = {
   active: '在册会友',
   inactive: '暂停聚会',
