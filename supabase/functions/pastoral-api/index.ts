@@ -1294,6 +1294,29 @@ async function handle(action: string, payload: Record<string, unknown>, role: Ro
       return { groups: data ?? [] };
     }
 
+    case 'events.list': {
+      const { data, error } = await supabase
+        .from('event_registrations')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      return { registrations: data ?? [] };
+    }
+
+    case 'events.update': {
+      const { id, ...patch } = payload as { id: string };
+      const { error } = await supabase.from('event_registrations').update(patch).eq('id', id);
+      if (error) throw error;
+      return { ok: true };
+    }
+
+    case 'events.delete': {
+      const { error } = await supabase.from('event_registrations').delete().eq('id', payload.id as string);
+      if (error) throw error;
+      return { ok: true };
+    }
+
+
     default:
       throw new Error(`未知操作: ${action}`);
   }
