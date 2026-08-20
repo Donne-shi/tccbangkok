@@ -311,6 +311,90 @@ export type Database = {
         }
         Relationships: []
       }
+      event_registrations: {
+        Row: {
+          admin_notes: string | null
+          age: number | null
+          backup_contact_name: string | null
+          backup_contact_phone: string | null
+          carpool_parent_child: string | null
+          carpool_parent_name: string | null
+          carpool_parent_phone: string | null
+          confirm_name: string
+          consents: Json
+          created_at: string
+          event_name: string
+          grade: string | null
+          group_level: string | null
+          guardian_name: string
+          has_special_notes: boolean
+          id: string
+          phone: string
+          relation: string | null
+          relation_other: string | null
+          special_notes: string | null
+          status: string
+          student_name_en: string | null
+          student_name_zh: string
+          transport_option: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          age?: number | null
+          backup_contact_name?: string | null
+          backup_contact_phone?: string | null
+          carpool_parent_child?: string | null
+          carpool_parent_name?: string | null
+          carpool_parent_phone?: string | null
+          confirm_name: string
+          consents?: Json
+          created_at?: string
+          event_name?: string
+          grade?: string | null
+          group_level?: string | null
+          guardian_name: string
+          has_special_notes?: boolean
+          id?: string
+          phone: string
+          relation?: string | null
+          relation_other?: string | null
+          special_notes?: string | null
+          status?: string
+          student_name_en?: string | null
+          student_name_zh: string
+          transport_option: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          age?: number | null
+          backup_contact_name?: string | null
+          backup_contact_phone?: string | null
+          carpool_parent_child?: string | null
+          carpool_parent_name?: string | null
+          carpool_parent_phone?: string | null
+          confirm_name?: string
+          consents?: Json
+          created_at?: string
+          event_name?: string
+          grade?: string | null
+          group_level?: string | null
+          guardian_name?: string
+          has_special_notes?: boolean
+          id?: string
+          phone?: string
+          relation?: string | null
+          relation_other?: string | null
+          special_notes?: string | null
+          status?: string
+          student_name_en?: string | null
+          student_name_zh?: string
+          transport_option?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       feedback: {
         Row: {
           created_at: string
