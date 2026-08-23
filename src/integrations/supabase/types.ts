@@ -395,6 +395,131 @@ export type Database = {
         }
         Relationships: []
       }
+      expense_claim_events: {
+        Row: {
+          action: string
+          actor: string | null
+          claim_id: string
+          created_at: string
+          id: string
+          note: string | null
+        }
+        Insert: {
+          action: string
+          actor?: string | null
+          claim_id: string
+          created_at?: string
+          id?: string
+          note?: string | null
+        }
+        Update: {
+          action?: string
+          actor?: string | null
+          claim_id?: string
+          created_at?: string
+          id?: string
+          note?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expense_claim_events_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "expense_claims"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expense_claims: {
+        Row: {
+          amount: number
+          approver1_at: string | null
+          approver1_name: string | null
+          approver1_note: string | null
+          approver2_at: string | null
+          approver2_name: string | null
+          approver2_note: string | null
+          category: string
+          created_at: string
+          currency: string
+          id: string
+          notes: string | null
+          paid_at: string | null
+          paid_by: string | null
+          payer_name: string
+          payment_method: string | null
+          payment_note: string | null
+          purpose: string
+          receipt_urls: Json
+          reject_reason: string | null
+          rejected_at: string | null
+          rejected_by: string | null
+          spent_on: string | null
+          status: string
+          submitter_contact: string | null
+          submitter_name: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          approver1_at?: string | null
+          approver1_name?: string | null
+          approver1_note?: string | null
+          approver2_at?: string | null
+          approver2_name?: string | null
+          approver2_note?: string | null
+          category: string
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          paid_at?: string | null
+          paid_by?: string | null
+          payer_name: string
+          payment_method?: string | null
+          payment_note?: string | null
+          purpose: string
+          receipt_urls?: Json
+          reject_reason?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          spent_on?: string | null
+          status?: string
+          submitter_contact?: string | null
+          submitter_name: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          approver1_at?: string | null
+          approver1_name?: string | null
+          approver1_note?: string | null
+          approver2_at?: string | null
+          approver2_name?: string | null
+          approver2_note?: string | null
+          category?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          paid_at?: string | null
+          paid_by?: string | null
+          payer_name?: string
+          payment_method?: string | null
+          payment_note?: string | null
+          purpose?: string
+          receipt_urls?: Json
+          reject_reason?: string | null
+          rejected_at?: string | null
+          rejected_by?: string | null
+          spent_on?: string | null
+          status?: string
+          submitter_contact?: string | null
+          submitter_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       feedback: {
         Row: {
           created_at: string
@@ -446,6 +571,36 @@ export type Database = {
           image_url?: string
           updated_at?: string
           year?: number
+        }
+        Relationships: []
+      }
+      finance_staff: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          name: string
+          sort_order: number
+          staff_role: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          sort_order?: number
+          staff_role?: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          sort_order?: number
+          staff_role?: string
+          updated_at?: string
         }
         Relationships: []
       }
