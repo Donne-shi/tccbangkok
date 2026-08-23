@@ -51,8 +51,28 @@ const APP_STATUS = [
   { v: 'declined', l: '暂不安排' },
 ];
 
+/* 聚会标签：写入 attendance 字段 */
+const ATTENDANCE_TAGS = [
+  { v: '固定每周参加', l: '稳定聚会', cls: 'bg-accent/15 text-accent border-accent/30' },
+  { v: '偶尔参加', l: '偶尔参加', cls: 'bg-secondary text-secondary-foreground border-border' },
+  { v: '第一次参加', l: '初次参加', cls: 'bg-primary/10 text-primary border-primary/20' },
+  { v: '曾参加过一段时间', l: '中断聚会', cls: 'bg-muted text-muted-foreground border-border' },
+  { v: '已离开', l: '已离开', cls: 'bg-destructive/10 text-destructive border-destructive/20' },
+];
+const tagOf = (v?: string | null) => ATTENDANCE_TAGS.find(t => t.v === v);
+
+const AttendanceBadge = ({ value }: { value?: string | null }) => {
+  const t = tagOf(value);
+  return (
+    <span className={`text-xs px-2 py-0.5 rounded-full border ${t?.cls ?? 'bg-muted text-muted-foreground border-border'}`}>
+      {t?.l ?? '未标记'}
+    </span>
+  );
+};
+
 const Field = ({ label, value }: { label: string; value?: string | null }) =>
   value ? <div><span className="text-muted-foreground">{label}：</span>{value}</div> : null;
+
 
 export default function YouthAdmin() {
   const { toast } = useToast();
