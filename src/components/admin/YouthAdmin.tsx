@@ -83,6 +83,8 @@ export default function YouthAdmin() {
   const [apps, setApps] = useState<VolunteerApp[]>([]);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [groupFilter, setGroupFilter] = useState('all');
+  const [tagFilter, setTagFilter] = useState('all');
+
   const [drafts, setDrafts] = useState<Record<string, Partial<Member>>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
   const [newGroup, setNewGroup] = useState({ name: '', leader: '' });
@@ -156,9 +158,13 @@ export default function YouthAdmin() {
   };
 
   const groupName = (id: string | null) => groups.find(g => g.id === id)?.name || '未分组';
-  const filteredMembers = groupFilter === 'all' ? members
+  const byGroup = groupFilter === 'all' ? members
     : groupFilter === 'none' ? members.filter(m => !m.group_id)
     : members.filter(m => m.group_id === groupFilter);
+  const filteredMembers = tagFilter === 'all' ? byGroup
+    : tagFilter === 'none' ? byGroup.filter(m => !tagOf(m.attendance))
+    : byGroup.filter(m => m.attendance === tagFilter);
+
 
   if (loading) return <div className="text-center py-12 text-muted-foreground">加载中...</div>;
 
