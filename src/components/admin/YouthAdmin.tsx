@@ -232,12 +232,14 @@ export default function YouthAdmin() {
                   <CardContent className="pt-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div>
-                        <div className="font-medium">
-                          {m.full_name}{m.nickname ? `（${m.nickname}）` : ''}
-                          <span className="ml-2 text-xs text-muted-foreground">
+                        <div className="font-medium flex flex-wrap items-center gap-2">
+                          <span>{m.full_name}{m.nickname ? `（${m.nickname}）` : ''}</span>
+                          <AttendanceBadge value={m.attendance} />
+                          <span className="text-xs text-muted-foreground font-normal">
                             {m.gender || ''} {m.grade || ''} · {groupName(m.group_id)}
                           </span>
                         </div>
+
                         <div className="text-xs text-muted-foreground mt-1">
                           提交于 {new Date(m.created_at).toLocaleDateString('zh-CN')} · {m.faith_status || '信仰状况未填'}
                         </div>
