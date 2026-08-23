@@ -51,8 +51,28 @@ const APP_STATUS = [
   { v: 'declined', l: '暂不安排' },
 ];
 
+/* 聚会标签：写入 attendance 字段 */
+const ATTENDANCE_TAGS = [
+  { v: '固定每周参加', l: '稳定聚会', cls: 'bg-accent/15 text-accent border-accent/30' },
+  { v: '偶尔参加', l: '偶尔参加', cls: 'bg-secondary text-secondary-foreground border-border' },
+  { v: '第一次参加', l: '初次参加', cls: 'bg-primary/10 text-primary border-primary/20' },
+  { v: '曾参加过一段时间', l: '中断聚会', cls: 'bg-muted text-muted-foreground border-border' },
+  { v: '已离开', l: '已离开', cls: 'bg-destructive/10 text-destructive border-destructive/20' },
+];
+const tagOf = (v?: string | null) => ATTENDANCE_TAGS.find(t => t.v === v);
+
+const AttendanceBadge = ({ value }: { value?: string | null }) => {
+  const t = tagOf(value);
+  return (
+    <span className={`text-xs px-2 py-0.5 rounded-full border ${t?.cls ?? 'bg-muted text-muted-foreground border-border'}`}>
+      {t?.l ?? '未标记'}
+    </span>
+  );
+};
+
 const Field = ({ label, value }: { label: string; value?: string | null }) =>
   value ? <div><span className="text-muted-foreground">{label}：</span>{value}</div> : null;
+
 
 export default function YouthAdmin() {
   const { toast } = useToast();
@@ -63,6 +83,8 @@ export default function YouthAdmin() {
   const [apps, setApps] = useState<VolunteerApp[]>([]);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [groupFilter, setGroupFilter] = useState('all');
+  const [tagFilter, setTagFilter] = useState('all');
+
   const [drafts, setDrafts] = useState<Record<string, Partial<Member>>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
   const [newGroup, setNewGroup] = useState({ name: '', leader: '' });
@@ -136,9 +158,13 @@ export default function YouthAdmin() {
   };
 
   const groupName = (id: string | null) => groups.find(g => g.id === id)?.name || '未分组';
-  const filteredMembers = groupFilter === 'all' ? members
+  const byGroup = groupFilter === 'all' ? members
     : groupFilter === 'none' ? members.filter(m => !m.group_id)
     : members.filter(m => m.group_id === groupFilter);
+  const filteredMembers = tagFilter === 'all' ? byGroup
+    : tagFilter === 'none' ? byGroup.filter(m => !tagOf(m.attendance))
+    : byGroup.filter(m => m.attendance === tagFilter);
+
 
   if (loading) return <div className="text-center py-12 text-muted-foreground">加载中...</div>;
 
@@ -168,9 +194,18 @@ export default function YouthAdmin() {
               {groups.map(g => <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>)}
             </SelectContent>
           </Select>
+          <Select value={tagFilter} onValueChange={setTagFilter}>
+            <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">全部聚会标签</SelectItem>
+              <SelectItem value="none">未标记</SelectItem>
+              {ATTENDANCE_TAGS.map(t => <SelectItem key={t.v} value={t.v}>{t.l}</SelectItem>)}
+            </SelectContent>
+          </Select>
           <div className="text-sm text-muted-foreground">
-            共 {filteredMembers.length} 人 · 未分组 {members.filter(m => !m.group_id).length} 人
+            共 {filteredMembers.length} 人 · 未分组 {members.filter(m => !m.group_id).length} 人 · 未标记 {members.filter(m => !tagOf(m.attendance)).length} 人
           </div>
+
         </div>
 
         {/* Group overview */}
@@ -197,12 +232,14 @@ export default function YouthAdmin() {
                   <CardContent className="pt-4">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div>
-                        <div className="font-medium">
-                          {m.full_name}{m.nickname ? `（${m.nickname}）` : ''}
-                          <span className="ml-2 text-xs text-muted-foreground">
+                        <div className="font-medium flex flex-wrap items-center gap-2">
+                          <span>{m.full_name}{m.nickname ? `（${m.nickname}）` : ''}</span>
+                          <AttendanceBadge value={m.attendance} />
+                          <span className="text-xs text-muted-foreground font-normal">
                             {m.gender || ''} {m.grade || ''} · {groupName(m.group_id)}
                           </span>
                         </div>
+
                         <div className="text-xs text-muted-foreground mt-1">
                           提交于 {new Date(m.created_at).toLocaleDateString('zh-CN')} · {m.faith_status || '信仰状况未填'}
                         </div>
@@ -228,9 +265,17 @@ export default function YouthAdmin() {
                         </Select>
                       </div>
                       <div>
+                        <Label className="text-xs">聚会标签</Label>
+                        <Select value={d.attendance || ''} onValueChange={v => setDraft(m.id, { attendance: v })}>
+                          <SelectTrigger><SelectValue placeholder="未标记" /></SelectTrigger>
+                          <SelectContent>{ATTENDANCE_TAGS.map(t => <SelectItem key={t.v} value={t.v}>{t.l}</SelectItem>)}</SelectContent>
+                        </Select>
+                      </div>
+                      <div>
                         <Label className="text-xs">跟进同工</Label>
                         <Input value={d.mentor || ''} onChange={e => setDraft(m.id, { mentor: e.target.value })} />
                       </div>
+
                       <div>
                         <Label className="text-xs">成长阶段</Label>
                         <Select value={d.growth_stage || ''} onValueChange={v => setDraft(m.id, { growth_stage: v })}>
