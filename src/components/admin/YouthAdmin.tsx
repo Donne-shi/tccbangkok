@@ -194,9 +194,18 @@ export default function YouthAdmin() {
               {groups.map(g => <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>)}
             </SelectContent>
           </Select>
+          <Select value={tagFilter} onValueChange={setTagFilter}>
+            <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">全部聚会标签</SelectItem>
+              <SelectItem value="none">未标记</SelectItem>
+              {ATTENDANCE_TAGS.map(t => <SelectItem key={t.v} value={t.v}>{t.l}</SelectItem>)}
+            </SelectContent>
+          </Select>
           <div className="text-sm text-muted-foreground">
-            共 {filteredMembers.length} 人 · 未分组 {members.filter(m => !m.group_id).length} 人
+            共 {filteredMembers.length} 人 · 未分组 {members.filter(m => !m.group_id).length} 人 · 未标记 {members.filter(m => !tagOf(m.attendance)).length} 人
           </div>
+
         </div>
 
         {/* Group overview */}
