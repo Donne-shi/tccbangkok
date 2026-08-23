@@ -265,9 +265,17 @@ export default function YouthAdmin() {
                         </Select>
                       </div>
                       <div>
+                        <Label className="text-xs">聚会标签</Label>
+                        <Select value={d.attendance || ''} onValueChange={v => setDraft(m.id, { attendance: v })}>
+                          <SelectTrigger><SelectValue placeholder="未标记" /></SelectTrigger>
+                          <SelectContent>{ATTENDANCE_TAGS.map(t => <SelectItem key={t.v} value={t.v}>{t.l}</SelectItem>)}</SelectContent>
+                        </Select>
+                      </div>
+                      <div>
                         <Label className="text-xs">跟进同工</Label>
                         <Input value={d.mentor || ''} onChange={e => setDraft(m.id, { mentor: e.target.value })} />
                       </div>
+
                       <div>
                         <Label className="text-xs">成长阶段</Label>
                         <Select value={d.growth_stage || ''} onValueChange={v => setDraft(m.id, { growth_stage: v })}>
