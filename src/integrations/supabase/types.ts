@@ -332,6 +332,7 @@ export type Database = {
           phone: string
           relation: string | null
           relation_other: string | null
+          service_roles: Json
           special_notes: string | null
           status: string
           student_name_en: string | null
@@ -359,11 +360,12 @@ export type Database = {
           phone: string
           relation?: string | null
           relation_other?: string | null
+          service_roles?: Json
           special_notes?: string | null
           status?: string
           student_name_en?: string | null
           student_name_zh: string
-          transport_option: string
+          transport_option?: string
           updated_at?: string
         }
         Update: {
@@ -386,6 +388,7 @@ export type Database = {
           phone?: string
           relation?: string | null
           relation_other?: string | null
+          service_roles?: Json
           special_notes?: string | null
           status?: string
           student_name_en?: string | null
