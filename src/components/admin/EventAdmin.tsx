@@ -18,9 +18,11 @@ type Registration = {
   group_level: string | null;
   age: number | null;
   guardian_name: string;
+  guardian_phone: string | null;
   relation: string | null;
   relation_other: string | null;
   phone: string;
+  service_roles: unknown;
   backup_contact_name: string | null;
   backup_contact_phone: string | null;
   has_special_notes: boolean;
@@ -38,7 +40,10 @@ const TRANSPORT_LABELS: Record<string, string> = {
   self: '家长自行接送',
   carpool: '搭乘其他家长车辆',
   undecided: '暂未确定车辆',
+  church_bus: '教会统一租车',
 };
+
+const roleList = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : []);
 
 const STATUS_LABELS: Record<string, string> = {
   pending: '待确认',
@@ -54,6 +59,8 @@ const CSV_COLUMNS: [keyof Registration | 'transport_label' | 'submitted_at', str
   ['grade', '年级'],
   ['age', '年龄'],
   ['guardian_name', '家长姓名'],
+  ['guardian_phone', '家长电话'],
+  ['service_roles', '服侍意向'],
   ['relation', '与孩子关系'],
   ['relation_other', '关系补充'],
   ['phone', '联系电话'],
