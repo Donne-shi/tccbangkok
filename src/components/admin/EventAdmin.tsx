@@ -154,6 +154,7 @@ export default function EventAdmin() {
         if (key === 'submitted_at') return esc(new Date(r.created_at).toLocaleString('zh-CN'));
         if (key === 'has_special_notes') return esc(r.has_special_notes ? '是' : '否');
         if (key === 'status') return esc(STATUS_LABELS[r.status] ?? r.status);
+        if (key === 'service_roles') return esc(roleList(r.service_roles).join(' / '));
         return esc(r[key as keyof Registration]);
       }).join(','));
     }
@@ -177,9 +178,24 @@ export default function EventAdmin() {
         <Card><CardContent className="pt-6"><p className="text-sm text-muted-foreground mb-1">交通方式</p>
           {stats.transport.map(({ t, n }) => <p key={t} className="text-sm">{TRANSPORT_LABELS[t]}：<span className="font-semibold">{n}</span></p>)}
         </CardContent></Card>
+        {stats.roles.length > 0 && (
+          <Card className="col-span-2 md:col-span-4"><CardContent className="pt-6">
+            <p className="text-sm text-muted-foreground mb-1">服侍意向人数</p>
+            <div className="flex flex-wrap gap-x-6">
+              {stats.roles.map(({ role, n }) => <p key={role} className="text-sm">{role}：<span className="font-semibold">{n}</span></p>)}
+            </div>
+          </CardContent></Card>
+        )}
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
+        <Select value={eventFilter} onValueChange={setEventFilter}>
+          <SelectTrigger className="w-64"><SelectValue /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">全部活动</SelectItem>
+            {eventNames.map(n => <SelectItem key={n} value={n}>{n}</SelectItem>)}
+          </SelectContent>
+        </Select>
         <Select value={groupFilter} onValueChange={setGroupFilter}>
           <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
@@ -265,3 +281,4 @@ export default function EventAdmin() {
 }
 
 const GROUPS = ['小学组', '初中组', '高中组'];
+const SERVICE_ROLES = ['游戏组', '礼物与物资组', '现场陪伴组', '接受统一安排'];
