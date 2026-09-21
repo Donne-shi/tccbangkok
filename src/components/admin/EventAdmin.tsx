@@ -83,6 +83,7 @@ export default function EventAdmin() {
   const [rows, setRows] = useState<Registration[]>([]);
   const [groupFilter, setGroupFilter] = useState('all');
   const [transportFilter, setTransportFilter] = useState('all');
+  const [eventFilter, setEventFilter] = useState('all');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -97,19 +98,31 @@ export default function EventAdmin() {
 
   useEffect(() => { load(); }, [load]);
 
+  const eventNames = useMemo(() => Array.from(new Set(rows.map(r => r.event_name))), [rows]);
+
+  const scoped = useMemo(
+    () => rows.filter(r => eventFilter === 'all' || r.event_name === eventFilter),
+    [rows, eventFilter],
+  );
+
   const filtered = useMemo(
-    () => rows.filter(r =>
+    () => scoped.filter(r =>
       (groupFilter === 'all' || r.group_level === groupFilter) &&
       (transportFilter === 'all' || r.transport_option === transportFilter)),
-    [rows, groupFilter, transportFilter],
+    [scoped, groupFilter, transportFilter],
   );
 
   const stats = useMemo(() => ({
-    total: rows.length,
-    groups: GROUPS.map(g => ({ g, n: rows.filter(r => r.group_level === g).length })),
-    transport: Object.keys(TRANSPORT_LABELS).map(t => ({ t, n: rows.filter(r => r.transport_option === t).length })),
-    notes: rows.filter(r => r.has_special_notes).length,
-  }), [rows]);
+    total: scoped.length,
+    groups: GROUPS.map(g => ({ g, n: scoped.filter(r => r.group_level === g).length })),
+    transport: Object.keys(TRANSPORT_LABELS)
+      .map(t => ({ t, n: scoped.filter(r => r.transport_option === t).length }))
+      .filter(x => x.n > 0),
+    roles: SERVICE_ROLES
+      .map(role => ({ role, n: scoped.filter(r => roleList(r.service_roles).includes(role)).length }))
+      .filter(x => x.n > 0),
+    notes: scoped.filter(r => r.has_special_notes).length,
+  }), [scoped]);
 
   const update = async (id: string, patch: Partial<Registration>) => {
     setRows(prev => prev.map(r => (r.id === id ? { ...r, ...patch } : r)));
