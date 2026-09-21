@@ -18,9 +18,11 @@ type Registration = {
   group_level: string | null;
   age: number | null;
   guardian_name: string;
+  guardian_phone: string | null;
   relation: string | null;
   relation_other: string | null;
   phone: string;
+  service_roles: unknown;
   backup_contact_name: string | null;
   backup_contact_phone: string | null;
   has_special_notes: boolean;
@@ -38,7 +40,10 @@ const TRANSPORT_LABELS: Record<string, string> = {
   self: '家长自行接送',
   carpool: '搭乘其他家长车辆',
   undecided: '暂未确定车辆',
+  church_bus: '教会统一租车',
 };
+
+const roleList = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : []);
 
 const STATUS_LABELS: Record<string, string> = {
   pending: '待确认',
@@ -54,6 +59,8 @@ const CSV_COLUMNS: [keyof Registration | 'transport_label' | 'submitted_at', str
   ['grade', '年级'],
   ['age', '年龄'],
   ['guardian_name', '家长姓名'],
+  ['guardian_phone', '家长电话'],
+  ['service_roles', '服侍意向'],
   ['relation', '与孩子关系'],
   ['relation_other', '关系补充'],
   ['phone', '联系电话'],
@@ -76,6 +83,7 @@ export default function EventAdmin() {
   const [rows, setRows] = useState<Registration[]>([]);
   const [groupFilter, setGroupFilter] = useState('all');
   const [transportFilter, setTransportFilter] = useState('all');
+  const [eventFilter, setEventFilter] = useState('all');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -90,19 +98,31 @@ export default function EventAdmin() {
 
   useEffect(() => { load(); }, [load]);
 
+  const eventNames = useMemo(() => Array.from(new Set(rows.map(r => r.event_name))), [rows]);
+
+  const scoped = useMemo(
+    () => rows.filter(r => eventFilter === 'all' || r.event_name === eventFilter),
+    [rows, eventFilter],
+  );
+
   const filtered = useMemo(
-    () => rows.filter(r =>
+    () => scoped.filter(r =>
       (groupFilter === 'all' || r.group_level === groupFilter) &&
       (transportFilter === 'all' || r.transport_option === transportFilter)),
-    [rows, groupFilter, transportFilter],
+    [scoped, groupFilter, transportFilter],
   );
 
   const stats = useMemo(() => ({
-    total: rows.length,
-    groups: GROUPS.map(g => ({ g, n: rows.filter(r => r.group_level === g).length })),
-    transport: Object.keys(TRANSPORT_LABELS).map(t => ({ t, n: rows.filter(r => r.transport_option === t).length })),
-    notes: rows.filter(r => r.has_special_notes).length,
-  }), [rows]);
+    total: scoped.length,
+    groups: GROUPS.map(g => ({ g, n: scoped.filter(r => r.group_level === g).length })),
+    transport: Object.keys(TRANSPORT_LABELS)
+      .map(t => ({ t, n: scoped.filter(r => r.transport_option === t).length }))
+      .filter(x => x.n > 0),
+    roles: SERVICE_ROLES
+      .map(role => ({ role, n: scoped.filter(r => roleList(r.service_roles).includes(role)).length }))
+      .filter(x => x.n > 0),
+    notes: scoped.filter(r => r.has_special_notes).length,
+  }), [scoped]);
 
   const update = async (id: string, patch: Partial<Registration>) => {
     setRows(prev => prev.map(r => (r.id === id ? { ...r, ...patch } : r)));
@@ -134,6 +154,7 @@ export default function EventAdmin() {
         if (key === 'submitted_at') return esc(new Date(r.created_at).toLocaleString('zh-CN'));
         if (key === 'has_special_notes') return esc(r.has_special_notes ? '是' : '否');
         if (key === 'status') return esc(STATUS_LABELS[r.status] ?? r.status);
+        if (key === 'service_roles') return esc(roleList(r.service_roles).join(' / '));
         return esc(r[key as keyof Registration]);
       }).join(','));
     }
@@ -157,9 +178,24 @@ export default function EventAdmin() {
         <Card><CardContent className="pt-6"><p className="text-sm text-muted-foreground mb-1">交通方式</p>
           {stats.transport.map(({ t, n }) => <p key={t} className="text-sm">{TRANSPORT_LABELS[t]}：<span className="font-semibold">{n}</span></p>)}
         </CardContent></Card>
+        {stats.roles.length > 0 && (
+          <Card className="col-span-2 md:col-span-4"><CardContent className="pt-6">
+            <p className="text-sm text-muted-foreground mb-1">服侍意向人数</p>
+            <div className="flex flex-wrap gap-x-6">
+              {stats.roles.map(({ role, n }) => <p key={role} className="text-sm">{role}：<span className="font-semibold">{n}</span></p>)}
+            </div>
+          </CardContent></Card>
+        )}
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
+        <Select value={eventFilter} onValueChange={setEventFilter}>
+          <SelectTrigger className="w-64"><SelectValue /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">全部活动</SelectItem>
+            {eventNames.map(n => <SelectItem key={n} value={n}>{n}</SelectItem>)}
+          </SelectContent>
+        </Select>
         <Select value={groupFilter} onValueChange={setGroupFilter}>
           <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
@@ -245,3 +281,4 @@ export default function EventAdmin() {
 }
 
 const GROUPS = ['小学组', '初中组', '高中组'];
+const SERVICE_ROLES = ['游戏组', '礼物与物资组', '现场陪伴组', '接受统一安排'];

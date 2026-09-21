@@ -35,6 +35,8 @@ import DevotionalDetailPage from "./pages/DevotionalDetailPage.tsx";
 import AdminPage from "./pages/AdminPage.tsx";
 import VisitPage from "./pages/VisitPage.tsx";
 import SurveyPage from "./pages/SurveyPage.tsx";
+import EventSignupPage from "./pages/EventSignupPage.tsx";
+import BlessingHomeSignupPage from "./pages/BlessingHomeSignupPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -78,6 +80,8 @@ const App = () => (
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/visit" element={<VisitPage />} />
           <Route path="/survey" element={<SurveyPage />} />
+          <Route path="/events/team-building-signup" element={<EventSignupPage />} />
+          <Route path="/events/blessing-home-signup" element={<BlessingHomeSignupPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
