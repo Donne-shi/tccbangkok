@@ -8,6 +8,13 @@
       "when": 1789966316888,
       "tag": "0000_add_service_roles_to_event_registrations",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789966354343,
+      "tag": "0001_add_guardian_phone_to_event_registrations",
+      "breakpoints": true
     }
   ]
 }

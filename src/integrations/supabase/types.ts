@@ -327,6 +327,7 @@ export type Database = {
           grade: string | null
           group_level: string | null
           guardian_name: string
+          guardian_phone: string | null
           has_special_notes: boolean
           id: string
           phone: string
@@ -355,6 +356,7 @@ export type Database = {
           grade?: string | null
           group_level?: string | null
           guardian_name: string
+          guardian_phone?: string | null
           has_special_notes?: boolean
           id?: string
           phone: string
@@ -383,6 +385,7 @@ export type Database = {
           grade?: string | null
           group_level?: string | null
           guardian_name?: string
+          guardian_phone?: string | null
           has_special_notes?: boolean
           id?: string
           phone?: string
